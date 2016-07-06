@@ -1,0 +1,27 @@
+$headerMaxWidth: 800px;
+$contentMaxWidth: 790px;
+
+@import 'defaults';
+@import 'header';
+@import 'dialog';
+@import 'homePage';
+@import 'requestsPage';
+@import 'aboutPage';
+@import 'buttons';
+@import 'book';
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+.page {
+}
+
+.pageContent {
+  width: 100%;
+  max-width: $contentMaxWidth;
+  padding-top: 12px;
+  margin: 0px auto 0px auto;
+  overflow: auto;
+}

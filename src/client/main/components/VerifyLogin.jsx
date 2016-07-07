@@ -1,11 +1,12 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import {verifyLogin} from '../../account/store/actions';
 
-export default class VerifyLogin extends React.Component {
+class VerifyLogin extends React.Component {
   constructor (props, context) {
     super (props, context);
     context.store.dispatch (verifyLogin ()).then (() => {
-      context.router.push ('/');
+      props.router.push ('/');
     });
   }
   render () {
@@ -13,7 +14,8 @@ export default class VerifyLogin extends React.Component {
   }
 }
 
+export default withRouter (VerifyLogin);
+
 VerifyLogin.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

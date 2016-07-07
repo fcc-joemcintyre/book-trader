@@ -1,12 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {updateProfile} from '../store/actions';
 import FilteredInput from '../../ui/FilteredInput.jsx';
 import USStateSelect from '../../ui/USStateSelect.jsx';
 
 const nameChars = /[A-Za-z -.,]/;
 
-export default class ProfilePage extends React.Component {
+class ProfilePage extends React.Component {
   constructor (props, context) {
     super (props, context);
     this.state = context.store.getState ().user;
@@ -19,7 +19,7 @@ export default class ProfilePage extends React.Component {
     event.preventDefault ();
     this.context.store.dispatch (updateProfile (this.state.name, this.state.city, this.state.state))
     .then (() => {
-      this.context.router.push ('/');
+      this.props.router.push ('/');
     })
     .catch (() => {
       this.setState ({error: 'Error saving profile information'});
@@ -70,7 +70,8 @@ export default class ProfilePage extends React.Component {
   }
 }
 
+export default withRouter (ProfilePage);
+
 ProfilePage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

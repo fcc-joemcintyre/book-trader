@@ -25,7 +25,6 @@ export default class RequestsPage extends React.Component {
   render () {
     let itemsRequested = [];
     let itemsPending = [];
-    console.log ('RequestsPage:books', this.state.books);
     let books = this.state.books;
     for (let book of books) {
       if (book.requesterId === this.state.user) {

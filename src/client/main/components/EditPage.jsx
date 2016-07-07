@@ -1,12 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {updateBook} from '../store/actions';
 import {getBook} from '../store/books';
 import FilteredInput from '../../ui/FilteredInput.jsx';
 
 const textChars = /[ -~]/;
 
-export default class EditPage extends React.Component {
+class EditPage extends React.Component {
   constructor (props, context) {
     super (props, context);
     let book = getBook (this.context.store.getState (), this.props.params._id);
@@ -27,7 +27,7 @@ export default class EditPage extends React.Component {
       this.context.store.dispatch (updateBook (this.state._id, this.state.category, this.state.title, this.state.author, this.state.cover))
       .then (success => {
         this.setState ({ error: false });
-        this.context.router.push ('/manage');
+        this.props.router.push ('/manage');
       }).catch (error => {
         this.setState ({ error: true });
       });
@@ -99,7 +99,8 @@ export default class EditPage extends React.Component {
   }
 }
 
+export default withRouter (EditPage);
+
 EditPage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 };

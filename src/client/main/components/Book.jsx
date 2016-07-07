@@ -11,10 +11,8 @@ export default class Book extends React.Component {
   }
 
   render () {
-    console.log ('book', this.props.book);
     let buttonArea;
     if ((this.props.user !== '') && (this.props.book.ownerId !== this.props.user)) {
-      console.log ('>>>', this.props.book.requester, this.props.user);
       if (this.props.book.requesterId === this.props.user) {
         buttonArea =
           <div className='buttonArea'>

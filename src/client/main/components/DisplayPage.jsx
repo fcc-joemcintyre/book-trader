@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import Book from './Book.jsx';
 import {setBooks, createTradeRequest, deleteTradeRequest} from '../store/actions';
 import Masonry from 'react-masonry-component';
@@ -33,7 +32,6 @@ export default class DisplayPage extends React.Component {
     if (this.state.user === '') {
       topMessage = <p>Login to add books and trade with others.</p>
     }
-    console.log (this.props.location);
     let includeBook;
     if (this.props.location.pathname.startsWith ('/books/owner')) {
       includeBook = (book) => {return (book.ownerId === this.props.params.id);}
@@ -76,6 +74,5 @@ export default class DisplayPage extends React.Component {
 }
 
 DisplayPage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

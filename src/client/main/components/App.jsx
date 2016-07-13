@@ -21,7 +21,7 @@ import VerifyLogin from './VerifyLogin.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 
 // initialize store
-const store = configureStore ({});
+const store = configureStore ();
 store.dispatch (verifyLogin ())
 .then (() => {
   store.dispatch (setBooks ())

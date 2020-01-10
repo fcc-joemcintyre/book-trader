@@ -1,183 +1,163 @@
-'use strict';
 const db = require ('./db');
 
-// Initialize listeners (currently empty)
 function init () {
+  // no op
 }
 
-function createBook (req, res) {
-  console.log ('createBook', req.body.category, req.body.title, req.body.author, req.body.cover);
-  let book = {
+async function createBook (req, res) {
+  console.log ('INFO createBook', req.body.category, req.body.title, req.body.author, req.body.cover);
+  const book = {
     ownerId: req.user.id,
     owner: req.user.username,
     category: req.body.category,
     title: req.body.title,
     author: req.body.author,
     cover: req.body.cover,
-    requester: ''
+    requester: '',
   };
-  Promise.resolve ().then (() => {
-    return db.insertBook (book);
-  }).then (() => {
+  try {
+    await db.insertBook (book);
     res.status (200).json (book);
-  }).catch (err => {
-    console.log ('  error', err);
+  } catch (err) {
+    console.log ('ERROR', err);
     res.status (500).json ({});
-  });
+  }
 }
 
-function updateBook (req, res) {
-  console.log ('updateBook', req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
-  Promise.resolve ().then (() => {
-    return db.updateBook (req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
-  }).then (() => {
-    return db.getBook (req.params._id);
-  }).then (book => {
+async function updateBook (req, res) {
+  console.log ('INFO updateBook', req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
+  try {
+    await db.updateBook (req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
+    const book = await db.getBook (req.params._id);
     res.status (200).json (book);
-  }).catch (err => {
+  } catch (err) {
     console.log ('  error', err);
     res.status (500).json ({});
-  });
+  }
 }
 
-function deleteBook (req, res) {
-  console.log ('deleteBook', req.params._id);
-  Promise.resolve ().then (() => {
-    return db.removeBook (req.params._id);
-  }).then (() => {
+async function deleteBook (req, res) {
+  console.log ('INFO deleteBook', req.params._id);
+  try {
+    await db.removeBook (req.params._id);
     res.status (200).json ({});
-  }).catch (err => {
+  } catch (err) {
     console.log ('  error', err);
     res.status (500).json ({});
-  });
+  }
 }
 
-function getBook (req, res) {
-  console.log ('getBook');
-  Promise.resolve ().then (() => {
-    return db.getBook (req.params._id);
-  }).then (book => {
+async function getBook (req, res) {
+  console.log ('INFO getBook');
+  try {
+    const book = await db.getBook (req.params._id);
     if (book === null) {
       res.status (404).json ({});
     } else {
       res.status (200).json (book);
     }
-  }).catch (err => {
+  } catch (err) {
     console.log (err);
     res.status (500).json ({});
-  });
+  }
 }
 
-function getBooks (req, res) {
-  console.log ('getBooks', req.query.id);
-  Promise.resolve ().then (() => {
+async function getBooks (req, res) {
+  console.log ('INFO getBooks', req.query.id);
+  try {
+    let books;
     if ((req.query) && (req.query.id)) {
-      return db.getBooksByOwnerId (req.query.id);
+      books = await db.getBooksByOwnerId (req.query.id);
     } else {
-      return db.getBooks ();
+      books = await db.getBooks ();
     }
-  }).then (books => {
     res.status (200).json (books);
-  }).catch (err => {
+  } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});
-  });
+  }
 }
 
 // get list of books that the authenticated user has requested
-function getRequestedBooks (req, res) {
-  console.log ('getRequestedBooks', req.params);
-  Promise.resolve ().then (() => {
-    return db.getRequestedBooks (req.user.id);
-  }).then (books => {
+async function getRequestedBooks (req, res) {
+  console.log ('INFO getRequestedBooks', req.params);
+  try {
+    const books = await db.getRequestedBooks (req.user.id);
     res.status (200).json (books);
-  }).catch (err => {
+  } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});
-  });
+  }
 }
 
 // add the authenticated user to list of book trade requesters for a book
-function createTradeRequest (req, res) {
-  console.log ('createTradeRequest', req.params, req.user.id);
-  let _id = req.params._id;
-  Promise.resolve ().then (() => {
-    return db.getBook (_id);
-  }).then (book => {
+async function createTradeRequest (req, res) {
+  console.log ('INFO createTradeRequest', req.params, req.user.id);
+  const _id = req.params._id;
+  try {
+    const book = await db.getBook (_id);
     if (book === null) {
-      return res.status (404).json ({});
+      res.status (404).json ({});
+      return;
     }
     // limit to one requester and book owner cannot add self as requester
     if (book.ownerId === req.user.id) {
-      return res.status (400).json ({});
+      res.status (400).json ({});
+      return;
     }
     if (book.requesterId) {
       if (book.requesterId === req.user.id) {
-        res.status (200).json ();
+        res.status (200).json ({});
       } else {
-        return res.status (400).json ({});
+        res.status (400).json ({});
       }
+      return;
     }
-    Promise.resolve ().then (() => {
-      return db.setRequester (_id, req.user.id, req.user.username);
-    }).then (() => {
-      res.status (200).json ();
-    });
-  }).catch ((err) => {
+    await db.setRequester (_id, req.user.id, req.user.username);
+    res.status (200).json ();
+  } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});
-  });
+  }
 }
 
 // remove the authenticated user from list of book trade requesters for a book
-function deleteTradeRequest (req, res) {
-  console.log ('deleteTradeRequest', req.params, req.user.id);
-  let _id = req.params._id;
-  Promise.resolve ().then (() => {
-    return db.getBook (_id);
-  }).then (book => {
+async function deleteTradeRequest (req, res) {
+  console.log ('INFO deleteTradeRequest', req.params, req.user.id);
+  const _id = req.params._id;
+  try {
+    const book = await db.getBook (_id);
     if (book === null) {
       res.status (404).json ({});
     } else {
-      Promise.resolve ().then (() => {
-        return db.setRequester (_id, '', '');
-      }).then (() => {
-        res.status (200).json ();
-      });
+      await db.setRequester (_id, '', '');
+      res.status (200).json ();
     }
-  }).catch ((err) => {
+  } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});
-  });
+  }
 }
 
 // trade book, changing owner and removing requester
-function executeTradeRequest (req, res) {
-  console.log ('executeTradeRequest', req.user.id);
-  let _id = req.params._id;
-  Promise.resolve ().then (() => {
-    return db.getBook (_id);
-  }).then (book => {
+async function executeTradeRequest (req, res) {
+  console.log ('INFO executeTradeRequest', req.user.id);
+  const _id = req.params._id;
+  try {
+    const book = db.getBook (_id);
     if (book === null) {
       res.status (404).json ({});
     } else if (book.ownerId !== req.user.id) {
       res.status (400).json ({});
     } else {
-      Promise.resolve ().then (() => {
-        return db.trade (_id);
-      }).then (() => {
-        return db.getBook (_id);
-      }).then ((book2) => {
-        res.status (200).json (book2);
-      }).catch ((err) => {
-        console.log ('  err', err);
-        res.status (500).json ({});
-      });
+      await db.trade (_id);
+      const book2 = await db.getBook (_id);
+      res.status (200).json (book2);
     }
-  }).catch ((err) => {
+  } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});
-  });
+  }
 }
 
 exports.init = init;

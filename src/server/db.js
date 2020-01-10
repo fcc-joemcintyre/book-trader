@@ -1,108 +1,83 @@
-'use strict';
-const mongoClient = require ('mongodb').MongoClient;
+const MongoClient = require ('mongodb').MongoClient;
 const ObjectId = require ('mongodb').ObjectId;
 const hash = require ('./hash');
 
+let client = null;
 let db = null;
 let users = null;
 let books = null;
 
 // connect to database and set up collections
-function init (uri) {
-  console.log ('db.init');
-  return new Promise ((resolve, reject) => {
-    if (db === null) {
-      mongoClient.connect (uri, (err, instance) => {
-        if (err) {
-          console.log ('init err:', err);
-          return reject (err);
-        }
-        db = instance;
-        Promise.resolve ().then (() => {
-          users = db.collection ('users');
-          return users.ensureIndex ({id: 1}, {unique: true});
-        }).then (() => {
-          books = db.collection ('books');
-          return books.ensureIndex ({ownerId: 1}, {unique: false});
-        }).then (() => {
-          return books.ensureIndex ({requesterId: 1}, {unique: false});
-        }).then (() => {
-          resolve ();
-        }).catch (err => {
-          reject (err);
-        });
-      });
-    } else {
-      resolve ();
-    }
-  });
+async function init (uri) {
+  console.log ('INFO db.init');
+  if (client) { return db; }
+
+  try {
+    // eslint-disable-next-line require-atomic-updates
+    client = await MongoClient.connect (uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    db = client.db ();
+    users = db.collection ('users');
+    books = db.collection ('books');
+  } catch (err) {
+    console.log ('ERROR db.init', err);
+    throw err;
+  }
+
+  return db;
 }
 
 // Close database and null out references
-function close () {
-  return new Promise ((resolve, reject) => {
-    if (db) {
+async function close () {
+  if (client) {
+    try {
       users = null;
       books = null;
-      Promise.resolve ().then (() => {
-        return db.close ();
-      }).then (() => {
-        db = null;
-        resolve ();
-      }).catch (() => {
-        db = null;
-        resolve ();
-      });
-    } else {
-      resolve ();
+      await client.close ();
+    } finally {
+      // eslint-disable-next-line require-atomic-updates
+      client = null;
+      db = null;
     }
-  });
+  }
 }
 
-// Find single user by id
-function findUser (id) {
-  return users.findOne ({id: id});
+// Find single user by user name
+function findUserByUsername (username) {
+  return users.findOne ({ username });
 }
 
-// Insert single user with base data. Additional information through profile.
-function insertLocalUser (username, password) {
-  return new Promise ((resolve, reject) => {
-    Promise.resolve ().then (() => {
-      return findUser ('l-' + username);
-    }).then (result => {
-      if (result !== null) {
-        return reject (new Error ('User already exists'));
-      }
-      let userHash = hash.create (password);
-      let user = {
-        id: 'l-' + username,
-        username: username,
-        name: '',
-        city: '',
-        state: '',
-        hash: userHash.hash,
-        salt: userHash.salt
-      };
-      return users.insert (user, {w:1});
-    }).then (result => {
-      resolve (result);
-    }).catch (err => {
-      reject (err);
-    });
-  });
+// Insert single user with username, password only populated. Suitable for
+// register user type functions.
+async function insertUser (username, password) {
+  const existing = await findUserByUsername (username);
+  if (existing) {
+    throw new Error ('User already exists');
+  }
+  const userHash = hash.create (password);
+  const user = {
+    username,
+    name: '',
+    city: '',
+    state: '',
+    hash: userHash.hash,
+    salt: userHash.salt,
+    theme: 'base',
+  };
+  const result = await users.insertOne (user, { w: 1 });
+  return result;
 }
 
-// update user
-function updateUser (id, name, city, state) {
-  return users.update (
-    { id: id },
-    { $set: { name: name, city: city, state: state} }
+// Update user information (not username or password).
+function updateUser (username, name, city, state, theme) {
+  return users.updateOne (
+    { username },
+    { $set: { name, city, state, theme } },
   );
 }
 
-// remove user
-function removeUser (id) {
-  return users.remove ({ id: id });
+// remove user by username
+function removeUser (username) {
+  return users.deleteOne ({ username });
 }
 
 // get all books
@@ -112,12 +87,12 @@ function getBooks () {
 
 // get books by ownerId
 function getBooksByOwnerId (ownerId) {
-  return books.find ({ownerId: ownerId}).toArray ();
+  return books.find ({ ownerId }).toArray ();
 }
 
 // get requested books
 function getRequestedBooks (requesterId) {
-  return books.find ({requesterId: requesterId}).toArray ();
+  return books.find ({ requesterId }).toArray ();
 }
 
 // get a single book
@@ -127,79 +102,60 @@ function getBook (_id) {
 
 // insert a book
 function insertBook (newBook) {
-  return books.insert (newBook, {w:1});
+  return books.insertOne (newBook, { w: 1 });
 }
 
 // update a book
 function updateBook (_id, category, title, author, cover) {
-  return books.update (
+  return books.updateOne (
     { _id: new ObjectId (_id) },
-    { $set: {
-      category: category,
-      title: title,
-      author: author,
-      cover: cover
-    }}
+    { $set: { category, title, author, cover } },
   );
 }
 
 // remove a book
 function removeBook (_id) {
-  return books.remove ({ _id: new ObjectId (_id) });
+  return books.removeOne ({ _id: new ObjectId (_id) });
 }
 
 // set requester for book
 function setRequester (_id, id, requester) {
-  return books.update (
+  return books.updateOne (
     { _id: new ObjectId (_id) },
-    { $set: { requesterId: id, requester: requester } }
+    { $set: { requesterId: id, requester } }
   );
 }
 
 // get trade requester
-function getRequester (_id) {
-  return new Promise ((resolve, reject) => {
-    Promise.resolve ().then (() => {
-      return books.findOne ({_id: new ObjectId (_id)});
-    }).then (book => {
-      if (book) {
-        resolve ({requesterId: book.requesterId, requester : book.requester});
-      } else {
-        resolve ({requesterId: '', requester : ''});
-      }
-    }).catch (err => {
-      reject (err);
-    });
-  });
+async function getRequester (_id) {
+  const book = await books.findOne ({ _id: new ObjectId (_id) });
+  if (book) {
+    return ({ requesterId: book.requesterId, requester: book.requester });
+  } else {
+    return ({ requesterId: '', requester: '' });
+  }
 }
 
 // trade book
-function trade (_id) {
-  return new Promise ((resolve, reject) => {
-    Promise.resolve ().then (() => {
-      return books.findOne ({ _id: new ObjectId (_id) });
-    }).then (book => {
-      return books.update (
-        { _id: new ObjectId (_id) },
-        {$set: {
-          ownerId: book.requesterId,
-          owner: book.requester,
-          requesterId: '',
-          requester: ''
-        }}
-      );
-    }).then (() => {
-      resolve ();
-    }).catch (err => {
-      reject (err);
-    });
-  });
+async function trade (_id) {
+  const book = await books.findOne ({ _id: new ObjectId (_id) });
+  if (book) {
+    await books.update (
+      { _id: new ObjectId (_id) },
+      { $set: {
+        ownerId: book.requesterId,
+        owner: book.requester,
+        requesterId: '',
+        requester: '',
+      } }
+    );
+  }
 }
 
 exports.init = init;
 exports.close = close;
-exports.findUser = findUser;
-exports.insertLocalUser = insertLocalUser;
+exports.findUserByUsername = findUserByUsername;
+exports.insertUser = insertUser;
 exports.updateUser = updateUser;
 exports.removeUser = removeUser;
 exports.getBooks = getBooks;

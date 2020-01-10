@@ -1,0 +1,12 @@
+{
+  "extends": "@cygns",
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "func-names": "off",
+    "no-console": "off",
+    "prefer-arrow-callback": "off",
+    "no-unused-expressions": "off"
+  }
+}

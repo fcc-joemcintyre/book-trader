@@ -1,4 +1,3 @@
-'use strict';
 const crypto = require ('crypto');
 
 /**
@@ -8,13 +7,13 @@ const crypto = require ('crypto');
  */
 
 function create (password) {
-  let salt = crypto.randomBytes (16).toString ('hex');
-  let hash = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
-  return { salt: salt, hash: hash };
+  const salt = crypto.randomBytes (16).toString ('hex');
+  const hash = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
+  return { salt, hash };
 }
 
 function compare (password, hash, salt) {
-  let key = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
+  const key = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
   return hash === key;
 }
 

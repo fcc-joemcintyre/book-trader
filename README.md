@@ -10,12 +10,12 @@ The application can be used at https://booktrader-jm.herokuapp.com
 
 ## Development setup
 
-Clone the *Github* repo, then install the dependencies using *npm*.
+Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/booktrader.git
 cd booktrader
-npm install
+yarn
 ```
 
 The database supported is *MongoDB*. This can be a local or hosted instance (you
@@ -28,17 +28,16 @@ name used by the test runner is *booktraderTest*.
 In a terminal, build can be activated with
 
 ```
-npm run [build | build-stage]
+yarn [build | build-stage]
 ```
 
-The build uses *gulp* to run the set of tasks defined in *gulpfile.js*. The
-build options are,
+The build uses *webpack*. The build options are,
 
 - build: regular build
 - build-stage: build application ready to be deployed to Heroku or similar
 
-*build* is a continuous build option - the gulp build will
-set up watches and rerun build elements as file changes are saved.
+*build* is a continuous build option - the build will set up watches and rerun build
+elements as file changes are saved.
 *build-stage* is a one time build option, run again to build a new stage output.
 
 ## Testing
@@ -46,23 +45,22 @@ set up watches and rerun build elements as file changes are saved.
 Testing can be done for all components,
 
 ```
-npm test
+yarn test
 ```
 
 Or components individually,
 
 ```
-npm run test-db
-npm run test-server
+yarn test-db
+yarn test-server
 ```
 
 ### Server
 
-In a terminal, continuous server operation, updating on changes,
-can be activated with
+In a terminal, continuous server operation, updating on changes, can be activated with
 
 ```
-npm start
+yarn start
 ```
 
 The *nodemon* utility provides restart on update.

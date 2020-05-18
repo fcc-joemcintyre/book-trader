@@ -1,9 +1,9 @@
 /* eslint-env jest */
 // @ts-check
-const {
+import {
   inDate, inInteger, inIntegerArray, outBoolean, outDate, outDateISO, outDateString, outInteger,
   outIntegerArray, outString, outStringArray, outTrim, outTrimArray,
-} = require ('./formatters');
+} from './formatters.js';
 
 test ('outString no leading or trailing spaces', () => {
   expect (outString ('test string')).toEqual ('test string');

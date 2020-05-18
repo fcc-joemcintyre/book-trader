@@ -136,13 +136,11 @@ function validate (field, fields, validators) {
  * @return {string | null} Error string, or null if no error
  */
 function validateField (field) {
-  const hasContent = (typeof field.value === 'string' && (field.value.trim () !== '')) ||
-    (Array.isArray (field.value) && field.value.length !== 0) ||
-    (typeof field.value === 'number' && !Number.isNaN (field.value));
-  if ((field.required === false) && (hasContent === false)) {
+  const content = hasContent (field.value);
+  if (!field.required && !content) {
     return null;
   }
-  if (field.required && (hasContent === false)) {
+  if (field.required && !content) {
     return 'required';
   }
 
@@ -155,4 +153,21 @@ function validateField (field) {
     }
   }
   return error;
+}
+
+/**
+ * Does field have any content
+ * @param {Object} value Value to check
+ * @returns {boolean} true if it has content, false if not. Default true for unknown types.
+ */
+function hasContent (value) {
+  if (typeof value === 'string') {
+    return value.trim () !== '';
+  } else if (Array.isArray (value)) {
+    return value.length !== 0;
+  } else if (typeof value === 'number') {
+    return !Number.isNaN (value);
+  } else {
+    return Boolean (value);
+  }
 }

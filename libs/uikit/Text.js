@@ -8,9 +8,9 @@ export const Text = styled.div`
   ${FontSize}
   ${({ c, bg, tc, tbg, m, mt, mb, ml, mr, p, pt, pb, pl, pr, minh, cursor, truncate, theme }) => `
     ${c ? `color: ${c};` : ''}
-    ${tc && theme.colors[tc] ? `color: ${theme.colors[tc]}` : ''}
+    ${tc && theme.colors[tc] ? `color: ${theme.colors[tc]};` : ''}
     ${bg ? `background-color: ${bg};` : ''}
-    ${tbg && theme.colors[tbg] ? `background-color: ${theme.colors[tbg]}` : ''}
+    ${tbg && theme.colors[tbg] ? `background-color: ${theme.colors[tbg]};` : ''}
     ${m ? `margin: ${m};` : ''}
     ${mt ? `margin-top: ${mt};` : ''}
     ${mb ? `margin-bottom: ${mb};` : ''}

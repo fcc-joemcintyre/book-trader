@@ -9,11 +9,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ajv": "6.10.2",
+    "ajv": "6.12.2",
     "cookie-session": "1.4.0",
     "express": "4.17.1",
-    "helmet": "3.21.2",
-    "mongodb": "3.4.1",
+    "helmet": "3.22.0",
+    "mongodb": "3.5.7",
     "passport": "0.4.1",
     "passport-local": "1.0.0"
   },
@@ -21,7 +21,7 @@
     "start": "node dist/main.js --port=3000"
   },
   "engines": {
-    "node": "12.14.0",
-    "yarn": "1.21.1"
+    "node": "14.2.0",
+    "yarn": "1.22.4"
   }
 }

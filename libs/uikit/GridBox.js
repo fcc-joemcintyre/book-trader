@@ -4,7 +4,7 @@ import { Box } from './Box';
 
 export const GridBox = styled (Box)`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-gap: ${({ gap }) => gap};
 `;
 

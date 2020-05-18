@@ -50,10 +50,14 @@ export function inDate (value = '') {
 
 /**
  * Convert input date string to Date object.
- * @param {string} value Input date (mm/dd/yyyy)
- * @return {Date} Date object, or '' if no valid date provided
+ * @param {string | Date} value Input date (mm/dd/yyyy) or Date object
+ * @return {Date} Date object, or null if no valid date provided
  */
 function parseDate (value) {
+  if (Object.prototype.toString.call (value) === '[object Date]') {
+    const date = new Date (value);
+    return (!Number.isNaN (date.getTime ()) ? date : null);
+  }
   if (typeof value === 'string') {
     const parts = value.split (/\D/);
     if (parts.length === 3) {

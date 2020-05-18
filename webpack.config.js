@@ -35,7 +35,10 @@ module.exports = (env) => {
       },
     },
     entry: {
-      app: './src/client/components/App/index.js',
+      app: {
+        import: './src/client/components/App/index.js',
+        dependOn: 'vendor',
+      },
       vendor: ['prop-types', 'react', 'react-dom', 'react-redux', 'react-router', 'react-router-dom', 'redux',
         'redux-thunk', 'styled-components'],
     },
@@ -68,14 +71,18 @@ module.exports = (env) => {
     },
     plugins: [
       new CompressionPlugin ({
-        test: /\.js$/,
+        test: /.bundle.js$/,
       }),
-      new CopyPlugin ([
-        { context: 'src/server', from: `${baseSrc}/src/server/**/*`, to: `${baseDest}/dist/` },
-        { from: `${baseSrc}/src/client/index.html`, to: `${baseDest}/dist/public/` },
-        { from: `${baseSrc}/src/client/favicon.ico`, to: `${baseDest}/dist/public/` },
-        ...stageFiles,
-      ]),
+      new CopyPlugin (
+        {
+          patterns: [
+            { context: 'src/server', from: `${baseSrc}/src/server/**/*`, to: `${baseDest}/dist/` },
+            { from: `${baseSrc}/src/client/index.html`, to: `${baseDest}/dist/public/` },
+            { from: `${baseSrc}/src/client/favicon.ico`, to: `${baseDest}/dist/public/` },
+            ...stageFiles,
+          ],
+        },
+      ),
     ],
   };
 };

@@ -7,9 +7,9 @@ export const MenuItem = styled.div`
   text-decoration: none;
   ${({ theme }) => `
     color: ${theme.colors.navText};
-    background-color: ${theme.colors.navColor}
+    background-color: ${theme.colors.navColor};
     &:hover {
-      color: ${theme.colors.navHoverText}
+      color: ${theme.colors.navHoverText};
       background-color: ${theme.colors.navHoverColor};
     }
     &.active {

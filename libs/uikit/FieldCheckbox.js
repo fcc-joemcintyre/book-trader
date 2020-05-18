@@ -13,9 +13,6 @@ const StyledCheckbox = styled.div`
   border: 1px solid transparent;
 `;
 
-/**
-  Checkbox field
-*/
 export const FieldCheckbox = (
   { field, label, span, row, info, errors, showInfo, showErrors, onChange, onValidate, ...rest }
 ) => (
@@ -48,30 +45,20 @@ export const FieldCheckbox = (
 );
 
 FieldCheckbox.propTypes = {
-  /** field */
   field: PropTypes.shape ({
     name: PropTypes.string,
     value: PropTypes.oneOfType ([PropTypes.string, PropTypes.bool]),
     required: PropTypes.bool,
     error: PropTypes.string,
   }).isRequired,
-  /** label */
   label: PropTypes.string,
-  /** span (1 to 12) */
   span: PropTypes.number,
-  /** place element on new row */
   row: PropTypes.bool,
-  /** info text to show */
   info: PropTypes.string,
-  /** list of errors { name: text } */
   errors: PropTypes.shape ({}),
-  /** show info flag */
   showInfo: PropTypes.bool,
-  /** show errors flag */
   showErrors: PropTypes.bool,
-  /** callback for onChange events */
   onChange: PropTypes.func.isRequired,
-  /** callback to validated called on onBlur event */
   onValidate: PropTypes.func,
 };
 

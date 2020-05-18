@@ -33,23 +33,23 @@ export function reducer (state, action) {
     case 'set':
       return action.data;
 
-    case 'addfield':
-      return ({ ...state, [action.field.name]: action.field });
-
-    case 'removefield': {
-      let newState = state;
-      if (action.field) {
-        newState = {};
-        for (const n of Object.keys (state)) {
-          if (n !== action.field) {
-            newState[n] = state[n];
+      case 'addfield':
+        return ({ ...state, [action.field.name]: action.field });
+  
+      case 'removefield': {
+        let newState = state;
+        if (action.field) {
+          newState = {};
+          for (const n of Object.keys (state)) {
+            if (n !== action.field) {
+              newState[n] = state[n];
+            }
           }
         }
+        return newState;
       }
-      return newState;
-    }
-
-    default:
+  
+      default:
       return state;
   }
 }

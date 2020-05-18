@@ -1,35 +1,20 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box } from './Box';
 
-const sizes = {
-  small: `
-    font-size: 12px;
-    padding: 2px 4px;
-  `,
-  normal: `
-    font-size: 16px;
-    padding: 4px 8px;
-  `,
-  large: `
-    font-size: 16px;
-    padding: 6px 12px;
-  `,
-  wide: `
-    width: 100%;
-    font-size: 16px;
-    padding: 6px 12px;
-  `,
-};
-
-const ButtonStyle = styled (Box)`
+export const Button = styled (Box)`
   border-radius: 4px;
   cursor: pointer;
   text-transform: uppercase;
-  ${({ s }) => sizes[s] || sizes.normal}
-  ${({ theme, type }) => (type === 'submit' ? theme.variant.buttonSubmit : theme.variant.buttonDefault)}
-  ${({ c, bg, bc, hc, hbg, hbc, dc, dbg, dbc }) => (`
+  ${({ theme, v, type }) => {
+    let base = v && theme.variant[v];
+    if (!base) {
+      base = type === 'submit' ? theme.variant.buttonSubmit : theme.variant.buttonDefault;
+    }
+    return base;
+  }}
+  ${({ theme, s, c, bg, bc, hc, hbg, hbc, dc, dbg, dbc }) => (`
+    ${(s && theme.buttonSize[s]) || theme.buttonSize.normal}
     ${c && `color: ${c};`}
     ${bg && `background-color: ${bg};`}
     ${bc && `border-color: ${bc};`}
@@ -46,42 +31,33 @@ const ButtonStyle = styled (Box)`
       ${dbc && `border-color: ${dbc};`}
     }
   `)}
+
+  ${({ s }) => (s === 'wide') && `
+    width: 100%;
+  `};
 `;
 
-/**
-  Button, using theme variants for submit and button types. Supports all Box
-  properties, plus Button specific properties.
-*/
-export const Button = props => (
-  <ButtonStyle {...props} />
-);
-
 Button.propTypes = {
-  ...Box.propTypes,
-  /** render as, default button */
   as: PropTypes.oneOfType ([PropTypes.string, PropTypes.node]),
-  /** size (small, normal, large, wide) */
+  v: PropTypes.string,
   s: PropTypes.string,
-  /** border-color */
+  c: PropTypes.string,
+  bg: PropTypes.string,
   bc: PropTypes.string,
-  /** hover color */
   hc: PropTypes.string,
-  /** hover background-color */
   hbg: PropTypes.string,
-  /** hover border-color */
   hbc: PropTypes.string,
-  /** disabled color */
   dc: PropTypes.string,
-  /** disabled background-color */
   dbg: PropTypes.string,
-  /** disabled border-color */
   dbc: PropTypes.string,
 };
 
 Button.defaultProps = {
-  ...Box.defaultProps,
   as: 'button',
+  v: null,
   s: 'normal',
+  c: null,
+  bg: null,
   bc: null,
   hc: null,
   hbg: null,

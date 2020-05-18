@@ -91,10 +91,9 @@ authentication and sessions are essential to the applications function.
 
 ## Technology Selections
 
-The server is implemented with Node.js and uses ES2015+ Javascript. Data is stored
-in MongoDB (4.x).
+The server is implemented with Node.js and uses ES2015+ Javascript. Data is stored in MongoDB (4.x).
 
 The client interface is implemented with React 16.x using ES2015+ Javascript
-as supported by Babel. React-redux, react-router and styled-components are also used.
+as supported by Babel. React Redux, React Router and Styled Components are also used.
 
 Webpack is uses for build.

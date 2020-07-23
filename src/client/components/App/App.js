@@ -36,7 +36,7 @@ const AppBase = ({ themeName, authenticated, dispatch }) => {
         setMessage ('Network error, try again.');
       }
     }) ();
-  }, []);
+  }, [dispatch]);
 
   const theme = getTheme (themeName);
   if (loading) {

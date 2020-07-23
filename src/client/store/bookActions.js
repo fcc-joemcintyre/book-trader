@@ -60,7 +60,7 @@ export function deleteBook (_id) {
 // create trade request
 export function createTradeRequest (book) {
   return async (dispatch, getState) => {
-    const user = getState ().user;
+    const { user } = getState ();
     const res = await post (`/api/books/${book.id}/request`);
     if (res.ok) {
       dispatch ({ type: SET_BOOK_REQUESTER, book, requesterId: user.id, requester: user.username });

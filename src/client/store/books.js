@@ -11,12 +11,13 @@ export default function books (state = initialState, action) {
       return [...state, action.book];
 
     case UPDATE_BOOK:
-      return state.map (a => (a._id === action.book._id ? action.book : a));
+      return state.map ((a) => (a._id === action.book._id ? action.book : a));
 
     case SET_BOOK_REQUESTER:
       return state.map ((book) => {
         if (book._id === action.book._id) {
-          return Object.assign (book, {
+          return ({
+            ...book,
             requesterId: action.requesterId,
             requester: action.requester,
           });
@@ -30,5 +31,5 @@ export default function books (state = initialState, action) {
 }
 
 export function getBook (state, _id) {
-  return state.books.find (a => a._id === _id);
+  return state.books.find ((a) => a._id === _id);
 }

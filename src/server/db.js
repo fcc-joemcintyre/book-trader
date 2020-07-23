@@ -1,5 +1,4 @@
-const MongoClient = require ('mongodb').MongoClient;
-const ObjectId = require ('mongodb').ObjectId;
+const { MongoClient, ObjectId } = require ('mongodb');
 const hash = require ('./hash');
 
 let client = null;

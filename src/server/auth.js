@@ -1,5 +1,5 @@
 const passport = require ('passport');
-const Strategy = require ('passport-local').Strategy;
+const { Strategy } = require ('passport-local');
 const db = require ('./db');
 const hash = require ('./hash');
 

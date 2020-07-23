@@ -6,8 +6,8 @@ import { Header } from '../Header';
 
 export const RequestPage = () => {
   const dispatch = useDispatch ();
-  const books = useSelector (state => state.books);
-  const user = useSelector (state => state.user.id);
+  const books = useSelector ((state) => state.books);
+  const user = useSelector ((state) => state.user.id);
 
   const itemsRequested = [];
   const itemsPending = [];
@@ -61,8 +61,9 @@ export const RequestPage = () => {
       <Header />
       <Box p='0 8px 20px 8px'>
         <Text as='h2'>Your Requests</Text>
-        {itemsRequested.length === 0 ?
-          <p>No outstanding requests.</p> :
+        {itemsRequested.length === 0 ? (
+          <p>No outstanding requests.</p>
+        ) : (
           <table>
             <thead>
               <tr>
@@ -76,12 +77,13 @@ export const RequestPage = () => {
               {itemsRequested}
             </tbody>
           </table>
-        }
+        )}
 
         <Divider />
         <Text as='h2'>Trade Requests</Text>
-        {itemsPending.length === 0 ?
-          <p>No pending requests.</p> :
+        {itemsPending.length === 0 ? (
+          <p>No pending requests.</p>
+        ) : (
           <table>
             <thead>
               <tr>
@@ -95,7 +97,7 @@ export const RequestPage = () => {
               {itemsPending}
             </tbody>
           </table>
-        }
+        )}
       </Box>
     </>
   );

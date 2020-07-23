@@ -9,8 +9,8 @@ import { EditBook } from './EditBook';
 
 export const ManagePage = () => {
   const dispatch = useDispatch ();
-  const books = useSelector (state => state.books);
-  const user = useSelector (state => state.user.id);
+  const books = useSelector ((state) => state.books);
+  const user = useSelector ((state) => state.user.id);
   const [mb, setMB] = useState (null);
   const [dialog, setDialog] = useState (null);
 
@@ -70,14 +70,14 @@ export const ManagePage = () => {
           {items}
         </Masonry>
       </Box>
-      {mb &&
+      { mb && (
         <MessageBox
           actions={mb.actions}
           closeAction={mb.closeAction}
           content={mb.content}
           onClose={() => setMB (null)}
         />
-      }
+      )}
       {dialog}
     </>
   );

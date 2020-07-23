@@ -93,7 +93,7 @@ async function getRequestedBooks (req, res) {
 // add the authenticated user to list of book trade requesters for a book
 async function createTradeRequest (req, res) {
   console.log ('INFO createTradeRequest', req.params, req.user.id);
-  const _id = req.params._id;
+  const { _id } = req.params;
   try {
     const book = await db.getBook (_id);
     if (book === null) {
@@ -124,7 +124,7 @@ async function createTradeRequest (req, res) {
 // remove the authenticated user from list of book trade requesters for a book
 async function deleteTradeRequest (req, res) {
   console.log ('INFO deleteTradeRequest', req.params, req.user.id);
-  const _id = req.params._id;
+  const { _id } = req.params;
   try {
     const book = await db.getBook (_id);
     if (book === null) {
@@ -142,7 +142,7 @@ async function deleteTradeRequest (req, res) {
 // trade book, changing owner and removing requester
 async function executeTradeRequest (req, res) {
   console.log ('INFO executeTradeRequest', req.user.id);
-  const _id = req.params._id;
+  const { _id } = req.params;
   try {
     const book = db.getBook (_id);
     if (book === null) {

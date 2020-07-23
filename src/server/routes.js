@@ -27,7 +27,8 @@ function init (app) {
 // authenticate, if passing continue, otherwise return 401 (auth failure)
 function isAuthenticated (req, res, next) {
   if (req.isAuthenticated ()) {
-    return next ();
+    next ();
+    return;
   }
   res.status (401).json ({});
 }

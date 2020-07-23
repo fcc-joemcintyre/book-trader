@@ -1,5 +1,5 @@
 /* eslint object-property-newline: off */
-const expect = require ('chai').expect;
+const { expect } = require ('chai');
 const db = require ('../src/server/db');
 
 const dataBooks = [

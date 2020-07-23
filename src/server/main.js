@@ -1,4 +1,4 @@
-const processCommand = require ('./cmd').processCommand;
+const { processCommand } = require ('./cmd');
 const server = require ('./server');
 
 if (require.main === module) {

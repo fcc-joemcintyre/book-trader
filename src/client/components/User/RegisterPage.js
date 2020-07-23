@@ -77,14 +77,14 @@ export const RegisterPage = ({ onClose }) => {
         onSubmit={onSubmit}
         onCancel={onClose}
       />
-      { mb &&
+      { mb && (
         <MessageBox
           actions={mb.actions}
           closeAction={mb.closeAction}
           content={mb.content}
           onClose={onCloseModal}
         />
-      }
+      )}
     </Fragment>
   );
 };

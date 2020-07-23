@@ -45,14 +45,14 @@ const ProfilePageBase = ({ dispatch, iName, iEmail, iTheme }) => {
         onValidate={onValidate}
         onSubmit={onSubmit}
       />
-      { mb &&
+      { mb && (
         <MessageBox
           actions={mb.actions}
           closeAction={mb.closeAction}
           content={mb.content}
           onClose={onCloseModal}
         />
-      }
+      )}
     </Fragment>
   );
 };

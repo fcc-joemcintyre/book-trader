@@ -10,12 +10,11 @@ import { Book } from './Book';
 
 export const HomePage = () => {
   const dispatch = useDispatch ();
-  const user = useSelector (state => state.user);
-  const books = useSelector (state => state.books);
+  const user = useSelector ((state) => state.user);
+  const books = useSelector ((state) => state.books);
   const location = useLocation ();
   const values = queryString.parse (location.search);
-  const owner = values.owner;
-  const category = values.category;
+  const { owner, category } = values;
 
   let topMessage;
   if (!user.authenticated) {

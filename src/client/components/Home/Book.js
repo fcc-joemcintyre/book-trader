@@ -9,7 +9,7 @@ import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions'
 export const Book = ({ book }) => {
   const [cover, setCover] = useState (book.cover);
   const dispatch = useDispatch ();
-  const username = useSelector (state => state.user.username);
+  const username = useSelector ((state) => state.user.username);
 
   let buttonArea;
   if ((username !== '') && (book.ownerId !== username)) {

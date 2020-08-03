@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import Masonry from 'react-masonry-component';
+import styled from 'styled-components';
 import queryString from 'query-string';
 import { Box, Text } from 'uikit';
 import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
@@ -48,11 +48,28 @@ export const HomePage = () => {
       <Box pt='10px' pb='10px'>
         { topMessage }
         <Box p='2px'>
-          <Masonry elementType='div'>
+          <Grid>
             {items}
-          </Masonry>
+          </Grid>
         </Box>
       </Box>
     </>
   );
 };
+
+const Grid = styled.div`
+  display: grid;
+  grid-gap: 8px;
+
+  @media (max-width: 599px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) and (max-width: 899px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+`;

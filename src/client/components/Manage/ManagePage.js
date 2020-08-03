@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Masonry from 'react-masonry-component';
+import styled from 'styled-components';
 import { Box, Button, MessageBox, Text } from 'uikit';
 import { saveBook, deleteBook } from '../../store/bookActions';
 import { Header } from '../Header';
@@ -66,9 +66,9 @@ export const ManagePage = () => {
             Add Book
           </Button>
         </Box>
-        <Masonry elementType='div'>
+        <Grid>
           {items}
-        </Masonry>
+        </Grid>
       </Box>
       { mb && (
         <MessageBox
@@ -82,3 +82,20 @@ export const ManagePage = () => {
     </>
   );
 };
+
+const Grid = styled.div`
+  display: grid;
+  grid-gap: 8px;
+
+  @media (max-width: 599px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) and (max-width: 899px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+`;

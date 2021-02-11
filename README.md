@@ -10,12 +10,19 @@ The application can be used at https://booktrader-jm.herokuapp.com
 
 ## Development setup
 
+*Note*: This project uses NPM workspaces, which requires NPM 7.x. To install
+this version of NPM, use,
+
+```
+npm i -g npm
+```
+
 Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/booktrader.git
 cd booktrader
-yarn
+npm i
 ```
 
 The database supported is *MongoDB*. This can be a local or hosted instance (you
@@ -23,49 +30,59 @@ can also choose to use a local instance for dev/test and a hosted instance for
 deployment). The database name for the application is *booktrader*. The database
 name used by the test runner is *booktraderTest*.
 
-### Build
+### Build (Development)
 
-In a terminal, build can be activated with
+Development build is separated into server and client build steps, each running
+continuously. Each runs in its own terminal to provide easy monitoring for build
+issues.
+
+In a terminal, run the server build
 
 ```
-yarn [build | build-stage]
+npm run dev:server
 ```
 
-The build uses *webpack*. The build options are,
+In a second terminal, run the client build
 
-- build: regular build
-- build-stage: build application ready to be deployed to Heroku or similar
+```
+npm run dev:server
+```
 
-*build* is a continuous build option - the build will set up watches and rerun build
-elements as file changes are saved.
-*build-stage* is a one time build option, run again to build a new stage output.
+## Build (Production)
+
+A single build command for production is provided that runs both server and
+client production builds as a single discrete build.
+
+```
+npm run build
+```
 
 ## Testing
 
-Testing can be done for all components,
+Testing can be run for both server and client,
 
 ```
-yarn test
+npm test
 ```
 
-Or components individually,
+Or client and server individually,
 
 ```
-yarn test-db
-yarn test-server
+npm run test:server
+npm run test:client
 ```
 
-### Server
+### Server Runtime
 
 In a terminal, continuous server operation, updating on changes, can be activated with
 
 ```
-yarn start
+npm dev:start
 ```
 
 The *nodemon* utility provides restart on update.
 
-### Client
+### Client Runtime
 
 After starting a server instance, open a browser and then access the
 application at http://localhost:3000
@@ -73,7 +90,7 @@ application at http://localhost:3000
 ## Deployment
 
 The build process creates the *dist* directory containing all the deployment
-files (in the project directory or in the staging directory).
+files. A Procfile is also provided for Heroku deployment.
 
 The entry point for the server is *main.js*.
 The port number for the server can be passed on the command (-p/--port) or using

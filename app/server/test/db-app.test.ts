@@ -1,5 +1,5 @@
-/* eslint object-property-newline: off */
 import chai from 'chai';
+import { Db, ObjectId } from 'mongodb';
 import * as db from '../src/db.js';
 
 const { expect } = chai;
@@ -14,15 +14,17 @@ const dataBooks = [
 ];
 
 describe ('books', () => {
-  let id1;
+  let id1: ObjectId;
 
   beforeEach (async () => {
-    const t = await db.init ('mongodb://localhost:27018/booktradertest');
+    const t = await db.init ('mongodb://localhost:27018/booktradertest') as Db;
     const books = t.collection ('books');
-    await books.deleteMany ();
+    await books.deleteMany ({});
     await books.insertMany (dataBooks);
     const a = await books.findOne ({ title: 'T1' });
-    id1 = a._id;
+    if (a) {
+      id1 = a._id;
+    }
     await db.close ();
 
     await db.init ('mongodb://localhost:27018/booktradertest');
@@ -55,8 +57,15 @@ describe ('books', () => {
 
   describe ('add new book', () => {
     it ('should have inserted count 1', async () => {
-      const result = await db.insertBook ({ creator: 'l-newuser', username: 'newuser', category: '', title: '',
-        author: '', cover: '', requesters: [] });
+      const result = await db.insertBook ({
+        creator: 'l-newuser',
+        username: 'newuser',
+        category: '',
+        title: '',
+        author: '',
+        cover: '',
+        requesters: [],
+      });
       expect (result.acknowledged).to.equal (true);
     });
   });

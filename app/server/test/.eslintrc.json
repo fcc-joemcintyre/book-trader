@@ -5,6 +5,7 @@
   },
   "rules": {
     "func-names": "off",
+    "import/no-extraneous-dependencies": "off",
     "no-console": "off",
     "prefer-arrow-callback": "off",
     "no-unused-expressions": "off"

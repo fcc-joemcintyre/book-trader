@@ -1,6 +1,7 @@
 {
   "extends": "@cygns/eslint-config-node",
   "rules": {
+    "jsdoc/require-jsdoc": "off",
     "no-console": "off"
   }
 }

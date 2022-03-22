@@ -17,7 +17,7 @@ describe ('books', () => {
   let id1;
 
   beforeEach (async () => {
-    const t = await db.init ('mongodb://localhost:27018/test');
+    const t = await db.init ('mongodb://localhost:27018/booktradertest');
     const books = t.collection ('books');
     await books.deleteMany ();
     await books.insertMany (dataBooks);
@@ -25,7 +25,7 @@ describe ('books', () => {
     id1 = a._id;
     await db.close ();
 
-    await db.init ('mongodb://localhost:27018/test');
+    await db.init ('mongodb://localhost:27018/booktradertest');
   });
 
   afterEach (async () => {
@@ -57,7 +57,7 @@ describe ('books', () => {
     it ('should have inserted count 1', async () => {
       const result = await db.insertBook ({ creator: 'l-newuser', username: 'newuser', category: '', title: '',
         author: '', cover: '', requesters: [] });
-      expect (result.insertedCount).to.equal (1);
+      expect (result.acknowledged).to.equal (true);
     });
   });
 

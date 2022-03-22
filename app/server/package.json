@@ -11,12 +11,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ajv": "6.12.6",
-    "cookie-session": "1.4.0",
-    "express": "4.17.1",
-    "helmet": "4.2.0",
-    "mongodb": "3.6.2",
-    "passport": "0.4.1",
+    "ajv": "8.10.0",
+    "cookie-session": "2.0.0",
+    "express": "4.17.3",
+    "helmet": "5.0.2",
+    "mongodb": "4.4.1",
+    "passport": "0.5.2",
     "passport-local": "1.0.0"
   },
   "scripts": {
@@ -26,16 +26,11 @@
     "lint": "eslint src/*.js && eslint test/**"
   },
   "devDependencies": {
-    "@cygns/eslint-config-node": "5.1.0",
-    "chai": "4.2.0",
-    "cross-env": "7.0.2",
-    "eslint": "7.12.1",
-    "eslint-plugin-import": "2.22.1",
-    "fetch-cookie": "0.11.0",
-    "mocha": "8.2.1",
-    "nock": "13.0.4",
-    "node-fetch": "2.6.1",
-    "nodemon": "2.0.15",
-    "nyc": "15.1.0"
+    "@cygns/eslint-config-node": "6.0.0",
+    "chai": "4.3.6",
+    "eslint": "7.25.0",
+    "eslint-plugin-import": "2.25.4",
+    "mocha": "9.2.2",
+    "nodemon": "2.0.15"
   }
 }

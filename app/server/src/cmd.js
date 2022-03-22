@@ -1,7 +1,7 @@
 /**
  * Parse a string to an integer, returning null if not an integer
- * @param {String} value String to convert
- * @returns {Number} Converted number, or null
+ * @param {string} value String to convert
+ * @returns {number} Converted number, or null
  */
 function getInteger (value) {
   const result = Number (value);
@@ -11,7 +11,7 @@ function getInteger (value) {
 /**
  * Valid command options
  *  [-p | --port] port to listen on, default 3000
- * @param {[String]} args Array of arguments
+ * @param {[string]} args Array of arguments
  * @returns {Object} code:{Integer}, exit:{Boolean}, port:{Integer}
  */
 /* eslint max-statements: off */

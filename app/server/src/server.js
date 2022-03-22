@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieSession from 'cookie-session';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 import fs from 'fs';
 import http from 'http';
 import path from 'path';
@@ -41,7 +41,9 @@ export async function start (port, dbLocation) {
     }
 
     // Express security best practices
-    // app.use (helmet ());
+    app.use (helmet ({
+      contentSecurityPolicy: false,
+    }));
 
     // set up HTTP parsers and session manager
     app.use (express.json ());

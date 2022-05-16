@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from 'uikit';
 import { createField, useFields } from 'use-fields';
@@ -11,14 +12,14 @@ export const EditBook = ({ book, onSave, onCancel }) => {
   ];
   const { fields, getValues, onChange, onValidate, validateAll } = useFields (initial);
 
-  function onSaveBook () {
+  const onSaveBook = useCallback (() => {
     const errors = validateAll ();
     if (!errors) {
       const { title, category, author, cover } = getValues ();
       onSave ({ _id: book ? book._id : '', title, category, author, cover });
     }
     return errors;
-  }
+  }, [book, getValues, onSave, validateAll]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Box, Button, MessageBox, Text } from 'uikit';
@@ -14,21 +14,7 @@ export const ManagePage = () => {
   const [mb, setMB] = useState (null);
   const [dialog, setDialog] = useState (null);
 
-  function onAdd () {
-    onEdit (null);
-  }
-
-  function onEdit (book) {
-    setDialog (
-      <EditBook
-        book={book}
-        onSave={onSave}
-        onCancel={() => setDialog (null)}
-      />
-    );
-  }
-
-  async function onSave (book) {
+  const onSave = useCallback (async (book) => {
     setMB ({ content: 'Saving book' });
     try {
       await dispatch (saveBook (book));
@@ -37,7 +23,21 @@ export const ManagePage = () => {
       setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error saving book' });
     }
     setDialog (null);
-  }
+  }, [dispatch, setMB]);
+
+  const onEdit = useCallback ((book) => {
+    setDialog (
+      <EditBook
+        book={book}
+        onSave={onSave}
+        onCancel={() => setDialog (null)}
+      />
+    );
+  }, [onSave, setDialog]);
+
+  const onAdd = useCallback (() => {
+    onEdit (null);
+  }, [onEdit]);
 
   const items = [];
   for (const book of books) {

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -40,7 +40,7 @@ export const RegisterPage = ({ onClose }) => {
   const history = useHistory ();
   const dispatch = useDispatch ();
 
-  async function onSubmit (e) {
+  const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
     const errors = validateAll ();
     if (!errors) {
@@ -62,11 +62,11 @@ export const RegisterPage = ({ onClose }) => {
       }
     }
     return errors;
-  }
+  }, [dispatch, getValues, history, onClose, setMB, validateAll]);
 
-  function onCloseModal () {
+  const onCloseModal = useCallback (() => {
     setMB (null);
-  }
+  }, [setMB]);
 
   return (
     <Fragment>

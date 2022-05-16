@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -17,18 +17,18 @@ const NavBase = ({ menu, authenticated }) => {
   const [dialog, setDialog] = useState (null);
   const [innerWidth, setInnerWidth] = useState (window.innerWidth);
 
+  const onResize = useCallback (() => {
+    setInnerWidth (window.innerWidth);
+  }, [setInnerWidth]);
+
   useEffect (() => {
     window.addEventListener ('resize', onResize);
     return (() => window.removeEventListener ('resize', onResize));
-  }, []);
+  }, [onResize]);
 
-  function onResize () {
-    setInnerWidth (window.innerWidth);
-  }
-
-  function onClose () {
+  const onClose = useCallback (() => {
     setDialog (null);
-  }
+  }, [setDialog]);
 
   const menus = (innerWidth < 420) ? (
     <StyledMenuDropdown m='10px 8px 0 4px' spacer={8}>

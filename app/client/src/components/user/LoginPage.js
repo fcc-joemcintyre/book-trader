@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createField, useFields } from 'use-fields';
@@ -16,7 +16,7 @@ const LoginPageBase = ({ onClose, dispatch }) => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [mb, setMB] = useState (null);
 
-  async function onSubmit (e) {
+  const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
 
     const errors = validateAll ();
@@ -31,11 +31,11 @@ const LoginPageBase = ({ onClose, dispatch }) => {
       }
     }
     return errors;
-  }
+  }, [dispatch, getValues, onClose, setMB, validateAll]);
 
-  function onCloseModal () {
+  const onCloseModal = useCallback (() => {
     setMB (null);
-  }
+  }, [setMB]);
 
   return (
     <Fragment>

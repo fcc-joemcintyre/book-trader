@@ -12,7 +12,7 @@ function getInteger (value) {
  * Valid command options
  *  [-p | --port] port to listen on, default 3000
  * @param {[string]} args Array of arguments
- * @returns {Object} code:{Integer}, exit:{Boolean}, port:{Integer}
+ * @returns {object} code:{Integer}, exit:{Boolean}, port:{Integer}
  */
 /* eslint max-statements: off */
 export function processCommand (args) {

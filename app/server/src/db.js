@@ -13,8 +13,9 @@ export async function init (uri) {
   if (client) { return db; }
 
   try {
+    const options = {};
     // eslint-disable-next-line require-atomic-updates
-    client = await MongoClient.connect (uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    client = await MongoClient.connect (uri, options);
     db = client.db ();
     users = db.collection ('users');
     books = db.collection ('books');

@@ -20,8 +20,9 @@
     "passport-local": "1.0.0"
   },
   "scripts": {
+    "build": "npm run build:copy && tsc",
+    "build:copy": "mkdir -p ../../dist/public && mkdir -p ../../dist/schema && cp -r public/* ../../dist/public && cp -r src/schema/* ../../dist/schema",
     "dev": "nodemon -e js,html --exec 'npm run build' ",
-    "build": "mkdir -p ../../dist/public && cp -r src/* ../../dist && cp -r public/* ../../dist/public",
     "test": "mocha test/**/*",
     "lint": "eslint src/*.js && eslint test/**"
   },

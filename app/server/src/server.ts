@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cookieSession from 'cookie-session';
 import helmet from 'helmet';
 import fs from 'fs';
@@ -10,14 +10,14 @@ import * as routes from './routes.js';
 import * as db from './db.js';
 
 // server instance
-let server;
+let server: http.Server | undefined;
 
 // the secret for the session, should be set in an environment variable
 // some random text used as a placeholder for dev
 const sessionSecret = process.env.SESSION_SECRET || 'randomtext_aseroja';
 
 // ensure HTTPS is used for all interactions
-const httpsOnly = (req, res, next) => {
+const httpsOnly = (req: Request, res: Response, next: NextFunction): void => {
   if (req.headers['x-forwarded-proto'] &&
     req.headers['x-forwarded-proto'] !== 'https') {
     res.redirect (['https://', req.hostname, req.url].join (''));
@@ -26,8 +26,13 @@ const httpsOnly = (req, res, next) => {
   }
 };
 
-// Start the server.
-export async function start (port, dbLocation) {
+/**
+ * Start the server
+ * @param port HTTP port number
+ * @param dbLocation URL to database
+ * @returns Promise with no data
+ */
+export async function startServer (port: number, dbLocation: string): Promise<void> {
   try {
     console.log ('INFO Starting server');
     await db.init (dbLocation);
@@ -84,31 +89,40 @@ export async function start (port, dbLocation) {
     app.use ('/api/*', (req, res) => {
       res.status (404).json ({});
     });
+
     // for all other routes, let client react-router handle them
     app.get ('*', (req, res) => {
       res.sendFile (path.join (process.cwd (), 'public/index.html'));
     });
 
     server = http.createServer (app);
-    server.listen (port, () => {
-      console.log (`INFO Server listening on port ${port}`);
-    });
+    await listenAsync (server, port);
+    console.log (`INFO Server listening on port ${port}`);
   } catch (err) {
     console.log ('ERROR Server startup', err);
     process.exit (1);
   }
 }
 
-export function stop () {
+/**
+ * Stop the server
+ * @returns Promise with no data
+ */
+export async function stopServer (): Promise<void> {
   if (server) {
-    return new Promise ((resolve) => {
-      server.close (() => {
-        db.close ()
-          .then (() => { resolve (); })
-          .catch (() => { resolve (); });
-      });
-    });
-  } else {
-    return Promise.resolve ();
+    await server.close ();
+    await db.close ();
   }
+}
+
+/**
+ * Async / await support for http.Server.listen
+ * @param s http.Server instance
+ * @param port port number
+ * @returns Promise to await server.listen on
+ */
+function listenAsync (s: http.Server, port: number) {
+  return new Promise ((resolve) => {
+    s.listen (port, () => { resolve (true); });
+  });
 }

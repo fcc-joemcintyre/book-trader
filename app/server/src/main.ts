@@ -1,5 +1,5 @@
 import { processCommand } from './cmd.js';
-import { start } from './server.js';
+import { startServer } from './server.js';
 
 main ();
 
@@ -10,7 +10,7 @@ function main () {
     process.exit (command.code);
   }
 
-  const port = process.env.PORT || command.port;
+  const port = Number (process.env.PORT) || command.port;
   const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/booktrader';
-  start (port, uri);
+  startServer (port, uri);
 }

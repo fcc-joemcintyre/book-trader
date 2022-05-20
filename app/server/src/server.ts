@@ -5,9 +5,9 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 import passport from 'passport';
-import * as auth from './auth.js';
+import * as auth from './auth/auth.js';
 import * as routes from './routes.js';
-import * as db from './db.js';
+import * as db from './db/db.js';
 
 // server instance
 let server: http.Server | undefined;

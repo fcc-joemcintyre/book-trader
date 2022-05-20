@@ -1,5 +1,5 @@
 import mongodb from 'mongodb';
-import * as hash from './hash.js';
+import * as hash from '../auth/hash.js';
 
 const { MongoClient, ObjectId } = mongodb;
 let client = null;

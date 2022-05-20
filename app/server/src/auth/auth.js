@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-import { findUserByUsername } from './db.js';
+import { findUserByUsername } from '../db/db.js';
 import { compare } from './hash.js';
 
 // Initialize authentication module, with serializer and desericalizer

@@ -1,6 +1,6 @@
 import { expect } from 'earljs';
 import { Db, ObjectId } from 'mongodb';
-import * as db from '../src/db.js';
+import * as db from '../src/db/db.js';
 
 const dataBooks = [
   { ownerId: 'l-amy', owner: 'amy', category: 'C1', title: 'T1', author: 'A1', cover: 'http://example.com/image1.png', requesterId: '', requester: '' },

@@ -1,8 +1,12 @@
+import { Application, NextFunction, Request, Response } from 'express';
 import * as listenerUser from './listener/listenerUser.js';
 import * as listenerApp from './listener/listenerApp.js';
 
-// Initialize routes.
-export function init (app) {
+/**
+ * Initialize routes.
+ * @param app Express app object
+ */
+export function init (app: Application) {
   listenerUser.init ();
   listenerApp.init ();
 
@@ -24,8 +28,13 @@ export function init (app) {
   app.get ('/api/requests', isAuthenticated, listenerApp.getRequestedBooks);
 }
 
-// authenticate, if passing continue, otherwise return 401 (auth failure)
-function isAuthenticated (req, res, next) {
+/**
+ * Authenticate, if passing continue, otherwise return 401 (auth failure)
+ * @param req Request
+ * @param res Response
+ * @param next Next middleware
+ */
+function isAuthenticated (req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated ()) {
     next ();
     return;

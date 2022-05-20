@@ -24,7 +24,7 @@
     "build:copy": "mkdir -p ../../dist/public && mkdir -p ../../dist/schema && cp -r public/* ../../dist/public && cp -r src/schema/* ../../dist/schema",
     "dev": "nodemon --watch public --watch src/schema --exec 'npm run build:copy' & tsc -w",
     "test": "mocha test/**/*",
-    "lint": "eslint src/*.js && eslint test/**"
+    "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern ."
   },
   "devDependencies": {
     "@cygns/eslint-config-node": "6.1.0",

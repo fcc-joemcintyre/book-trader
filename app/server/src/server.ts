@@ -6,8 +6,8 @@ import http from 'http';
 import path from 'path';
 import passport from 'passport';
 import * as auth from './auth/auth.js';
+import { closeDatabase, initDatabase } from './db/index.js';
 import * as routes from './routes.js';
-import * as db from './db/db.js';
 
 // server instance
 let server: http.Server | undefined;
@@ -35,7 +35,7 @@ const httpsOnly = (req: Request, res: Response, next: NextFunction): void => {
 export async function startServer (port: number, dbLocation: string): Promise<void> {
   try {
     console.log ('INFO Starting server');
-    await db.init (dbLocation);
+    await initDatabase (dbLocation);
 
     // set up static HTML serving
     const app = express ();
@@ -111,7 +111,7 @@ export async function startServer (port: number, dbLocation: string): Promise<vo
 export async function stopServer (): Promise<void> {
   if (server) {
     await server.close ();
-    await db.close ();
+    await closeDatabase ();
   }
 }
 

@@ -15,7 +15,7 @@ describe ('books', () => {
   let id1: ObjectId;
 
   beforeEach (async () => {
-    const t = await db.init ('mongodb://localhost:27018/booktradertest') as Db;
+    const t = await db.initDatabase ('mongodb://localhost:27018/booktradertest') as Db;
     const books = t.collection ('books');
     await books.deleteMany ({});
     await books.insertMany (dataBooks);
@@ -23,13 +23,13 @@ describe ('books', () => {
     if (a) {
       id1 = a._id;
     }
-    await db.close ();
+    await db.closeDatabase ();
 
-    await db.init ('mongodb://localhost:27018/booktradertest');
+    await db.initDatabase ('mongodb://localhost:27018/booktradertest');
   });
 
   afterEach (async () => {
-    await db.close ();
+    await db.closeDatabase ();
   });
 
   describe ('query existing books', () => {

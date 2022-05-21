@@ -2,38 +2,52 @@ import { MongoClient } from 'mongodb';
 import { initBooks } from './books.js';
 import { initUsers } from './users.js';
 
-let client = null;
-let db = null;
+// connection status to share connection
+let status = 0;
+let client;
+let db;
 
-// connect to database and set up collections
-export async function init (uri) {
-  console.log ('INFO db.init');
-  if (client) { return db; }
+/**
+ * Connect to database and set up collections
+ * @param uri Database connection string
+ * @returns Database instance
+ */
+export async function initDatabase (uri) {
+  console.log ('INFO initDatabase');
+  // existing connection
+  if (status === 2) {
+    return db;
+  }
+  // connection being set up already
+  if (status === 1) {
+    return null;
+  }
+  status = 1; // setting up connection
 
   try {
     const options = {};
-    // eslint-disable-next-line require-atomic-updates
     client = await MongoClient.connect (uri, options);
     db = client.db ();
-    initUsers (db);
     initBooks (db);
+    initUsers (db);
   } catch (err) {
-    console.log ('ERROR db.init', err);
+    status = 0; // eslint-disable-line require-atomic-updates
+    console.log ('ERROR initDatabase', err);
     throw err;
   }
 
+  status = 2; // eslint-disable-line require-atomic-updates
   return db;
 }
 
-// Close database and null out references
-export async function close () {
+/**
+ * Close database and null out references
+ * @returns Promise with no data
+ */
+export async function closeDatabase () {
+  console.log ('INFO closeDatabase');
   if (client) {
-    try {
-      await client.close ();
-    } finally {
-      // eslint-disable-next-line require-atomic-updates
-      client = null;
-      db = null;
-    }
+    await client.close ();
   }
+  status = 0;
 }

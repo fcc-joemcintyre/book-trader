@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Ajv from 'ajv';
 import passport from 'passport';
-import * as db from '../db/db.js';
+import * as db from '../db/index.js';
 
 // object holding validator instance and pre-compiled schemas
 const validator = {};

@@ -1,4 +1,4 @@
-import * as db from '../db/db.js';
+import * as db from '../db/index.js';
 
 export function init () {
   // no op

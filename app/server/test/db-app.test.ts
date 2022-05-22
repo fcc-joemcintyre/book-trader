@@ -1,5 +1,5 @@
 import { expect } from 'earljs';
-import { Db, ObjectId } from 'mongodb';
+import { Db } from 'mongodb';
 import * as db from '../src/db/index.js';
 
 const dataBooks = [
@@ -12,7 +12,7 @@ const dataBooks = [
 ];
 
 describe ('books', () => {
-  let id1: ObjectId;
+  let id1: string;
 
   beforeEach (async () => {
     const t = await db.initDatabase ('mongodb://localhost:27018/booktradertest') as Db;
@@ -21,7 +21,7 @@ describe ('books', () => {
     await books.insertMany (dataBooks);
     const a = await books.findOne ({ title: 'T1' });
     if (a) {
-      id1 = a._id;
+      id1 = a._id.toString ();
     }
     await db.closeDatabase ();
 
@@ -56,13 +56,13 @@ describe ('books', () => {
   describe ('add new book', () => {
     it ('should have inserted count 1', async () => {
       const result = await db.insertBook ({
-        creator: 'l-newuser',
-        username: 'newuser',
+        ownerId: 'newuser',
         category: '',
         title: '',
         author: '',
         cover: '',
-        requesters: [],
+        requesterId: '',
+        requester: '',
       });
       expect (result.acknowledged).toEqual (true);
     });

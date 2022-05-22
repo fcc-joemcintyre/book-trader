@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { findUserByUsername } from '../db/index.js';
-import { compare } from './hash.js';
+import { compareHash } from './hash.js';
 
 // Initialize authentication module, with serializer and desericalizer
 export function init () {
@@ -12,7 +12,7 @@ export function init () {
       if (!user) {
         return callback (null, false);
       }
-      const passwordMatch = compare (password, user.hash, user.salt);
+      const passwordMatch = compareHash (password, user.hash, user.salt);
       return callback (null, (passwordMatch) ? user : false);
     } catch (err) {
       return callback (err);

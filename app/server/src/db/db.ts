@@ -1,18 +1,18 @@
-import { MongoClient } from 'mongodb';
+import { Db, MongoClient } from 'mongodb';
 import { initBooks } from './books.js';
 import { initUsers } from './users.js';
 
 // connection status to share connection
 let status = 0;
-let client;
-let db;
+let client: MongoClient;
+let db: Db;
 
 /**
  * Connect to database and set up collections
  * @param uri Database connection string
  * @returns Database instance
  */
-export async function initDatabase (uri) {
+export async function initDatabase (uri: string): Promise<Db | null> {
   console.log ('INFO initDatabase');
   // existing connection
   if (status === 2) {

@@ -6,13 +6,13 @@ import crypto from 'crypto';
  *  - salt length of 128 bits, SHA-512 algorithm, 512 bit keylen
  */
 
-export function create (password) {
+export function createHash (password) {
   const salt = crypto.randomBytes (16).toString ('hex');
   const hash = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
   return { salt, hash };
 }
 
-export function compare (password, hash, salt) {
+export function compareHash (password, hash, salt) {
   const key = crypto.pbkdf2Sync (password, salt, 2000, 64, 'sha512').toString ('hex');
   return hash === key;
 }

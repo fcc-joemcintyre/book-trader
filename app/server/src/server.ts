@@ -5,7 +5,7 @@ import fs from 'fs';
 import http from 'http';
 import path from 'path';
 import passport from 'passport';
-import * as auth from './auth/auth.js';
+import { initAuth } from './auth/auth.js';
 import { closeDatabase, initDatabase } from './db/index.js';
 import * as routes from './routes.js';
 
@@ -59,7 +59,7 @@ export async function startServer (port: number, dbLocation: string): Promise<vo
     }));
 
     // set up passport authentication, attach to express session manager
-    auth.init ();
+    initAuth ();
     app.use (passport.initialize ());
     app.use (passport.session ());
 

@@ -1,31 +1,29 @@
 import { Application, NextFunction, Request, Response } from 'express';
-import * as listenerUser from './listener/listenerUser.js';
-import * as listenerApp from './listener/listenerApp.js';
+import { getProfile, login, logout, register, updateProfile, verifyLogin } from './listener/user.js';
+import { createBook, createTradeRequest, deleteBook, deleteTradeRequest, executeTradeRequest, getBook,
+  getBooks, getRequestedBooks, updateBook } from './listener/app.js';
 
 /**
  * Initialize routes.
  * @param app Express app object
  */
-export function init (app: Application) {
-  listenerUser.init ();
-  listenerApp.init ();
+export function initRoutes (app: Application) {
+  app.post ('/api/login', login);
+  app.post ('/api/logout', logout);
+  app.get ('/api/verifylogin', verifyLogin);
+  app.post ('/api/register', register);
+  app.get ('/api/profile', isAuthenticated, getProfile);
+  app.post ('/api/profile', isAuthenticated, updateProfile);
 
-  app.post ('/api/login', listenerUser.login);
-  app.post ('/api/logout', listenerUser.logout);
-  app.get ('/api/verifylogin', listenerUser.verifyLogin);
-  app.post ('/api/register', listenerUser.register);
-  app.get ('/api/profile', isAuthenticated, listenerUser.getProfile);
-  app.post ('/api/profile', isAuthenticated, listenerUser.updateProfile);
-
-  app.get ('/api/books/:_id', listenerApp.getBook);
-  app.get ('/api/books', listenerApp.getBooks);
-  app.post ('/api/books', isAuthenticated, listenerApp.createBook);
-  app.post ('/api/books/:_id/request', isAuthenticated, listenerApp.createTradeRequest);
-  app.delete ('/api/books/:_id/request', isAuthenticated, listenerApp.deleteTradeRequest);
-  app.post ('/api/books/:_id/trade', isAuthenticated, listenerApp.executeTradeRequest);
-  app.post ('/api/books/:_id', isAuthenticated, listenerApp.updateBook);
-  app.delete ('/api/books/:_id', isAuthenticated, listenerApp.deleteBook);
-  app.get ('/api/requests', isAuthenticated, listenerApp.getRequestedBooks);
+  app.get ('/api/books/:_id', getBook);
+  app.get ('/api/books', getBooks);
+  app.post ('/api/books', isAuthenticated, createBook);
+  app.post ('/api/books/:_id/request', isAuthenticated, createTradeRequest);
+  app.delete ('/api/books/:_id/request', isAuthenticated, deleteTradeRequest);
+  app.post ('/api/books/:_id/trade', isAuthenticated, executeTradeRequest);
+  app.post ('/api/books/:_id', isAuthenticated, updateBook);
+  app.delete ('/api/books/:_id', isAuthenticated, deleteBook);
+  app.get ('/api/requests', isAuthenticated, getRequestedBooks);
 }
 
 /**

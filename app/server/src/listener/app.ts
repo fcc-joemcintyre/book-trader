@@ -1,18 +1,17 @@
+import { Request, Response } from 'express';
 import * as db from '../db/index.js';
 
-export function init () {
-  // no op
-}
-
-export async function createBook (req, res) {
+export async function createBook (req: Request, res: Response) {
   console.log ('INFO createBook', req.body.category, req.body.title, req.body.author, req.body.cover);
+  const user = req.user as db.User;
   const book = {
-    ownerId: req.user.id,
-    owner: req.user.username,
+    ownerId: user.username,
+    owner: user.username,
     category: req.body.category,
     title: req.body.title,
     author: req.body.author,
     cover: req.body.cover,
+    requesterId: '',
     requester: '',
   };
   try {
@@ -24,7 +23,7 @@ export async function createBook (req, res) {
   }
 }
 
-export async function updateBook (req, res) {
+export async function updateBook (req: Request, res: Response) {
   console.log ('INFO updateBook', req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
   try {
     await db.updateBook (req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
@@ -36,7 +35,7 @@ export async function updateBook (req, res) {
   }
 }
 
-export async function deleteBook (req, res) {
+export async function deleteBook (req: Request, res: Response) {
   console.log ('INFO deleteBook', req.params._id);
   try {
     await db.removeBook (req.params._id);
@@ -47,7 +46,7 @@ export async function deleteBook (req, res) {
   }
 }
 
-export async function getBook (req, res) {
+export async function getBook (req: Request, res: Response) {
   console.log ('INFO getBook');
   try {
     const book = await db.getBook (req.params._id);
@@ -62,11 +61,11 @@ export async function getBook (req, res) {
   }
 }
 
-export async function getBooks (req, res) {
+export async function getBooks (req: Request, res: Response) {
   console.log ('INFO getBooks', req.query.id);
   try {
     let books;
-    if ((req.query) && (req.query.id)) {
+    if (req.query && req.query.id && typeof req.query.id === 'string') {
       books = await db.getBooksByOwnerId (req.query.id);
     } else {
       books = await db.getBooks ();
@@ -79,10 +78,11 @@ export async function getBooks (req, res) {
 }
 
 // get list of books that the authenticated user has requested
-export async function getRequestedBooks (req, res) {
+export async function getRequestedBooks (req: Request, res: Response) {
   console.log ('INFO getRequestedBooks', req.params);
   try {
-    const books = await db.getRequestedBooks (req.user.id);
+    const user = req.user as db.User;
+    const books = await db.getRequestedBooks (user.username);
     res.status (200).json (books);
   } catch (err) {
     console.log ('  err', err);
@@ -91,8 +91,8 @@ export async function getRequestedBooks (req, res) {
 }
 
 // add the authenticated user to list of book trade requesters for a book
-export async function createTradeRequest (req, res) {
-  console.log ('INFO createTradeRequest', req.params, req.user.id);
+export async function createTradeRequest (req: Request, res: Response) {
+  console.log ('INFO createTradeRequest');
   const { _id } = req.params;
   try {
     const book = await db.getBook (_id);
@@ -101,19 +101,20 @@ export async function createTradeRequest (req, res) {
       return;
     }
     // limit to one requester and book owner cannot add self as requester
-    if (book.ownerId === req.user.id) {
+    const user = req.user as db.User;
+    if (book.ownerId === user.username) {
       res.status (400).json ({});
       return;
     }
     if (book.requesterId) {
-      if (book.requesterId === req.user.id) {
+      if (book.requesterId === user.username) {
         res.status (200).json ({});
       } else {
         res.status (400).json ({});
       }
       return;
     }
-    await db.setRequester (_id, req.user.id, req.user.username);
+    await db.setRequester (_id, user.username, user.username);
     res.status (200).json ();
   } catch (err) {
     console.log ('  err', err);
@@ -122,8 +123,8 @@ export async function createTradeRequest (req, res) {
 }
 
 // remove the authenticated user from list of book trade requesters for a book
-export async function deleteTradeRequest (req, res) {
-  console.log ('INFO deleteTradeRequest', req.params, req.user.id);
+export async function deleteTradeRequest (req: Request, res: Response) {
+  console.log ('INFO deleteTradeRequest', req.params);
   const { _id } = req.params;
   try {
     const book = await db.getBook (_id);
@@ -140,14 +141,15 @@ export async function deleteTradeRequest (req, res) {
 }
 
 // trade book, changing owner and removing requester
-export async function executeTradeRequest (req, res) {
-  console.log ('INFO executeTradeRequest', req.user.id);
+export async function executeTradeRequest (req: Request, res: Response) {
+  console.log ('INFO executeTradeRequest');
   const { _id } = req.params;
+  const user = req.user as db.User;
   try {
-    const book = db.getBook (_id);
+    const book = await db.getBook (_id);
     if (book === null) {
       res.status (404).json ({});
-    } else if (book.ownerId !== req.user.id) {
+    } else if (book.ownerId !== user.username) {
       res.status (400).json ({});
     } else {
       await db.trade (_id);

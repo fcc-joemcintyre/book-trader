@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { initDatabase, closeDatabase } from './db.js';
 import { getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
-  insertBook, removeBook, setRequester, updateBook } from './books.js';
+  insertBook, removeBook, setRequester, trade, updateBook } from './books.js';
 import { findUserByUsername, insertUser, removeUser, updateUser } from './users.js';
 
 export type Book = {
@@ -28,6 +28,6 @@ export type User = {
 export {
   initDatabase, closeDatabase,
   getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
-  insertBook, removeBook, setRequester, updateBook,
+  insertBook, removeBook, setRequester, trade, updateBook,
   findUserByUsername, insertUser, removeUser, updateUser,
 };

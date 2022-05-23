@@ -7,7 +7,7 @@ import path from 'path';
 import passport from 'passport';
 import { initAuth } from './auth/auth.js';
 import { closeDatabase, initDatabase } from './db/index.js';
-import * as routes from './routes.js';
+import { initRoutes } from './routes.js';
 
 // server instance
 let server: http.Server | undefined;
@@ -64,7 +64,7 @@ export async function startServer (port: number, dbLocation: string): Promise<vo
     app.use (passport.session ());
 
     // create server with HTML and REST routes
-    routes.init (app);
+    initRoutes (app);
 
     app.get ('*.js', (req, res) => {
       const file = path.join (process.cwd (), `public${req.path}.gz`);

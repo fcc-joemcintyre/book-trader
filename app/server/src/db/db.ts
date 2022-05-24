@@ -1,5 +1,6 @@
 import { Db, MongoClient } from 'mongodb';
 import { initBooks } from './books.js';
+import { initCounters } from './counters.js';
 import { initUsers } from './users.js';
 
 // connection status to share connection
@@ -28,6 +29,7 @@ export async function initDatabase (uri: string): Promise<Db | null> {
     const options = {};
     client = await MongoClient.connect (uri, options);
     db = client.db ();
+    initCounters (db);
     initBooks (db);
     initUsers (db);
   } catch (err) {

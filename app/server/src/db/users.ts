@@ -1,6 +1,7 @@
-import { Collection, Db } from 'mongodb';
+import { Collection, Db, MongoServerError } from 'mongodb';
 import { createHash } from '../auth/hash.js';
-import { User } from './index.js';
+import { User, UserResult } from './index.js';
+import { getNextSequence } from './counters.js';
 
 let c: Collection<User>;
 
@@ -8,8 +9,9 @@ let c: Collection<User>;
  * Initialize collection
  * @param db MongoDB db instance object
  */
-export function initUsers (db: Db): void {
+export async function initUsers (db: Db): Promise<void> {
   c = db.collection ('users');
+  await c.createIndex ({ key: 1 }, { unique: true, name: 'key' });
 }
 
 /**
@@ -17,8 +19,12 @@ export function initUsers (db: Db): void {
  * @param username User name
  * @returns Db result
  */
-export function findUserByUsername (username: string) {
-  return c.findOne ({ username });
+export async function findUserByUsername (username: string): Promise<UserResult> {
+  const t = await c.findOne ({ username });
+  return ({
+    status: t ? 200 : 404,
+    user: t || undefined,
+  });
 }
 
 /**
@@ -27,46 +33,69 @@ export function findUserByUsername (username: string) {
  * @param password Password
  * @returns Db result
  */
-export async function insertUser (username: string, password: string) {
-  const existing = await findUserByUsername (username);
-  if (existing) {
-    throw new Error ('User already exists');
+export async function insertUser (username: string, password: string): Promise<UserResult> {
+  const key = await getNextSequence ('users');
+  if (!key) {
+    return ({ status: 500 });
   }
-  const userHash = createHash (password);
-  const user = {
-    username,
-    name: '',
-    city: '',
-    state: '',
-    hash: userHash.hash,
-    salt: userHash.salt,
-    theme: 'base',
-  };
-  const result = await c.insertOne (user);
-  return result;
+
+  try {
+    const { hash, salt } = createHash (password);
+    const t = await c.insertOne (
+      { key, username, name: '', city: '', state: '', hash, salt, theme: 'light ' }
+    );
+    if (t.acknowledged) {
+      const t2 = await c.findOne ({ key });
+      return ({
+        status: t2 ? 200 : 404,
+        user: t2 || undefined,
+      });
+    } else {
+      return ({ status: 400 });
+    }
+  } catch (err) {
+    if (err instanceof MongoServerError) {
+      if (err.code === 11000) {
+        return ({ status: 409 });
+      }
+    }
+    return ({ status: 500 });
+  }
 }
 
 /**
  * Update user, not including auth fields
- * @param username User name
+ * @param key User key
  * @param name Name
  * @param city City
  * @param state State
  * @param theme Theme
  * @returns Db result
  */
-export function updateUser (username: string, name: string, city: string, state: string, theme: string) {
-  return c.updateOne (
-    { username },
+export async function updateUser (
+  key: number, name: string, city: string, state: string, theme: string
+): Promise<UserResult> {
+  const t = await c.findOneAndUpdate (
+    { key },
     { $set: { name, city, state, theme } },
+    { returnDocument: 'after' },
   );
+  return ({
+    status: t.value ? 200 : 404,
+    user: t.value || undefined,
+  });
 }
 
 /**
  * Delete user
- * @param username User name
+ * @param key User key
  * @returns Db result
  */
-export function removeUser (username: string) {
-  return c.deleteOne ({ username });
+export async function removeUser (key: number): Promise<UserResult> {
+  try {
+    await c.deleteOne ({ key });
+    return ({ status: 200 });
+  } catch (err) {
+    return ({ status: 400 });
+  }
 }

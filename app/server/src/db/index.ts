@@ -16,6 +16,7 @@ export type Book = {
 };
 
 export type User = {
+  key: number,
   username: string,
   name: string,
   city: string,
@@ -23,6 +24,11 @@ export type User = {
   hash: string,
   salt: string,
   theme: string,
+};
+
+export type UserResult = {
+  status: number,
+  user?: User,
 };
 
 export {

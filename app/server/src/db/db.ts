@@ -31,7 +31,7 @@ export async function initDatabase (uri: string): Promise<Db | null> {
     db = client.db ();
     initCounters (db);
     initBooks (db);
-    initUsers (db);
+    await initUsers (db);
   } catch (err) {
     status = 0; // eslint-disable-line require-atomic-updates
     console.log ('ERROR initDatabase', err);

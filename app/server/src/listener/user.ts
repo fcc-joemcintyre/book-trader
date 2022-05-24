@@ -79,13 +79,13 @@ export async function register (req: Request, res: Response) {
     console.log ('ERROR register (400) invalid body', validateRegister.errors);
     res.status (400).json ({});
   } else {
-    try {
-      await db.insertUser (req.body.username, req.body.password);
+    const t = await db.insertUser (req.body.username, req.body.password);
+    if (t.status === 200) {
       console.log ('INFO register ok', req.body.username);
       res.status (200).json ({});
-    } catch (err) {
-      console.log ('ERROR register', err);
-      res.status (403).json ({});
+    } else {
+      console.log ('ERROR register', t.status);
+      res.status (t.status).json ({});
     }
   }
 }
@@ -108,14 +108,14 @@ export async function updateProfile (req: Request, res: Response) {
     console.log ('ERROR updateProfile (400) invalid body', validateProfile.errors);
     res.status (400).json ({});
   } else {
-    try {
-      const { name, city, state, theme } = req.body;
-      await db.updateUser (user.username, name, city, state, theme);
+    const { name, city, state, theme } = req.body;
+    const t = await db.updateUser (user.key, name, city, state, theme);
+    if (t.status === 200) {
       console.log ('INFO updateProfile ok');
       res.status (200).json ({});
-    } catch (err) {
-      console.log ('ERROR updateProfile (500)', err);
-      res.status (500).json ({});
+    } else {
+      console.log (`ERROR updateProfile (${t.status})`);
+      res.status (t.status).json ({});
     }
   }
 }

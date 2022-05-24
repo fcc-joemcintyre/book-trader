@@ -8,12 +8,12 @@ export function initAuth (): void {
   // local authentication using database for user registry
   passport.use (new Strategy (async (username, password, callback) => {
     try {
-      const user = await findUserByUsername (username);
-      if (!user) {
+      const t = await findUserByUsername (username);
+      if (!t.user) {
         return callback (null, false);
       }
-      const passwordMatch = compareHash (password, user.hash, user.salt);
-      return callback (null, (passwordMatch) ? user : false);
+      const passwordMatch = compareHash (password, t.user.hash, t.user.salt);
+      return callback (null, (passwordMatch) ? t.user : false);
     } catch (err) {
       return callback (err);
     }

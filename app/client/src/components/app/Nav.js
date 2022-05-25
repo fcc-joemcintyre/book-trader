@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from 'uikit';
 import { LoginPage, RegisterPage } from '../user';
@@ -16,6 +16,7 @@ const StyledMenuDropdown = styled (MenuDropdown)`
 const NavBase = ({ menu, authenticated }) => {
   const [dialog, setDialog] = useState (null);
   const [innerWidth, setInnerWidth] = useState (window.innerWidth);
+  const history = useHistory ();
 
   const onResize = useCallback (() => {
     setInnerWidth (window.innerWidth);
@@ -48,7 +49,6 @@ const NavBase = ({ menu, authenticated }) => {
     </StyledMenuDropdown>
   ) : authenticated ? (
     <MenuBar right>
-      <MenuItem as={NavLink} to='/' exact>Home</MenuItem>
       <MenuItem as={NavLink} to='/requests'>Requests</MenuItem>
       <MenuItem as={NavLink} to='/manage'>Manage</MenuItem>
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
@@ -59,7 +59,6 @@ const NavBase = ({ menu, authenticated }) => {
     </MenuBar>
   ) : (
     <MenuBar right>
-      <MenuItem as={NavLink} to='/' exact>Home</MenuItem>
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
       <MenuItem onClick={() => setDialog (<RegisterPage onClose={onClose} />)}>Register</MenuItem>
       <MenuItem onClick={() => setDialog (<LoginPage onClose={onClose} />)}>Login</MenuItem>
@@ -71,7 +70,7 @@ const NavBase = ({ menu, authenticated }) => {
       <Container>
         <Content>
           {menu && innerWidth < 420 && menus}
-          <Title>BookTrader</Title>
+          <Title onClick={() => history.push ('/')}>BookTrader</Title>
           {menu && innerWidth >= 420 && menus}
         </Content>
       </Container>
@@ -122,4 +121,5 @@ export const Title = styled (Text)`
   color: #00ffff;
   text-shadow: 2px 2px 2px #ff00ff;
   line-height: 1.0;
+  cursor: pointer;
 `;

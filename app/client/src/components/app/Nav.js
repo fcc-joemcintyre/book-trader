@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from 'uikit';
 import { LoginPage, RegisterPage } from '../user';
@@ -16,7 +16,7 @@ const StyledMenuDropdown = styled (MenuDropdown)`
 const NavBase = ({ menu, authenticated }) => {
   const [dialog, setDialog] = useState (null);
   const [innerWidth, setInnerWidth] = useState (window.innerWidth);
-  const history = useHistory ();
+  const navigate = useNavigate ();
 
   const onResize = useCallback (() => {
     setInnerWidth (window.innerWidth);
@@ -70,7 +70,7 @@ const NavBase = ({ menu, authenticated }) => {
       <Container>
         <Content>
           {menu && innerWidth < 420 && menus}
-          <Title onClick={() => history.push ('/')}>BookTrader</Title>
+          <Title onClick={() => navigate ('/')}>BookTrader</Title>
           {menu && innerWidth >= 420 && menus}
         </Content>
       </Container>

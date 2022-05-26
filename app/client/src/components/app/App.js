@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { getTheme } from './theme';
@@ -21,7 +21,7 @@ import { NotFoundPage } from './NotFoundPage';
 import { AboutPage } from '../about';
 import { LogoutPage } from '../logoutPage';
 
-const AppBase = ({ themeName, authenticated, dispatch }) => {
+const AppBase = ({ themeName, dispatch }) => {
   const [loading, setLoading] = useState (true);
   const [message, setMessage] = useState ('Loading ...');
 
@@ -44,7 +44,9 @@ const AppBase = ({ themeName, authenticated, dispatch }) => {
       <ThemeProvider theme={theme}>
         <Fragment>
           <GlobalStyle />
-          <Nav menu={false} />
+          <BrowserRouter>
+            <Nav menu={false} />
+          </BrowserRouter>
           <LoadingPage message={message} />
         </Fragment>
       </ThemeProvider>
@@ -58,15 +60,15 @@ const AppBase = ({ themeName, authenticated, dispatch }) => {
           <Fragment>
             <GlobalStyle />
             <Nav menu />
-            <Switch>
-              <Route exact path='/'><HomePage /></Route>
-              <AuthRoute exact path='/requests' authenticated={authenticated}><RequestPage /></AuthRoute>
-              <AuthRoute exact path='/manage' authenticated={authenticated}><ManagePage /></AuthRoute>
-              <AuthRoute exact path='/profile' authenticated={authenticated}><ProfilePage /></AuthRoute>
-              <Route exact path='/about'><AboutPage /></Route>
-              <Route exact path='/logout'><LogoutPage /></Route>
-              <Route path='*'><NotFoundPage /></Route>
-            </Switch>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/requests' element={<AuthRoute><RequestPage /></AuthRoute>} />
+              <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
+              <Route path='/profile' element={<AuthRoute><ProfilePage /></AuthRoute>} />
+              <Route path='/about' element={<AboutPage />} />
+              <Route path='/logout' element={<LogoutPage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Routes>
           </Fragment>
         </ThemeProvider>
       </ScrollToTop>
@@ -76,14 +78,12 @@ const AppBase = ({ themeName, authenticated, dispatch }) => {
 
 
 const mapStateToProps = ({ user }) => ({
-  authenticated: user.authenticated,
   themeName: user.theme || 'base',
 });
 
 export const App = connect (mapStateToProps) (AppBase);
 
 AppBase.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
   themeName: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

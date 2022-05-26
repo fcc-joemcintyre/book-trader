@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
 import { isPassword } from 'validators';
@@ -37,7 +37,7 @@ const initialFields = [
 export const RegisterPage = ({ onClose }) => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
   const [mb, setMB] = useState (null);
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const dispatch = useDispatch ();
 
   const onSubmit = useCallback (async (e) => {
@@ -53,7 +53,7 @@ export const RegisterPage = ({ onClose }) => {
           await dispatch (login (username, password));
           setMB (null);
           onClose ();
-          history.replace ('/');
+          navigate ('/', { replace: true });
         } catch (err) {
           setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error logging in' });
         }
@@ -62,7 +62,7 @@ export const RegisterPage = ({ onClose }) => {
       }
     }
     return errors;
-  }, [dispatch, getValues, history, onClose, setMB, validateAll]);
+  }, [dispatch, getValues, navigate, onClose, setMB, validateAll]);
 
   const onCloseModal = useCallback (() => {
     setMB (null);

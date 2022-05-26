@@ -1,18 +1,19 @@
 import { Fragment, useCallback, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
 import { isEmail } from 'validators';
 import { updateProfile } from '../../store/userActions';
 import { ProfileForm } from './ProfileForm';
 
-const ProfilePageBase = ({ dispatch, iName, iEmail, iTheme }) => {
+export const ProfilePage = ({ iName, iEmail, iTheme }) => {
+  const dispatch = useDispatch ();
+  const user = useSelector ((a) => a.user);
   const initialFields = useMemo (() => [
-    createField ('name', iName, true),
-    createField ('email', iEmail, false, [isEmail]),
-    createField ('theme', iTheme, false),
-  ], [iName, iEmail, iTheme]);
+    createField ('name', user.name, true),
+    createField ('email', user.email, false, [isEmail]),
+    createField ('theme', user.theme, false),
+  ], [user]);
 
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [mb, setMB] = useState (null);
@@ -55,19 +56,4 @@ const ProfilePageBase = ({ dispatch, iName, iEmail, iTheme }) => {
       )}
     </Fragment>
   );
-};
-
-const mapStateToProps = ({ user }) => ({
-  iName: user.name,
-  iEmail: user.email,
-  iTheme: user.theme || 'base',
-});
-
-export const ProfilePage = connect (mapStateToProps) (ProfilePageBase);
-
-ProfilePageBase.propTypes = {
-  iName: PropTypes.string.isRequired,
-  iEmail: PropTypes.string.isRequired,
-  iTheme: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };

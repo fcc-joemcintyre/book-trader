@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -21,10 +20,12 @@ import { NotFoundPage } from './NotFoundPage';
 import { AboutPage } from '../about';
 import { LogoutPage } from '../logoutPage';
 
-const AppBase = ({ themeName, dispatch }) => {
+export const App = () => {
+  const dispatch = useDispatch ();
+  const themeName = useSelector ((a) => a.user.theme || 'base');
   const [loading, setLoading] = useState (true);
   const [message, setMessage] = useState ('Loading ...');
-
+ 
   useEffect (() => {
     (async () => {
       try {
@@ -74,16 +75,4 @@ const AppBase = ({ themeName, dispatch }) => {
       </ScrollToTop>
     </BrowserRouter>
   );
-};
-
-
-const mapStateToProps = ({ user }) => ({
-  themeName: user.theme || 'base',
-});
-
-export const App = connect (mapStateToProps) (AppBase);
-
-AppBase.propTypes = {
-  themeName: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
 import { isPassword } from 'validators';
@@ -12,7 +12,8 @@ const initialFields = [
   createField ('password', '', true, [isPassword]),
 ];
 
-const LoginPageBase = ({ onClose, dispatch }) => {
+export const LoginPage = ({ onClose }) => {
+  const dispatch = useDispatch ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [mb, setMB] = useState (null);
 
@@ -58,10 +59,6 @@ const LoginPageBase = ({ onClose, dispatch }) => {
   );
 };
 
-
-export const LoginPage = connect (null) (LoginPageBase);
-
-LoginPageBase.propTypes = {
+LoginPage.propTypes = {
   onClose: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };

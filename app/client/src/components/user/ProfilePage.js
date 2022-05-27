@@ -6,7 +6,7 @@ import { isEmail } from 'validators';
 import { updateProfile } from '../../store/userActions';
 import { ProfileForm } from './ProfileForm';
 
-export const ProfilePage = ({ iName, iEmail, iTheme }) => {
+export const ProfilePage = () => {
   const dispatch = useDispatch ();
   const user = useSelector ((a) => a.user);
   const initialFields = useMemo (() => [

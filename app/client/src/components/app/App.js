@@ -25,7 +25,7 @@ export const App = () => {
   const themeName = useSelector ((a) => a.user.theme || 'base');
   const [loading, setLoading] = useState (true);
   const [message, setMessage] = useState ('Loading ...');
- 
+
   useEffect (() => {
     (async () => {
       try {

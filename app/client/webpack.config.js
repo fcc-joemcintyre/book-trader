@@ -35,4 +35,9 @@ module.exports = {
       test: /bundle.js$/,
     }),
   ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
 };

@@ -15,7 +15,7 @@ import { LoadingPage } from './LoadingPage';
 import { HomePage } from '../home';
 import { RequestPage } from '../request';
 import { ManagePage } from '../manage';
-import { ProfilePage } from '../user';
+import { Profile } from '../profile';
 import { NotFoundPage } from './NotFoundPage';
 import { AboutPage } from '../about';
 import { LogoutPage } from '../logoutPage';
@@ -65,7 +65,7 @@ export const App = () => {
               <Route path='/' element={<HomePage />} />
               <Route path='/requests' element={<AuthRoute><RequestPage /></AuthRoute>} />
               <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
-              <Route path='/profile' element={<AuthRoute><ProfilePage /></AuthRoute>} />
+              <Route path='/profile' element={<AuthRoute><Profile /></AuthRoute>} />
               <Route path='/about' element={<AboutPage />} />
               <Route path='/logout' element={<LogoutPage />} />
               <Route path='*' element={<NotFoundPage />} />

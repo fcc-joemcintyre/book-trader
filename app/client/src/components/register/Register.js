@@ -34,7 +34,7 @@ const initialFields = [
 ];
 
 
-export const RegisterPage = ({ onClose }) => {
+export const Register = ({ onClose }) => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
   const [mb, setMB] = useState (null);
   const navigate = useNavigate ();
@@ -89,6 +89,6 @@ export const RegisterPage = ({ onClose }) => {
   );
 };
 
-RegisterPage.propTypes = {
+Register.propTypes = {
   onClose: PropTypes.func.isRequired,
 };

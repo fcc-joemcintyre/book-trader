@@ -12,7 +12,7 @@ const initialFields = [
   createField ('password', '', true, [isPassword]),
 ];
 
-export const LoginPage = ({ onClose }) => {
+export const Login = ({ onClose }) => {
   const dispatch = useDispatch ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [mb, setMB] = useState (null);
@@ -59,6 +59,6 @@ export const LoginPage = ({ onClose }) => {
   );
 };
 
-LoginPage.propTypes = {
+Login.propTypes = {
   onClose: PropTypes.func.isRequired,
 };

@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from 'uikit';
-import { LoginPage, RegisterPage } from '../user';
+import { Login } from '../login';
+import { Register } from '../register';
 
 const StyledMenuDropdown = styled (MenuDropdown)`
   display: inline-block;
@@ -42,10 +43,10 @@ export const Nav = ({ menu }) => {
       <MenuSeparator spacing='4px' />
       { authenticated && <MenuItem as={NavLink} to='/logout'>Logout</MenuItem> }
       { !authenticated &&
-        <MenuItem onClick={() => setDialog (<RegisterPage onClose={onClose} />)}>Register</MenuItem>
+        <MenuItem onClick={() => setDialog (<Register onClose={onClose} />)}>Register</MenuItem>
       }
       { !authenticated &&
-        <MenuItem onClick={() => setDialog (<LoginPage onClose={onClose} />)}>Login</MenuItem>
+        <MenuItem onClick={() => setDialog (<Login onClose={onClose} />)}>Login</MenuItem>
       }
     </StyledMenuDropdown>
   ) : authenticated ? (
@@ -61,8 +62,8 @@ export const Nav = ({ menu }) => {
   ) : (
     <MenuBar right>
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
-      <MenuItem onClick={() => setDialog (<RegisterPage onClose={onClose} />)}>Register</MenuItem>
-      <MenuItem onClick={() => setDialog (<LoginPage onClose={onClose} />)}>Login</MenuItem>
+      <MenuItem onClick={() => setDialog (<Register onClose={onClose} />)}>Register</MenuItem>
+      <MenuItem onClick={() => setDialog (<Login onClose={onClose} />)}>Login</MenuItem>
     </MenuBar>
   );
 

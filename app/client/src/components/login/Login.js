@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
-import { isPassword } from 'validators';
+import { isPassword } from '@cygns/validators';
 import { login } from '../../store/userActions';
 import { LoginForm } from './LoginForm';
 

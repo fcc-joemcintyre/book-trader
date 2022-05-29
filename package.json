@@ -12,13 +12,14 @@
   "license": "MIT",
   "workspaces": [
     "app/client",
-    "app/server"
+    "app/server",
+    "lib/validators"
   ],
   "dependencies": {
     "nodemon": "2.0.16"
   },
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -rf lib/validators/lib",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "cd app/server && npm run lint",
     "lint:client": "cd app/client && npm run lint",
@@ -29,9 +30,11 @@
     "dev:start": "cd dist && nodemon main.js -p=3000",
     "dev:server": "cd app/server && npm run dev",
     "dev:client": "cd app/client && npm run dev",
-    "build": "npm run clean && npm run build:server && npm run build:client",
+    "build": "npm run clean && npm run build:libs && npm run build:server && npm run build:client",
     "build:server": "cd app/server && npm run build",
-    "build:client": "cd app/client && npm run build"
+    "build:client": "cd app/client && npm run build",
+    "build:libs": "npm run build:libs:validators",
+    "build:libs:validators": "cd lib/validators && npm run build"
   },
   "engines": {
     "node": "^16.15"

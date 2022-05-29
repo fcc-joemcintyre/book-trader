@@ -2,7 +2,7 @@ import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
-import { isEmail } from 'validators';
+import { isEmail } from '@cygns/validators';
 import { updateProfile } from '../../store/userActions';
 import { ProfileForm } from './ProfileForm';
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
-import { isPassword } from 'validators';
+import { isPassword } from '@cygns/validators';
 import { register, login } from '../../store/userActions';
 import { RegisterForm } from './RegisterForm';
 

@@ -79,7 +79,7 @@ export async function register (req: Request, res: Response) {
     console.log ('ERROR register (400) invalid body', validateRegister.errors);
     res.status (400).json ({});
   } else {
-    const t = await db.insertUser (req.body.username, req.body.password);
+    const t = await db.insertUser (req.body.email, req.body.username, req.body.password);
     if (t.status === 200) {
       console.log ('INFO register ok', req.body.username);
       res.status (200).json ({});

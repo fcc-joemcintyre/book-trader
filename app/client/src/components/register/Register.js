@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
-import { isPassword } from '@cygns/validators';
+import { isEmail, isPassword } from '@cygns/validators';
 import { register, login } from '../../store/userActions';
 import { RegisterForm } from './RegisterForm';
 
@@ -28,6 +28,7 @@ function isMatch (value, fields) {
 }
 
 const initialFields = [
+  createField ('email', '', true, [isEmail]),
   createField ('username', '', true, [isNameChars]),
   createField ('password', '', true, [isPassword, isPasswordChars]),
   createField ('verifyPassword', '', true, [isPassword, isPasswordChars]),
@@ -46,8 +47,8 @@ export const Register = ({ onClose }) => {
     if (!errors) {
       setMB ({ content: 'Registering ...' });
       try {
-        const { username, password } = getValues ();
-        await dispatch (register (username, password));
+        const { email, username, password } = getValues ();
+        await dispatch (register (email, username, password));
         try {
           setMB ({ content: 'Registered, logging in ...' });
           await dispatch (login (username, password));
@@ -58,6 +59,7 @@ export const Register = ({ onClose }) => {
           setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error logging in' });
         }
       } catch (err) {
+        console.log (err);
         setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error registering' });
       }
     }

@@ -1,8 +1,14 @@
 import { SET_AUTHENTICATED, SET_PROFILE } from './userConstants';
 import { get, post } from './jsonFetch';
 
-export async function register (username, password) {
-  await post ('/api/register', { username, password });
+export function register (email, username, password) {
+  return async () => {
+    const res = await post ('/api/register', { email, username, password });
+    if (res.ok) {
+      return;
+    }
+    throw res;
+  };
 }
 
 export function login (username, password) {

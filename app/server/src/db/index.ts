@@ -17,6 +17,7 @@ export type Book = {
 
 export type User = {
   key: number,
+  email: string,
   username: string,
   name: string,
   city: string,

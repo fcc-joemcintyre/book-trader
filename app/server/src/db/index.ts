@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import { initDatabase, closeDatabase } from './db.js';
 import { getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
   insertBook, removeBook, setRequester, trade, updateBook } from './books.js';
-import { findUserByUsername, insertUser, removeUser } from './users.js';
+import { createUser, findUserByUsername, deleteUser } from './users.js';
 
 export type Book = {
   _id?: ObjectId,
@@ -19,12 +19,8 @@ export type User = {
   key: number,
   email: string,
   username: string,
-  name: string,
-  city: string,
-  state: string,
   hash: string,
   salt: string,
-  theme: string,
 };
 
 export type UserResult = {
@@ -36,5 +32,5 @@ export {
   initDatabase, closeDatabase,
   getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
   insertBook, removeBook, setRequester, trade, updateBook,
-  findUserByUsername, insertUser, removeUser,
+  createUser, findUserByUsername, deleteUser,
 };

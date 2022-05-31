@@ -63,9 +63,9 @@ async function resetDatabase () {
   ];
 
   const initialUsers: User[] = [
-    { key: 1, email: 'a@example.com', username: 'a', name: 'A A', theme: 'light', hash, salt, city: '', state: '' },
-    { key: 2, email: 'b@example.com', username: 'b', name: 'B B', theme: 'light', hash, salt, city: '', state: '' },
-    { key: 3, email: 'c@example.com', username: 'c', name: 'C C', theme: 'light', hash, salt, city: '', state: '' },
+    { key: 1, email: 'a@example.com', username: 'a', hash, salt },
+    { key: 2, email: 'b@example.com', username: 'b', hash, salt },
+    { key: 3, email: 'c@example.com', username: 'c', hash, salt },
   ];
 
   const client = await MongoClient.connect (uri);

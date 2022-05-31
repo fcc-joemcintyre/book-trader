@@ -63,7 +63,7 @@ export function createTradeRequest (book) {
     const { user } = getState ();
     const res = await post (`/api/books/${book.id}/request`);
     if (res.ok) {
-      dispatch ({ type: SET_BOOK_REQUESTER, book, requesterId: user.id, requester: user.username });
+      dispatch ({ type: SET_BOOK_REQUESTER, book, requesterId: user.username, requester: user.username });
       return;
     }
     throw res;

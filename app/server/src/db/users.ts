@@ -28,13 +28,13 @@ export async function findUserByUsername (username: string): Promise<UserResult>
 }
 
 /**
- * Insert user, creating skeleton user document
+ * Create user, creating skeleton user document
  * @param email User email
  * @param username User name
  * @param password Password
  * @returns Db result
  */
-export async function insertUser (email: string, username: string, password: string): Promise<UserResult> {
+export async function createUser (email: string, username: string, password: string): Promise<UserResult> {
   const key = await getNextSequence ('users');
   if (!key) {
     return ({ status: 500 });
@@ -43,7 +43,7 @@ export async function insertUser (email: string, username: string, password: str
   try {
     const { hash, salt } = createHash (password);
     const t = await c.insertOne (
-      { key, email, username, name: '', city: '', state: '', hash, salt, theme: 'light' }
+      { key, email, username, hash, salt }
     );
     if (t.acknowledged) {
       const t2 = await c.findOne ({ key });
@@ -69,7 +69,7 @@ export async function insertUser (email: string, username: string, password: str
  * @param key User key
  * @returns Db result
  */
-export async function removeUser (key: number): Promise<UserResult> {
+export async function deleteUser (key: number): Promise<UserResult> {
   try {
     await c.deleteOne ({ key });
     return ({ status: 200 });

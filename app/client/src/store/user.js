@@ -2,11 +2,9 @@ import { SET_AUTHENTICATED } from './userConstants';
 
 const initialState = {
   authenticated: false,
-  id: '',
+  key: 0,
   username: '',
-  name: '',
   email: '',
-  theme: '',
 };
 
 export default function user (state = initialState, action) {
@@ -15,8 +13,9 @@ export default function user (state = initialState, action) {
       return ({
         ...state,
         authenticated: action.authenticated,
-        id: action.id,
+        key: action.key,
         username: action.username,
+        email: action.email,
       });
 
     default:

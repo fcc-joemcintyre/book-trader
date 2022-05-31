@@ -10,7 +10,7 @@ import { EditBook } from './EditBook';
 export const ManagePage = () => {
   const dispatch = useDispatch ();
   const books = useSelector ((state) => state.books);
-  const user = useSelector ((state) => state.user.id);
+  const user = useSelector ((state) => state.user.username);
   const [mb, setMB] = useState (null);
   const [dialog, setDialog] = useState (null);
 

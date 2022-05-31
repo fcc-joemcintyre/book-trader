@@ -26,12 +26,8 @@ export function login (req: Request, res: Response, next: NextFunction) {
         console.log ('INFO login ok', user.username);
         const result = {
           key: user.key,
-          id: user.id,
           username: user.username,
-          name: user.name,
-          city: user.city,
-          state: user.state,
-          theme: user.theme,
+          email: user.email,
         };
         return res.status (200).json (result);
       });
@@ -51,19 +47,18 @@ export function logout (req: Request, res: Response) {
 // allows continuation of session
 export function verifyLogin (req: Request, res: Response) {
   console.log ('INFO verifyLogin');
-  type User = { id: string, username: string, name: string, city: string, state: string, theme: string };
-  let message: { authenticated: boolean, user: User | null } = { authenticated: false, user: null };
+  let message: {
+    authenticated: boolean,
+    user: { key: number, username: string, email: string} | null
+  } = { authenticated: false, user: null };
   if (req.isAuthenticated ()) {
     const user = req.user as db.User;
     message = {
       authenticated: true,
       user: {
-        id: user.username,
+        key: user.key,
         username: user.username,
-        name: user.name,
-        city: user.city,
-        state: user.state,
-        theme: user.theme,
+        email: user.email,
       },
     };
     console.log ('INFO verified', user.username);
@@ -80,7 +75,7 @@ export async function register (req: Request, res: Response) {
     console.log ('ERROR register (400) invalid body', validateRegister.errors);
     res.status (400).json ({});
   } else {
-    const t = await db.insertUser (req.body.email, req.body.username, req.body.password);
+    const t = await db.createUser (req.body.email, req.body.username, req.body.password);
     if (t.status === 200) {
       console.log ('INFO register ok', req.body.username);
       res.status (200).json ({});

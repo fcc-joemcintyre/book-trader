@@ -16,7 +16,7 @@ export function login (username, password) {
     const res = await post ('/api/login', { username, password });
     if (res.ok) {
       const user = res.data;
-      dispatch (setAuthenticated (true, user.id, user.username));
+      dispatch (setAuthenticated (true, user.key, user.username, user.email));
       return;
     }
     throw res;
@@ -25,7 +25,7 @@ export function login (username, password) {
 
 export function logout () {
   return async (dispatch) => {
-    dispatch (setAuthenticated (false, ''));
+    dispatch (setAuthenticated (false, 0, '', ''));
     try {
       await post ('/api/logout');
     } catch (err) {
@@ -39,10 +39,10 @@ export function verifyLogin () {
     const res = await get ('/api/verifylogin');
     if (res.ok) {
       if (res.data.authenticated) {
-        dispatch (setAuthenticated (true, res.data.user.id, res.data.user.username));
+        dispatch (setAuthenticated (true, res.data.user.key, res.data.user.username, res.data.user.email));
         return true;
       } else {
-        dispatch (setAuthenticated (false, '', ''));
+        dispatch (setAuthenticated (false, 0, '', ''));
         return false;
       }
     }
@@ -50,6 +50,6 @@ export function verifyLogin () {
   };
 }
 
-export function setAuthenticated (authenticated, id, username) {
-  return { type: SET_AUTHENTICATED, authenticated, id, username };
+export function setAuthenticated (authenticated, key, username, email) {
+  return { type: SET_AUTHENTICATED, authenticated, key, username, email };
 }

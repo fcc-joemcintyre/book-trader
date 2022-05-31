@@ -108,7 +108,8 @@
 							"pm.test ('user key to be 4, theme to be light', () => {",
 							"    var data = pm.response.json ();",
 							"    pm.expect (data.key).to.eq (4);",
-							"    pm.expect (data.theme).to.eq ('light');",
+							"    pm.expect (data.email).to.eq ('test@example.com');",
+							"    pm.expect (data.username).to.eq ('test');",
 							"})"
 						],
 						"type": "text/javascript"

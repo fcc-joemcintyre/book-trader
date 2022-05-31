@@ -6,7 +6,7 @@ import { Header } from '../header';
 export const RequestPage = () => {
   const dispatch = useDispatch ();
   const books = useSelector ((state) => state.books);
-  const user = useSelector ((state) => state.user.id);
+  const user = useSelector ((state) => state.user.username);
 
   const itemsRequested = [];
   const itemsPending = [];

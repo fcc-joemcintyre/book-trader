@@ -1,11 +1,26 @@
 {
-  "extends": "@cygns",
+  "extends": [
+    "@cygns/eslint-config",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true
   },
   "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-use-before-define": "off",
+    "valid-jsdoc": "off",
+
+    "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error",
+      { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }]
   },
   "settings": {
     "import/resolver": {

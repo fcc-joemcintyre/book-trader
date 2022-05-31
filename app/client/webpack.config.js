@@ -5,11 +5,10 @@ const baseDest = path.resolve (__dirname, '../../dist');
 
 module.exports = {
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.ts', '.tsx', '.js'],
     alias: {
       uikit: path.resolve (__dirname, 'libs/uikit'),
       'use-fields': path.resolve (__dirname, 'libs/use-fields'),
-      validators: path.resolve (__dirname, 'libs/validators'),
     },
   },
   entry: {
@@ -26,6 +25,15 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          compilerOptions: {
+            noEmit: false,
+          },
         },
       },
     ],

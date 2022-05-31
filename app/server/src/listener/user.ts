@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 import * as db from '../db/index.js';
-import { validateLogin, validateRegister, validateProfile } from './validators.js';
+import { validateLogin, validateRegister } from './validators.js';
 
 // Login, authenticating user and creating a session
 export function login (req: Request, res: Response, next: NextFunction) {
@@ -86,36 +86,6 @@ export async function register (req: Request, res: Response) {
       res.status (200).json ({});
     } else {
       console.log ('ERROR register', t.status);
-      res.status (t.status).json ({});
-    }
-  }
-}
-
-export function getProfile (req: Request, res: Response) {
-  const user = req.user as db.User;
-  console.log ('INFO getProfile', user.username);
-  res.status (200).json ({
-    name: user.name,
-    city: user.city,
-    state: user.state,
-    theme: user.theme,
-  });
-}
-
-export async function updateProfile (req: Request, res: Response) {
-  const user = req.user as db.User;
-  console.log ('INFO updateProfile', user.username);
-  if (validateProfile (req.body) === false) {
-    console.log ('ERROR updateProfile (400) invalid body', validateProfile.errors);
-    res.status (400).json ({});
-  } else {
-    const { name, city, state, theme } = req.body;
-    const t = await db.updateUser (user.key, name, city, state, theme);
-    if (t.status === 200) {
-      console.log ('INFO updateProfile ok');
-      res.status (200).json ({});
-    } else {
-      console.log (`ERROR updateProfile (${t.status})`);
       res.status (t.status).json ({});
     }
   }

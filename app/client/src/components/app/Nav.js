@@ -39,7 +39,6 @@ export const Nav = ({ menu }) => {
       { authenticated && <MenuItem as={NavLink} to='/requests'>Requests</MenuItem> }
       { authenticated && <MenuItem as={NavLink} to='/manage'>Manage</MenuItem> }
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
-      { authenticated && <MenuItem as={NavLink} to='/profile'>Profile</MenuItem> }
       <MenuSeparator spacing='4px' />
       { authenticated && <MenuItem as={NavLink} to='/logout'>Logout</MenuItem> }
       { !authenticated &&
@@ -55,7 +54,6 @@ export const Nav = ({ menu }) => {
       <MenuItem as={NavLink} to='/manage'>Manage</MenuItem>
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
       <MenuSubmenu text='User' right spacer='8px'>
-        <MenuItem as={NavLink} to='/profile'>Profile</MenuItem>
         <MenuItem as={NavLink} to='/logout'>Logout</MenuItem>
       </MenuSubmenu>
     </MenuBar>

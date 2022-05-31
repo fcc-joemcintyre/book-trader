@@ -8,7 +8,6 @@ const dir = dirname (fileURLToPath (import.meta.url));
 
 export const validateLogin = compile ('../schema/login.json');
 export const validateRegister = compile ('../schema/register.json');
-export const validateProfile = compile ('../schema/profile.json');
 
 /**
  * Compile JSON schema

@@ -1,5 +1,5 @@
 import { Application, NextFunction, Request, Response } from 'express';
-import { getProfile, login, logout, register, updateProfile, verifyLogin } from './listener/user.js';
+import { login, logout, register, verifyLogin } from './listener/user.js';
 import { createBook, createTradeRequest, deleteBook, deleteTradeRequest, executeTradeRequest, getBook,
   getBooks, getRequestedBooks, updateBook } from './listener/app.js';
 
@@ -12,8 +12,6 @@ export function initRoutes (app: Application) {
   app.post ('/api/logout', logout);
   app.get ('/api/verifylogin', verifyLogin);
   app.post ('/api/register', register);
-  app.get ('/api/profile', isAuthenticated, getProfile);
-  app.post ('/api/profile', isAuthenticated, updateProfile);
 
   app.get ('/api/books/:_id', getBook);
   app.get ('/api/books', getBooks);

@@ -65,29 +65,6 @@ export async function insertUser (email: string, username: string, password: str
 }
 
 /**
- * Update user, not including auth fields
- * @param key User key
- * @param name Name
- * @param city City
- * @param state State
- * @param theme Theme
- * @returns Db result
- */
-export async function updateUser (
-  key: number, name: string, city: string, state: string, theme: string
-): Promise<UserResult> {
-  const t = await c.findOneAndUpdate (
-    { key },
-    { $set: { name, city, state, theme } },
-    { returnDocument: 'after' },
-  );
-  return ({
-    status: t.value ? 200 : 404,
-    user: t.value || undefined,
-  });
-}
-
-/**
  * Delete user
  * @param key User key
  * @returns Db result

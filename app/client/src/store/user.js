@@ -1,4 +1,4 @@
-import { SET_AUTHENTICATED, SET_PROFILE } from './userConstants';
+import { SET_AUTHENTICATED } from './userConstants';
 
 const initialState = {
   authenticated: false,
@@ -17,14 +17,6 @@ export default function user (state = initialState, action) {
         authenticated: action.authenticated,
         id: action.id,
         username: action.username,
-      });
-
-    case SET_PROFILE:
-      return ({
-        ...state,
-        name: action.name,
-        email: action.email,
-        theme: action.theme,
       });
 
     default:

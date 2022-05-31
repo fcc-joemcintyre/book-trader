@@ -1,0 +1,184 @@
+{
+	"info": {
+		"name": "booktrader",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{hostTest}}/api/test/reset",
+					"host": [
+						"{{hostTest}}"
+					],
+					"path": [
+						"api",
+						"test",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsupported API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 404', () => {",
+							"    pm.response.to.have.status (404);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/nothing",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"nothing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"username\": \"test\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Login new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('user key to be 4, theme to be light', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data.key).to.eq (4);",
+							"    pm.expect (data.theme).to.eq ('light');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

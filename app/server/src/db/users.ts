@@ -35,7 +35,6 @@ export async function findUserByUsername (username: string): Promise<UserResult>
  * @returns Db result
  */
 export async function insertUser (email: string, username: string, password: string): Promise<UserResult> {
-  console.log (1, email, username, password);
   const key = await getNextSequence ('users');
   if (!key) {
     return ({ status: 500 });
@@ -44,12 +43,10 @@ export async function insertUser (email: string, username: string, password: str
   try {
     const { hash, salt } = createHash (password);
     const t = await c.insertOne (
-      { key, email, username, name: '', city: '', state: '', hash, salt, theme: 'light ' }
+      { key, email, username, name: '', city: '', state: '', hash, salt, theme: 'light' }
     );
-    console.log (2, t);
     if (t.acknowledged) {
       const t2 = await c.findOne ({ key });
-      console.log (3, t2);
       return ({
         status: t2 ? 200 : 404,
         user: t2 || undefined,

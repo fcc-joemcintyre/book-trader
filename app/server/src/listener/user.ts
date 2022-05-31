@@ -25,6 +25,7 @@ export function login (req: Request, res: Response, next: NextFunction) {
         }
         console.log ('INFO login ok', user.username);
         const result = {
+          key: user.key,
           id: user.id,
           username: user.username,
           name: user.name,

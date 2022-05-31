@@ -59,7 +59,6 @@ export const Register = ({ onClose }) => {
           setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error logging in' });
         }
       } catch (err) {
-        console.log (err);
         setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error registering' });
       }
     }

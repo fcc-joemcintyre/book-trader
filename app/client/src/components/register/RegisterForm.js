@@ -15,6 +15,7 @@ const passwordErrors = {
 };
 
 export const RegisterForm = ({
+  isLoading, isError, isSuccess, isLogin, isLoginError,
   fields: { email, username, password, verifyPassword },
   onChange, onValidate, onSubmit, onCancel,
 }) => (
@@ -28,6 +29,17 @@ export const RegisterForm = ({
       }}
     >
       <GridBox w='300px' p='10px 10px 20px 10px' center>
+        <GridBoxElement span={12} center>
+          <Text as='p' center>
+            { isLoading ? 'Registering' :
+              isError ? 'Error, check entries and retry' :
+              isSuccess ? 'Registered successfully' :
+              isLogin ? 'Registered, logging in' :
+              isLoginError ? 'Registered, but failed to login.' :
+              'Enter information' }
+          </Text>
+        </GridBoxElement>
+
         <FieldInput
           field={email}
           label='Email'
@@ -88,6 +100,11 @@ export const RegisterForm = ({
 );
 
 RegisterForm.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isError: PropTypes.bool.isRequired,
+  isSuccess: PropTypes.bool.isRequired,
+  isLogin: PropTypes.bool.isRequired,
+  isLoginError: PropTypes.bool.isRequired,
   fields: PropTypes.shape ({
     email: PropTypes.shape (fieldPropTypes).isRequired,
     username: PropTypes.shape (fieldPropTypes).isRequired,

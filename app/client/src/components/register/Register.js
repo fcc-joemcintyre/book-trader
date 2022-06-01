@@ -1,11 +1,11 @@
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createField, useFields } from 'use-fields';
-import { MessageBox } from 'uikit';
 import { isEmail, isPassword } from '@cygns/validators';
-import { register, login } from '../../store/userActions';
+import { useLoginMutation, useRegisterMutation } from '../../store/api';
+import { useAppDispatch } from '../../store/hooks';
+import { setAuthenticated } from '../../store/userSlice';
 import { RegisterForm } from './RegisterForm';
 
 function isNameChars (value) {
@@ -37,55 +37,39 @@ const initialFields = [
 
 export const Register = ({ onClose }) => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
-  const [mb, setMB] = useState (null);
   const navigate = useNavigate ();
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
+  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation ();
+  const [login, { isLoading: isLogin, isError: isLoginError }] = useLoginMutation ();
 
   const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
     const errors = validateAll ();
     if (!errors) {
-      setMB ({ content: 'Registering ...' });
-      try {
-        const { email, username, password } = getValues ();
-        await dispatch (register (email, username, password));
-        try {
-          setMB ({ content: 'Registered, logging in ...' });
-          await dispatch (login (username, password));
-          setMB (null);
-          onClose ();
-          navigate ('/', { replace: true });
-        } catch (err) {
-          setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error logging in' });
-        }
-      } catch (err) {
-        setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error registering' });
-      }
+      const { email, username, password } = getValues ();
+      await register ({ email, username, password });
+      const user = await login ({ username, password });
+      await dispatch (setAuthenticated (user));
+      onClose ();
+      navigate ('/', { replace: true });
     }
     return errors;
-  }, [dispatch, getValues, navigate, onClose, setMB, validateAll]);
-
-  const onCloseModal = useCallback (() => {
-    setMB (null);
-  }, [setMB]);
+  }, [dispatch, getValues, login, navigate, onClose, register, validateAll]);
 
   return (
     <Fragment>
       <RegisterForm
+        isLoading={isLoading}
+        isError={isError}
+        isSuccess={isSuccess}
+        isLogin={isLogin}
+        isLoginError={isLoginError}
         fields={fields}
         onChange={onChange}
         onValidate={onValidate}
         onSubmit={onSubmit}
         onCancel={onClose}
       />
-      { mb && (
-        <MessageBox
-          actions={mb.actions}
-          closeAction={mb.closeAction}
-          content={mb.content}
-          onClose={onCloseModal}
-        />
-      )}
     </Fragment>
   );
 };

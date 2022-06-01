@@ -1,10 +1,11 @@
 import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { createField, useFields } from 'use-fields';
 import { MessageBox } from 'uikit';
 import { isPassword } from '@cygns/validators';
-import { login } from '../../store/userActions';
+import { useLoginMutation } from '../../store/api';
+import { useAppDispatch } from '../../store/hooks';
+import { setAuthenticated } from '../../store/userSlice';
 import { LoginForm } from './LoginForm';
 
 const initialFields = [
@@ -13,7 +14,9 @@ const initialFields = [
 ];
 
 export const Login = ({ onClose }) => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
+  const [login] = useLoginMutation ();
+
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [mb, setMB] = useState (null);
 
@@ -25,14 +28,15 @@ export const Login = ({ onClose }) => {
       setMB ({ content: 'Logging in' });
       try {
         const { username, password } = getValues ();
-        await dispatch (login (username, password));
+        const user = await login ({ username, password });
+        await dispatch (setAuthenticated ({ authenticated: true, ...user.data }));
         onClose ();
       } catch (err) {
         setMB ({ actions: ['Ok'], closeAction: 'Ok', content: 'Error logging in' });
       }
     }
     return errors;
-  }, [dispatch, getValues, onClose, setMB, validateAll]);
+  }, [dispatch, getValues, login, onClose, setMB, validateAll]);
 
   const onCloseModal = useCallback (() => {
     setMB (null);

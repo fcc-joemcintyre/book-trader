@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { useAppDispatch } from '../../store/hooks';
+import { useVerifyLoginMutation } from '../../store/api';
+import { setAuthenticated } from '../../store/userSlice';
+
 import { getTheme } from './theme';
 import { GlobalStyle } from './GlobalStyle';
 import { AuthRoute } from './AuthRoute';
 import { Nav } from './Nav';
-import { verifyLogin } from '../../store/userActions';
 import { setBooks } from '../../store/bookActions';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -17,10 +20,13 @@ import { RequestPage } from '../request';
 import { ManagePage } from '../manage';
 import { NotFoundPage } from './NotFoundPage';
 import { AboutPage } from '../about';
-import { LogoutPage } from '../logoutPage';
+import { Logout } from '../logout';
 
 export const App = () => {
   const dispatch = useDispatch ();
+  const appDispatch = useAppDispatch ();
+  const [verifyLogin] = useVerifyLoginMutation ();
+
   const themeName = useSelector ((a) => a.user.theme || 'base');
   const [loading, setLoading] = useState (true);
   const [message, setMessage] = useState ('Loading ...');
@@ -28,7 +34,8 @@ export const App = () => {
   useEffect (() => {
     (async () => {
       try {
-        await dispatch (verifyLogin ());
+        const user = await verifyLogin ().unwrap ();
+        await appDispatch (setAuthenticated (user));
         await dispatch (setBooks ());
         setLoading (false);
         setMessage ('');
@@ -36,7 +43,7 @@ export const App = () => {
         setMessage ('Network error, try again.');
       }
     }) ();
-  }, [dispatch]);
+  }, [dispatch, appDispatch, verifyLogin]);
 
   const theme = getTheme (themeName);
   if (loading) {
@@ -65,7 +72,7 @@ export const App = () => {
               <Route path='/requests' element={<AuthRoute><RequestPage /></AuthRoute>} />
               <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
               <Route path='/about' element={<AboutPage />} />
-              <Route path='/logout' element={<LogoutPage />} />
+              <Route path='/logout' element={<Logout />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </Fragment>

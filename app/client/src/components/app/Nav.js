@@ -1,9 +1,9 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from 'uikit';
+import { useAppSelector } from '../../store/hooks';
 import { Login } from '../login';
 import { Register } from '../register';
 
@@ -18,7 +18,7 @@ export const Nav = ({ menu }) => {
   const [dialog, setDialog] = useState (null);
   const [innerWidth, setInnerWidth] = useState (window.innerWidth);
   const navigate = useNavigate ();
-  const authenticated = useSelector ((a) => a.user.authenticated);
+  const authenticated = useAppSelector ((a) => a.user.authenticated);
 
   const onResize = useCallback (() => {
     setInnerWidth (window.innerWidth);

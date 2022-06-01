@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import newman from 'newman'; // eslint-disable-line
 import { Book, User } from '../src/db/index.js';
 import { startServer, stopServer } from '../src/server.js';
@@ -69,9 +69,9 @@ async function resetDatabase () {
   ];
 
   const initialBooks: Book[] = [
-    { _id: new ObjectId (), ownerId: 'a', category: 'C1', title: 'T1', author: 'A A', cover: '', requester: '', requesterId: '' },
-    { _id: new ObjectId (), ownerId: 'a', category: 'C2', title: 'T2', author: 'B B', cover: '', requester: '', requesterId: '' },
-    { _id: new ObjectId (), ownerId: 'b', category: 'C1', title: 'T3', author: 'A A', cover: '', requester: '', requesterId: '' },
+    { key: 1, owner: 1, category: 'C1', title: 'T1', author: 'A A', cover: '', requester: 0 },
+    { key: 2, owner: 1, category: 'C2', title: 'T2', author: 'B B', cover: '', requester: 0 },
+    { key: 3, owner: 2, category: 'C1', title: 'T3', author: 'A A', cover: '', requester: 0 },
   ];
 
   const client = await MongoClient.connect (uri);

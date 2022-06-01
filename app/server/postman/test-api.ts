@@ -1,8 +1,8 @@
 import express from 'express';
 import http from 'http';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import newman from 'newman'; // eslint-disable-line
-import { User } from '../src/db/index.js';
+import { Book, User } from '../src/db/index.js';
 import { startServer, stopServer } from '../src/server.js';
 
 const port = 3000;
@@ -42,7 +42,7 @@ async function main (): Promise<void> {
   // if running tests, start test runner
   if (!server) {
     newman.run ({
-      collection: 'pollster.postman_collection.json',
+      collection: 'booktrader.postman_collection.json',
       environment: 'local.postman_environment.json',
       reporters: 'cli',
     }, async () => {
@@ -68,6 +68,12 @@ async function resetDatabase () {
     { key: 3, email: 'c@example.com', username: 'c', hash, salt },
   ];
 
+  const initialBooks: Book[] = [
+    { _id: new ObjectId (), ownerId: 'a', category: 'C1', title: 'T1', author: 'A A', cover: '', requester: '', requesterId: '' },
+    { _id: new ObjectId (), ownerId: 'a', category: 'C2', title: 'T2', author: 'B B', cover: '', requester: '', requesterId: '' },
+    { _id: new ObjectId (), ownerId: 'b', category: 'C1', title: 'T3', author: 'A A', cover: '', requester: '', requesterId: '' },
+  ];
+
   const client = await MongoClient.connect (uri);
   const db = client.db ();
   const c1 = db.collection ('counters');
@@ -78,6 +84,10 @@ async function resetDatabase () {
   await c2.deleteMany ({});
   await c2.createIndex ({ email: 1 }, { unique: true, name: 'email' });
   await c2.insertMany (initialUsers);
+
+  const c3 = db.collection ('books');
+  await c3.deleteMany ({});
+  await c3.insertMany (initialBooks);
   client.close ();
 }
 

@@ -24,6 +24,7 @@
     "build:copy": "mkdir -p ../../dist/public && mkdir -p ../../dist/schema && cp -r public/* ../../dist/public && cp -r src/schema/* ../../dist/schema",
     "dev": "nodemon --watch public --watch src/schema --exec 'npm run build:copy' & tsc -w",
     "test": "mocha test/**/*",
+    "postman:server": "cd postman && node --loader ts-node/esm test-api.ts --server",
     "postman:run": "cd postman && node --loader ts-node/esm test-api.ts",
     "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern ."
   },

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Divider, Flex, FlexItem, Image, Text } from 'uikit';
+import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '../../../libs/uikit';
 import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
 
 export const Book = ({ book }) => {

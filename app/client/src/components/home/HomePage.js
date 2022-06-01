@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
-import { Box, Text } from 'uikit';
+import { Box, Text } from '../../../libs/uikit';
 import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
 import { Header } from '../header';
 import { Book } from './Book';

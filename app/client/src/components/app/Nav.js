@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from 'uikit';
+import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from '../../../libs/uikit';
 import { useAppSelector } from '../../store/hooks';
 import { Login } from '../login';
 import { Register } from '../register';

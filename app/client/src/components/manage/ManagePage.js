@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Box, Button, MessageBox, Text } from 'uikit';
+import { Box, Button, MessageBox, Text } from '../../../libs/uikit';
 import { saveBook, deleteBook } from '../../store/bookActions';
 import { Header } from '../header';
 import { ManageBook } from './ManageBook';

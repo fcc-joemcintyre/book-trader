@@ -1,8 +1,8 @@
 import { Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { createField, useFields } from 'use-fields';
-import { MessageBox } from 'uikit';
 import { isPassword } from '@cygns/validators';
+import { createField, useFields } from '../../../libs/use-fields';
+import { MessageBox } from '../../../libs/uikit';
 import { useLoginMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
 import { setAuthenticated } from '../../store/userSlice';

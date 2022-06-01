@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from 'uikit';
-import { fieldPropTypes } from 'use-fields';
+import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '../../../libs/uikit';
+import { fieldPropTypes } from '../../../libs/use-fields';
 
 const passwordErrors = {
   length: 'Must be 4+ characters',

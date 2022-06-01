@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Divider, Flex, Image, Text } from 'uikit';
+import { Box, Button, Divider, Flex, Image, Text } from '../../../libs/uikit';
 
 export const ManageBook = ({ book, onEditBook, onDeleteBook }) => {
   const [cover, setCover] = useState (book.cover);

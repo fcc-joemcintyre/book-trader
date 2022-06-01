@@ -6,10 +6,6 @@ const baseDest = path.resolve (__dirname, '../../dist');
 module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
-    alias: {
-      uikit: path.resolve (__dirname, 'libs/uikit'),
-      'use-fields': path.resolve (__dirname, 'libs/use-fields'),
-    },
   },
   entry: {
     app: './src/components/app/index.js',

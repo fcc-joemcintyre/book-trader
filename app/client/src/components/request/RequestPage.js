@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Divider, Text } from 'uikit';
+import { Box, Button, Divider, Text } from '../../../libs/uikit';
 import { deleteTradeRequest, executeTrade } from '../../store/bookActions';
 import { Header } from '../header';
 

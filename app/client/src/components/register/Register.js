@@ -1,8 +1,8 @@
 import { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { createField, useFields } from 'use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
+import { createField, useFields } from '../../../libs/use-fields';
 import { useLoginMutation, useRegisterMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
 import { setAuthenticated } from '../../store/userSlice';

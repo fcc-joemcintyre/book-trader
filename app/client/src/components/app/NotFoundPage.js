@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Text } from 'uikit';
+import { Text } from '../../../libs/uikit';
 import { Header } from '../header';
 
 export const NotFoundPage = () => (

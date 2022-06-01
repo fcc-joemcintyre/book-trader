@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from 'uikit';
-import { createField, useFields } from 'use-fields';
+import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '../../../libs/uikit';
+import { createField, useFields } from '../../../libs/use-fields';
 
 export const EditBook = ({ book, onSave, onCancel }) => {
   const initial = [

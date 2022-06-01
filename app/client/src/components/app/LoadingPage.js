@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'uikit';
+import { Text } from '../../../libs/uikit';
 import { Header } from '../header';
 
 export const LoadingPage = ({ message }) => (

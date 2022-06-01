@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Box, LinkExternal, PageContent, Text } from 'uikit';
+import { Box, LinkExternal, PageContent, Text } from '../../../libs/uikit';
 import { Header } from '../header';
 
 export const AboutPage = () => (

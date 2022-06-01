@@ -1,5 +1,6 @@
-import { Collection, Db, ObjectId } from 'mongodb';
+import { Collection, Db } from 'mongodb';
 import { Book } from './index.js';
+import { getNextSequence } from './counters.js';
 
 let c: Collection<Book>;
 
@@ -7,7 +8,7 @@ let c: Collection<Book>;
  * Initialize collection
  * @param db MongoDB db instance object
  */
-export function initBooks (db: Db) {
+export function initBooks (db: Db): void {
   c = db.collection ('books');
 }
 
@@ -20,109 +21,103 @@ export function getBooks () {
 }
 
 /**
- * Get all books by owner id
- * @param ownerId Owner user name
+ * Get all books by owner
+ * @param owner Owner key
  * @returns Db result
  */
-export function getBooksByOwnerId (ownerId: string) {
-  return c.find ({ ownerId }).toArray ();
+export function getBooksByOwner (owner: number) {
+  return c.find ({ owner }).toArray ();
 }
 
 /**
  * Get all books by a requester
- * @param requesterId requeter user name
+ * @param requester requeter key
  * @returns Db result
  */
-export function getRequestedBooks (requesterId: string) {
-  return c.find ({ requesterId }).toArray ();
+export function getRequestedBooks (requester: number) {
+  return c.find ({ requesters: requester }).toArray ();
 }
 
 /**
  * Get a single book
- * @param _id Book key
+ * @param key Book key
  * @returns Db result
  */
-export function getBook (_id: string) {
-  return c.findOne ({ _id: new ObjectId (_id) });
+export function getBook (key: number) {
+  return c.findOne ({ key });
 }
 
 /**
- * Insert a book
- * @param newBook Book fields
- * @returns Db result
- */
-export function insertBook (newBook: Book) {
-  return c.insertOne (newBook);
-}
-
-
-/**
- * Update a book
- * @param _id Book key
+ * Create a new book
+ * @param owner Owner key
  * @param category Category
  * @param title Title
  * @param author Author
  * @param cover URL of cover image
  * @returns Db result
  */
-export function updateBook (_id: string, category: string, title: string, author: string, cover: string) {
+export async function createBook (owner: number, category: string, title: string, author: string, cover: string) {
+  const key = await getNextSequence ('books');
+  if (key) {
+    const t = await c.insertOne ({ key, owner, category, title, author, cover, requester: 0 });
+    if (t.acknowledged) {
+      const t1 = await c.findOne ({ key });
+      return (t1);
+    }
+  }
+  return null;
+}
+
+/**
+ * Update a book
+ * @param key Book key
+ * @param category Category
+ * @param title Title
+ * @param author Author
+ * @param cover URL of cover image
+ * @returns Db result
+ */
+export function updateBook (key: number, category: string, title: string, author: string, cover: string) {
   return c.updateOne (
-    { _id: new ObjectId (_id) },
+    { key },
     { $set: { category, title, author, cover } },
   );
 }
 
 /**
  * Delete a book
- * @param _id Book key
+ * @param key Book key
  * @returns Db result
  */
-export function removeBook (_id: string) {
-  return c.deleteOne ({ _id: new ObjectId (_id) });
+export function deleteBook (key: number) {
+  return c.deleteOne ({ key });
 }
 
 /**
  * Set requester for book
- * @param _id Book key
- * @param id Requester user name
- * @param requester Requester name
+ * @param key Book key
+ * @param requester Requester key
  * @returns Db result
  */
-export function setRequester (_id: string, id: string, requester: string) {
+export function setRequester (key: number, requester: number) {
   return c.updateOne (
-    { _id: new ObjectId (_id) },
-    { $set: { requesterId: id, requester } }
+    { key },
+    { $set: { requester } }
   );
 }
 
 /**
- * Get trade requester
- * @param _id Book key
- * @returns Requester info
+ * Execute trade of a book to a requester
+ * @param key Book key
  */
-export async function getRequester (_id: string): Promise <{ requesterId: string, requester: string}> {
-  const book = await c.findOne ({ _id: new ObjectId (_id) });
-  if (book) {
-    return ({ requesterId: book.requesterId, requester: book.requester });
-  } else {
-    return ({ requesterId: '', requester: '' });
-  }
-}
-
-/**
- * Execute trade of a book to the requester
- * @param _id Book key
- */
-export async function trade (_id: string): Promise<void> {
-  const book = await c.findOne ({ _id: new ObjectId (_id) });
+export async function trade (key: number): Promise<void> {
+  const book = await c.findOne ({ key });
   if (book) {
     await c.updateOne (
-      { _id: new ObjectId (_id) },
+      { key },
       { $set: {
-        ownerId: book.requesterId,
         owner: book.requester,
-        requesterId: '',
-        requester: '',
+        requester: 0,
       } }
     );
   }

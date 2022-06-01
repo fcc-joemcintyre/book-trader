@@ -16,7 +16,7 @@ export const EditBook = ({ book, onSave, onCancel }) => {
     const errors = validateAll ();
     if (!errors) {
       const { title, category, author, cover } = getValues ();
-      onSave ({ _id: book ? book._id : '', title, category, author, cover });
+      onSave ({ key: book ? book.key : 0, title, category, author, cover });
     }
     return errors;
   }, [book, getValues, onSave, validateAll]);
@@ -82,7 +82,7 @@ export const EditBook = ({ book, onSave, onCancel }) => {
 
 EditBook.propTypes = {
   book: PropTypes.shape ({
-    _id: PropTypes.string,
+    key: PropTypes.number,
     title: PropTypes.string,
     category: PropTypes.string,
     author: PropTypes.string,

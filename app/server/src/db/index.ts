@@ -1,18 +1,16 @@
-import { ObjectId } from 'mongodb';
 import { initDatabase, closeDatabase } from './db.js';
-import { getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
-  insertBook, removeBook, setRequester, trade, updateBook } from './books.js';
+import { createBook, deleteBook, getBook, getBooks, getBooksByOwner, getRequestedBooks,
+  setRequester, trade, updateBook } from './books.js';
 import { createUser, findUserByUsername, deleteUser } from './users.js';
 
 export type Book = {
-  _id?: ObjectId,
-  ownerId: string,
+  key: number,
+  owner: number,
   category: string,
   title: string,
   author: string,
   cover: string,
-  requesterId: string,
-  requester: string,
+  requester: number,
 };
 
 export type User = {
@@ -30,7 +28,7 @@ export type UserResult = {
 
 export {
   initDatabase, closeDatabase,
-  getBook, getBooks, getBooksByOwnerId, getRequestedBooks, getRequester,
-  insertBook, removeBook, setRequester, trade, updateBook,
+  createBook, deleteBook, getBook, getBooks, getBooksByOwner, getRequestedBooks,
+  setRequester, trade, updateBook,
   createUser, findUserByUsername, deleteUser,
 };

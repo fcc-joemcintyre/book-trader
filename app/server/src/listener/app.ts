@@ -4,19 +4,10 @@ import * as db from '../db/index.js';
 export async function createBook (req: Request, res: Response) {
   console.log ('INFO createBook', req.body.category, req.body.title, req.body.author, req.body.cover);
   const user = req.user as db.User;
-  const book = {
-    ownerId: user.username,
-    owner: user.username,
-    category: req.body.category,
-    title: req.body.title,
-    author: req.body.author,
-    cover: req.body.cover,
-    requesterId: '',
-    requester: '',
-  };
   try {
-    await db.insertBook (book);
-    res.status (200).json (book);
+    const { category, title, author, cover } = req.body;
+    const t = await db.createBook (user.key, category, title, author, cover);
+    res.status (200).json (t);
   } catch (err) {
     console.log ('ERROR', err);
     res.status (500).json ({});
@@ -24,10 +15,11 @@ export async function createBook (req: Request, res: Response) {
 }
 
 export async function updateBook (req: Request, res: Response) {
-  console.log ('INFO updateBook', req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
+  console.log ('INFO updateBook', req.params.key, req.body.category, req.body.title, req.body.author, req.body.cover);
   try {
-    await db.updateBook (req.params._id, req.body.category, req.body.title, req.body.author, req.body.cover);
-    const book = await db.getBook (req.params._id);
+    const key = Number (req.params.key);
+    await db.updateBook (key, req.body.category, req.body.title, req.body.author, req.body.cover);
+    const book = await db.getBook (key);
     res.status (200).json (book);
   } catch (err) {
     console.log ('  error', err);
@@ -38,7 +30,7 @@ export async function updateBook (req: Request, res: Response) {
 export async function deleteBook (req: Request, res: Response) {
   console.log ('INFO deleteBook', req.params._id);
   try {
-    await db.removeBook (req.params._id);
+    await db.deleteBook (Number (req.params.key));
     res.status (200).json ({});
   } catch (err) {
     console.log ('  error', err);
@@ -49,7 +41,7 @@ export async function deleteBook (req: Request, res: Response) {
 export async function getBook (req: Request, res: Response) {
   console.log ('INFO getBook');
   try {
-    const book = await db.getBook (req.params._id);
+    const book = await db.getBook (Number (req.params.key));
     if (book === null) {
       res.status (404).json ({});
     } else {
@@ -62,11 +54,12 @@ export async function getBook (req: Request, res: Response) {
 }
 
 export async function getBooks (req: Request, res: Response) {
-  console.log ('INFO getBooks', req.query.id);
+  console.log ('INFO getBooks', req.query.key);
   try {
     let books;
-    if (req.query && req.query.id && typeof req.query.id === 'string') {
-      books = await db.getBooksByOwnerId (req.query.id);
+    const key = Number (req.query.key);
+    if (!Number.isNaN (key)) {
+      books = await db.getBooksByOwner (key);
     } else {
       books = await db.getBooks ();
     }
@@ -79,10 +72,10 @@ export async function getBooks (req: Request, res: Response) {
 
 // get list of books that the authenticated user has requested
 export async function getRequestedBooks (req: Request, res: Response) {
-  console.log ('INFO getRequestedBooks', req.params);
+  console.log ('INFO getRequestedBooks');
   try {
     const user = req.user as db.User;
-    const books = await db.getRequestedBooks (user.username);
+    const books = await db.getRequestedBooks (user.key);
     res.status (200).json (books);
   } catch (err) {
     console.log ('  err', err);
@@ -93,28 +86,25 @@ export async function getRequestedBooks (req: Request, res: Response) {
 // add the authenticated user to list of book trade requesters for a book
 export async function createTradeRequest (req: Request, res: Response) {
   console.log ('INFO createTradeRequest');
-  const { _id } = req.params;
+  const key = Number (req.params.key);
   try {
-    const book = await db.getBook (_id);
+    const book = await db.getBook (key);
     if (book === null) {
       res.status (404).json ({});
       return;
     }
     // limit to one requester and book owner cannot add self as requester
     const user = req.user as db.User;
-    if (book.ownerId === user.username) {
+    if (book.owner === user.key) {
       res.status (400).json ({});
       return;
     }
-    if (book.requesterId) {
-      if (book.requesterId === user.username) {
-        res.status (200).json ({});
-      } else {
-        res.status (400).json ({});
-      }
-      return;
+    if (book.requester === user.key) {
+      res.status (200).json ({});
+    } else if (book.requester !== 0) {
+      res.status (400).json ({});
     }
-    await db.setRequester (_id, user.username, user.username);
+    await db.setRequester (key, user.key);
     res.status (200).json ();
   } catch (err) {
     console.log ('  err', err);
@@ -124,14 +114,14 @@ export async function createTradeRequest (req: Request, res: Response) {
 
 // remove the authenticated user from list of book trade requesters for a book
 export async function deleteTradeRequest (req: Request, res: Response) {
-  console.log ('INFO deleteTradeRequest', req.params);
-  const { _id } = req.params;
+  console.log ('INFO deleteTradeRequest');
+  const key = Number (req.params.key);
   try {
-    const book = await db.getBook (_id);
+    const book = await db.getBook (key);
     if (book === null) {
       res.status (404).json ({});
     } else {
-      await db.setRequester (_id, '', '');
+      await db.setRequester (key, 0);
       res.status (200).json ();
     }
   } catch (err) {
@@ -143,18 +133,18 @@ export async function deleteTradeRequest (req: Request, res: Response) {
 // trade book, changing owner and removing requester
 export async function executeTradeRequest (req: Request, res: Response) {
   console.log ('INFO executeTradeRequest');
-  const { _id } = req.params;
+  const key = Number (req.params.key);
   const user = req.user as db.User;
   try {
-    const book = await db.getBook (_id);
+    const book = await db.getBook (key);
     if (book === null) {
       res.status (404).json ({});
-    } else if (book.ownerId !== user.username) {
+    } else if (book.owner !== user.key) {
       res.status (400).json ({});
     } else {
-      await db.trade (_id);
-      const book2 = await db.getBook (_id);
-      res.status (200).json (book2);
+      await db.trade (key);
+      const t = await db.getBook (key);
+      res.status (200).json (t);
     }
   } catch (err) {
     console.log ('  err', err);

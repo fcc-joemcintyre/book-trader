@@ -13,7 +13,7 @@ export const RequestPage = () => {
   for (const book of books) {
     if (book.requesterId === user) {
       itemsRequested.push (
-        <tr key={book._id}>
+        <tr key={book.key}>
           <td className='r-title'>{book.title}</td>
           <td className='r-author'>{book.author}</td>
           <td className='r-owner'>{book.owner}</td>
@@ -30,7 +30,7 @@ export const RequestPage = () => {
       );
     } else if ((book.ownerId === user) && (book.requesterId !== '')) {
       itemsPending.push (
-        <tr key={book._id}>
+        <tr key={book.key}>
           <td className='r-title'>{book.title}</td>
           <td className='r-author'>{book.author}</td>
           <td className='r-requester'>{book.requester}</td>

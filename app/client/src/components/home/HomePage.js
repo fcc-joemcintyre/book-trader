@@ -31,7 +31,7 @@ export const HomePage = () => {
     if (include1 && include2) {
       items.push (
         <Book
-          key={book._id}
+          key={book.key}
           user={user}
           book={book}
           handleRequest={() => { dispatch (createTradeRequest (book)); }}

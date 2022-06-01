@@ -30,7 +30,7 @@ export const ManageBook = ({ book, onEditBook, onDeleteBook }) => {
           </Button>
           <Button
             type='button'
-            onClick={() => onDeleteBook (book._id)}
+            onClick={() => onDeleteBook (book.key)}
           >
             Delete
           </Button>
@@ -42,7 +42,7 @@ export const ManageBook = ({ book, onEditBook, onDeleteBook }) => {
 
 ManageBook.propTypes = {
   book: PropTypes.shape ({
-    _id: PropTypes.string,
+    key: PropTypes.number,
     cover: PropTypes.string,
     title: PropTypes.string,
     author: PropTypes.string,

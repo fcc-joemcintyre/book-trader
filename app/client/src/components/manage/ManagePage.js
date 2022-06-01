@@ -44,10 +44,10 @@ export const ManagePage = () => {
     if (book.ownerId === user) {
       items.push (
         <ManageBook
-          key={book._id}
+          key={book.key}
           book={book}
           onEditBook={onEdit}
-          onDeleteBook={(bookId) => { dispatch (deleteBook (bookId)); }}
+          onDeleteBook={(key) => { dispatch (deleteBook (key)); }}
         />
       );
     }

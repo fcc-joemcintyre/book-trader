@@ -14,8 +14,8 @@ export function setBooks () {
 }
 
 export function saveBook (book) {
-  if (book._id) {
-    return updateBook (book._id, book.category, book.title, book.author, book.cover);
+  if (book.key) {
+    return updateBook (book.key, book.category, book.title, book.author, book.cover);
   } else {
     return addBook (book.category, book.title, book.author, book.cover);
   }
@@ -34,9 +34,9 @@ export function addBook (category, title, author, cover) {
 }
 
 // update an existing book
-export function updateBook (_id, category, title, author, cover) {
+export function updateBook (key, category, title, author, cover) {
   return async (dispatch) => {
-    const res = await post (`/api/books/${_id}`, { category, title, author, cover });
+    const res = await post (`/api/books/${key}`, { category, title, author, cover });
     if (res.ok) {
       dispatch ({ type: UPDATE_BOOK, book: res.data });
       return res.data;
@@ -46,9 +46,9 @@ export function updateBook (_id, category, title, author, cover) {
 }
 
 // delete an existing book
-export function deleteBook (_id) {
+export function deleteBook (key) {
   return async (dispatch) => {
-    const res = await remove (`/api/books/${_id}`);
+    const res = await remove (`/api/books/${key}`);
     if (res.ok) {
       dispatch ({ type: SET_BOOKS, books: res.data });
       return res.data;
@@ -61,9 +61,9 @@ export function deleteBook (_id) {
 export function createTradeRequest (book) {
   return async (dispatch, getState) => {
     const { user } = getState ();
-    const res = await post (`/api/books/${book.id}/request`);
+    const res = await post (`/api/books/${book.key}/request`);
     if (res.ok) {
-      dispatch ({ type: SET_BOOK_REQUESTER, book, requesterId: user.username, requester: user.username });
+      dispatch ({ type: SET_BOOK_REQUESTER, book, requester: user.key });
       return;
     }
     throw res;
@@ -73,9 +73,9 @@ export function createTradeRequest (book) {
 // delete trade request
 export function deleteTradeRequest (book) {
   return async (dispatch) => {
-    const res = await remove (`/api/books/${book.id}/request`);
+    const res = await remove (`/api/books/${book.key}/request`);
     if (res.ok) {
-      dispatch ({ type: SET_BOOK_REQUESTER, book, requesterId: '', requester: '' });
+      dispatch ({ type: SET_BOOK_REQUESTER, book, requester: 0 });
       return;
     }
     throw res;
@@ -83,12 +83,12 @@ export function deleteTradeRequest (book) {
 }
 
 // execute trade
-export function executeTrade (input) {
+export function executeTrade (book) {
   return async (dispatch) => {
-    const res = await post (`/api/books/${input.id}/trade`);
+    const res = await post (`/api/books/${book.key}/trade`);
     if (res.ok) {
-      const { ownerId, owner, requesterId, requester } = res.data;
-      dispatch ({ type: UPDATE_BOOK, book: res.data, ownerId, owner, requesterId, requester });
+      const { owner, requester } = res.data;
+      dispatch ({ type: UPDATE_BOOK, book: res.data, owner, requester });
       return;
     }
     throw res;

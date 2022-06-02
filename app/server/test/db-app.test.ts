@@ -28,63 +28,73 @@ describe ('books', () => {
 
   describe ('query existing books', () => {
     it ('all should be found', async () => {
-      const data = await db.getBooks ();
-      expect (data).toBeAnArrayOfLength (6);
+      const t = await db.getBooks ();
+      expect (t.status).toEqual (200);
+      expect (t.books).toBeAnArrayOfLength (6);
     });
   });
 
   describe ('query existing books of a user', () => {
     it ('all should be found', async () => {
-      const data = await db.getBooksByOwner (1);
-      expect (data).toBeAnArrayOfLength (4);
+      const t = await db.getBooksByOwner (1);
+      expect (t.status).toEqual (200);
+      expect (t.books).toBeAnArrayOfLength (4);
     });
   });
 
   describe ('query books of non-existing id', () => {
     it ('should not be found', async () => {
-      const data = await db.getBooksByOwner (0);
-      expect (data).toBeAnArrayOfLength (0);
+      const t = await db.getBooksByOwner (0);
+      expect (t.status).toEqual (200);
+      expect (t.books).toBeAnArrayOfLength (0);
     });
   });
 
   describe ('add new book', () => {
     it ('should be created', async () => {
-      const result = await db.createBook (1, 'C', 'T', 'A', '');
-      expect (result).not.toBeNullish ();
+      const t = await db.createBook (1, 'C', 'T', 'A', '');
+      expect (t.status).toEqual (200);
+      expect (t.book).not.toBeNullish ();
     });
   });
 
   describe ('add requester', () => {
     it ('should show id added as requester', async () => {
-      await db.setRequester (1, 1);
-      const data = await db.getBook (1);
-      expect (data).not.toBeNullish ();
-      if (data) {
-        expect (data.requester).toEqual (1);
+      const t = await db.setRequester (1, 1);
+      expect (t.status).toEqual (200);
+      expect (t.book).not.toBeNullish ();
+      if (t.book) {
+        expect (t.book.requester).toEqual (1);
       }
     });
   });
 
   describe ('add duplicate requester', () => {
     it ('should show requester', async () => {
-      await db.setRequester (1, 1);
-      await db.setRequester (1, 1);
-      const data = await db.getBook (1);
-      expect (data).not.toBeNullish ();
-      if (data) {
-        expect (data.requester).toEqual (1);
+      const t1 = await db.setRequester (1, 1);
+      expect (t1.status).toEqual (200);
+      const t2 = await db.setRequester (1, 1);
+      expect (t2.status).toEqual (200);
+      const t = await db.getBook (1);
+      expect (t.status).toEqual (200);
+      expect (t.book).not.toBeNullish ();
+      if (t.book) {
+        expect (t.book.requester).toEqual (1);
       }
     });
   });
 
   describe ('add and remove requester', () => {
     it ('should show no requester', async () => {
-      await db.setRequester (1, 1);
-      await db.setRequester (1, 0);
-      const data = await db.getBook (1);
-      expect (data).not.toBeNullish ();
-      if (data) {
-        expect (data.requester).toEqual (0);
+      const t1 = await db.setRequester (1, 1);
+      expect (t1.status).toEqual (200);
+      const t2 = await db.setRequester (1, 0);
+      expect (t2.status).toEqual (200);
+      const t = await db.getBook (1);
+      expect (t.status).toEqual (200);
+      expect (t.book).not.toBeNullish ();
+      if (t.book) {
+        expect (t.book.requester).toEqual (0);
       }
     });
   });

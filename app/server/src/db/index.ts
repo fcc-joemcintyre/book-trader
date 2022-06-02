@@ -13,6 +13,16 @@ export type Book = {
   requester: number,
 };
 
+export type BookResult = {
+  status: number,
+  book?: Book,
+};
+
+export type BookArrayResult = {
+  status: number,
+  books?: Book[],
+};
+
 export type User = {
   key: number,
   email: string,

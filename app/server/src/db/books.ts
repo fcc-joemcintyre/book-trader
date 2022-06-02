@@ -1,5 +1,5 @@
 import { Collection, Db } from 'mongodb';
-import { Book } from './index.js';
+import { Book, BookArrayResult, BookResult } from './index.js';
 import { getNextSequence } from './counters.js';
 
 let c: Collection<Book>;
@@ -16,8 +16,9 @@ export function initBooks (db: Db): void {
  * Get all books
  * @returns Db result
  */
-export function getBooks () {
-  return c.find ().toArray ();
+export async function getBooks (): Promise<BookArrayResult> {
+  const t = await c.find ().toArray ();
+  return ({ status: 200, books: t });
 }
 
 /**
@@ -25,8 +26,9 @@ export function getBooks () {
  * @param owner Owner key
  * @returns Db result
  */
-export function getBooksByOwner (owner: number) {
-  return c.find ({ owner }).toArray ();
+export async function getBooksByOwner (owner: number): Promise<BookArrayResult> {
+  const t = await c.find ({ owner }).toArray ();
+  return ({ status: 200, books: t });
 }
 
 /**
@@ -34,8 +36,9 @@ export function getBooksByOwner (owner: number) {
  * @param requester requeter key
  * @returns Db result
  */
-export function getRequestedBooks (requester: number) {
-  return c.find ({ requesters: requester }).toArray ();
+export async function getRequestedBooks (requester: number): Promise<BookArrayResult> {
+  const t = await c.find ({ requester }).toArray ();
+  return ({ status: 200, books: t });
 }
 
 /**
@@ -43,8 +46,9 @@ export function getRequestedBooks (requester: number) {
  * @param key Book key
  * @returns Db result
  */
-export function getBook (key: number) {
-  return c.findOne ({ key });
+export async function getBook (key: number): Promise<BookResult> {
+  const t = await c.findOne ({ key });
+  return ({ status: t ? 200 : 404, book: t || undefined });
 }
 
 /**
@@ -56,16 +60,20 @@ export function getBook (key: number) {
  * @param cover URL of cover image
  * @returns Db result
  */
-export async function createBook (owner: number, category: string, title: string, author: string, cover: string) {
+export async function createBook (
+  owner: number, category: string, title: string, author: string, cover: string
+): Promise<BookResult> {
   const key = await getNextSequence ('books');
   if (key) {
     const t = await c.insertOne ({ key, owner, category, title, author, cover, requester: 0 });
     if (t.acknowledged) {
       const t1 = await c.findOne ({ key });
-      return (t1);
+      return ({ status: t1 ? 200 : 404, book: t1 || undefined });
+    } else {
+      return { status: 400 };
     }
   }
-  return null;
+  return { status: 400 };
 }
 
 /**
@@ -77,11 +85,19 @@ export async function createBook (owner: number, category: string, title: string
  * @param cover URL of cover image
  * @returns Db result
  */
-export function updateBook (key: number, category: string, title: string, author: string, cover: string) {
-  return c.updateOne (
+export async function updateBook (
+  key: number, category: string, title: string, author: string, cover: string
+): Promise<BookResult> {
+  const t = await c.findOneAndUpdate (
     { key },
     { $set: { category, title, author, cover } },
+    { returnDocument: 'after' },
   );
+  if (t.ok) {
+    return ({ status: 200, book: t.value || undefined });
+  } else {
+    return ({ status: 400 });
+  }
 }
 
 /**
@@ -89,8 +105,9 @@ export function updateBook (key: number, category: string, title: string, author
  * @param key Book key
  * @returns Db result
  */
-export function deleteBook (key: number) {
-  return c.deleteOne ({ key });
+export async function deleteBook (key: number): Promise<BookResult> {
+  const t = await c.deleteOne ({ key });
+  return ({ status: t.acknowledged ? 200 : 404 });
 }
 
 /**
@@ -99,26 +116,29 @@ export function deleteBook (key: number) {
  * @param requester Requester key
  * @returns Db result
  */
-export function setRequester (key: number, requester: number) {
-  return c.updateOne (
+export async function setRequester (key: number, requester: number): Promise<BookResult> {
+  const t = await c.findOneAndUpdate (
     { key },
-    { $set: { requester } }
+    { $set: { requester } },
+    { returnDocument: 'after' },
   );
+  return ({ status: t.ok ? 200 : 404, book: t.value || undefined });
 }
 
 /**
  * Execute trade of a book to a requester
  * @param key Book key
  */
-export async function trade (key: number): Promise<void> {
+export async function trade (key: number): Promise<BookResult> {
   const book = await c.findOne ({ key });
   if (book) {
-    await c.updateOne (
+    const t = await c.findOneAndUpdate (
       { key },
-      { $set: {
-        owner: book.requester,
-        requester: 0,
-      } }
+      { $set: { owner: book.requester, requester: 0 } },
+      { returnDocument: 'after' },
     );
+    return ({ status: t.ok ? 200 : 400, book: t.value || undefined });
+  } else {
+    return { status: 404 };
   }
 }

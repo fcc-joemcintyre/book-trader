@@ -217,6 +217,200 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Login (a)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('user key to be 4, username, email match', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data.username).to.eq ('a');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"a\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('verify book content', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        owner: 1,",
+							"        category: 'Test',",
+							"        title: 'Test Title',",
+							"        author: 'Author Test',",
+							"        cover: 'https://www.example.com/test.jpg',",
+							"        requester: 0,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"Test\",\n    \"title\": \"Test Title\",\n    \"author\": \"Author Test\",\n    \"cover\": \"https://www.example.com/test.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/books",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get books, verify addition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('book count to be 4', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (4);",
+							"})",
+							"",
+							"pm.test ('new book exists, with have expected data', () => {",
+							"    var data = pm.response.json ();",
+							"    var t = data.find ((a) => a.title === 'Test Title');",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        owner: 1,",
+							"        category: 'Test',",
+							"        title: 'Test Title',",
+							"        author: 'Author Test',",
+							"        cover: 'https://www.example.com/test.jpg',",
+							"        requester: 0,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/books",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout (a)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

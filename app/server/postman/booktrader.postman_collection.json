@@ -373,6 +373,116 @@
 			"response": []
 		},
 		{
+			"name": "Update book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated book content', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        owner: 1,",
+							"        category: 'Category U',",
+							"        title: 'Title U',",
+							"        author: 'Author U',",
+							"        cover: 'https://www.example.com/u.jpg',",
+							"        requester: 0,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"Category U\",\n    \"title\": \"Title U\",\n    \"author\": \"Author U\",\n    \"cover\": \"https://www.example.com/u.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/books/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get books, verify update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('book count to be 4', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (4);",
+							"})",
+							"",
+							"pm.test ('updated book exists, with have expected data', () => {",
+							"    var data = pm.response.json ();",
+							"    var t = data.find ((a) => a.title === 'Title U');",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        owner: 1,",
+							"        category: 'Category U',",
+							"        title: 'Title U',",
+							"        author: 'Author U',",
+							"        cover: 'https://www.example.com/u.jpg',",
+							"        requester: 0,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/books",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Logout (a)",
 			"event": [
 				{

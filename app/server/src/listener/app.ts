@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import * as db from '../db/index.js';
 
 export async function createBook (req: Request, res: Response) {
-  console.log ('INFO createBook', req.body.category, req.body.title, req.body.author, req.body.cover);
+  console.log ('INFO createBook');
   const user = req.user as db.User;
   try {
     const { category, title, author, cover } = req.body;
@@ -15,7 +15,7 @@ export async function createBook (req: Request, res: Response) {
 }
 
 export async function updateBook (req: Request, res: Response) {
-  console.log ('INFO updateBook', req.params.key, req.body.category, req.body.title, req.body.author, req.body.cover);
+  console.log ('INFO updateBook', req.params.key);
   try {
     const key = Number (req.params.key);
     const t = await db.updateBook (key, req.body.category, req.body.title, req.body.author, req.body.cover);
@@ -27,7 +27,7 @@ export async function updateBook (req: Request, res: Response) {
 }
 
 export async function deleteBook (req: Request, res: Response) {
-  console.log ('INFO deleteBook', req.params._id);
+  console.log ('INFO deleteBook', req.params.key);
   try {
     const t = await db.deleteBook (Number (req.params.key));
     res.status (t.status).json ({});

@@ -13,14 +13,14 @@ export function initRoutes (app: Application) {
   app.get ('/api/verifylogin', verifyLogin);
   app.post ('/api/register', register);
 
-  app.get ('/api/books/:_id', getBook);
+  app.get ('/api/books/:key', getBook);
   app.get ('/api/books', getBooks);
   app.post ('/api/books', isAuthenticated, createBook);
-  app.post ('/api/books/:_id/request', isAuthenticated, createTradeRequest);
-  app.delete ('/api/books/:_id/request', isAuthenticated, deleteTradeRequest);
-  app.post ('/api/books/:_id/trade', isAuthenticated, executeTradeRequest);
-  app.post ('/api/books/:_id', isAuthenticated, updateBook);
-  app.delete ('/api/books/:_id', isAuthenticated, deleteBook);
+  app.post ('/api/books/:key/request', isAuthenticated, createTradeRequest);
+  app.delete ('/api/books/:key/request', isAuthenticated, deleteTradeRequest);
+  app.post ('/api/books/:key/trade', isAuthenticated, executeTradeRequest);
+  app.post ('/api/books/:key', isAuthenticated, updateBook);
+  app.delete ('/api/books/:key', isAuthenticated, deleteBook);
   app.get ('/api/requests', isAuthenticated, getRequestedBooks);
 }
 

@@ -483,6 +483,89 @@
 			"response": []
 		},
 		{
+			"name": "Delete book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/books/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get books, verify delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('book count to be 3', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (3);",
+							"})",
+							"",
+							"pm.test ('deleted book does not exist', () => {",
+							"    var data = pm.response.json ();",
+							"    var t = data.find ((a) => a.title === 'Title U');",
+							"    pm.expect (t).to.be.undefined;",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/books",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Logout (a)",
 			"event": [
 				{

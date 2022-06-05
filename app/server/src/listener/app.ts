@@ -103,8 +103,8 @@ export async function createTradeRequest (req: Request, res: Response) {
     } else if (t.book.requester !== 0) {
       res.status (400).json ({});
     }
-    await db.setRequester (key, user.key);
-    res.status (200).json ();
+    const t1 = await db.setRequester (key, user.key);
+    res.status (t1.status).json (t1.book);
   } catch (err) {
     console.log ('  err', err);
     res.status (500).json ({});

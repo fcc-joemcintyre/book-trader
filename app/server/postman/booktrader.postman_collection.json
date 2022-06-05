@@ -483,6 +483,64 @@
 			"response": []
 		},
 		{
+			"name": "Request book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated book content', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 3,",
+							"        owner: 2,",
+							"        category: 'C1',",
+							"        title: 'T3',",
+							"        author: 'A A',",
+							"        cover: 'https://www.example.com/c.jpg',",
+							"        requester: 1,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/books/3/request",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"books",
+						"3",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete book",
 			"event": [
 				{

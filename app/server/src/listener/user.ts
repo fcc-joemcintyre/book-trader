@@ -5,7 +5,7 @@ import { validateLogin, validateRegister } from './validators.js';
 
 // Login, authenticating user and creating a session
 export function login (req: Request, res: Response, next: NextFunction) {
-  console.log ('INFO login', req.body);
+  console.log ('INFO login');
   if (validateLogin (req.body) === false) {
     console.log ('ERROR login (400) invalid body', validateLogin.errors);
     res.status (400).json ({});

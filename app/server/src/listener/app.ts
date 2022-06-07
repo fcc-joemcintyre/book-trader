@@ -95,13 +95,15 @@ export async function createTradeRequest (req: Request, res: Response) {
     // limit to one requester and book owner cannot add self as requester
     const user = req.user as db.User;
     if (t.book.owner === user.key) {
-      res.status (400).json ({});
+      res.status (400).json ({ error: 'mybook' });
       return;
     }
     if (t.book.requester === user.key) {
-      res.status (200).json ({});
+      res.status (200).json (t.book);
+      return;
     } else if (t.book.requester !== 0) {
-      res.status (400).json ({});
+      res.status (400).json ({ error: 'requested' });
+      return;
     }
     const t1 = await db.setRequester (key, user.key);
     res.status (t1.status).json (t1.book);

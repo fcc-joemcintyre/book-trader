@@ -136,7 +136,7 @@ export async function executeTradeRequest (req: Request, res: Response) {
     if (t.status !== 200 || t.book === undefined) {
       res.status (t.status).json ({});
     } else if (t.book.owner !== user.key) {
-      res.status (401).json ({});
+      res.status (403).json ({});
     } else {
       const t1 = await db.trade (key);
       res.status (t1.status).json (t1.book);

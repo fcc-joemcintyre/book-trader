@@ -70,7 +70,7 @@ async function resetDatabase () {
 
   const initialBooks: Book[] = [
     { key: 1, owner: 2, category: 'C1', title: 'T1', author: 'A A', cover: 'https://www.example.com/a.jpg', requester: 3 },
-    { key: 2, owner: 1, category: 'C2', title: 'T2', author: 'B B', cover: 'https://www.example.com/b.jpg', requester: 0 },
+    { key: 2, owner: 1, category: 'C2', title: 'T2', author: 'B B', cover: 'https://www.example.com/b.jpg', requester: 2 },
     { key: 3, owner: 2, category: 'C1', title: 'T3', author: 'A A', cover: 'https://www.example.com/c.jpg', requester: 0 },
   ];
 

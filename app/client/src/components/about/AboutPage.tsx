@@ -1,9 +1,8 @@
-import { Fragment } from 'react';
 import { Box, LinkExternal, PageContent, Text } from '../../../libs/uikit';
 import { Header } from '../header';
 
 export const AboutPage = () => (
-  <Fragment>
+  <>
     <Header />
     <PageContent>
       <Text as='h1' center>About BookTrader</Text>
@@ -38,5 +37,5 @@ export const AboutPage = () => (
         </Box>
       </Box>
     </PageContent>
-  </Fragment>
+  </>
 );

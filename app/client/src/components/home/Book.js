@@ -8,11 +8,11 @@ import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions'
 export const Book = ({ book }) => {
   const [cover, setCover] = useState (book.cover);
   const dispatch = useDispatch ();
-  const username = useSelector ((state) => state.user.username);
+  const user = useSelector ((state) => state.user.key);
 
   let buttonArea;
-  if ((username !== '') && (book.ownerId !== username)) {
-    if (book.requesterId === username) {
+  if ((user !== 0) && (book.owner !== user)) {
+    if (book.requester === user) {
       buttonArea = (
         <Box mt='10px' pr='4px' align='right'>
           <Button
@@ -23,7 +23,7 @@ export const Book = ({ book }) => {
           </Button>
         </Box>
       );
-    } else if (book.requesterId === '') {
+    } else if (book.requester === 0) {
       buttonArea = (
         <Box mt='10px' pr='4px' align='right'>
           <Button
@@ -63,7 +63,7 @@ export const Book = ({ book }) => {
           </FlexItem>
           <FlexItem>
             <Text as='span' right>
-              <Link to={`/?owner=${book.ownerId}`}>{book.owner}</Link>
+              <Link to={`/?owner=${book.owner}`}>{book.owner}</Link>
             </Text>
           </FlexItem>
         </Flex>
@@ -75,12 +75,11 @@ export const Book = ({ book }) => {
 
 Book.propTypes = {
   book: PropTypes.shape ({
-    requesterId: PropTypes.string,
+    owner: PropTypes.number,
     category: PropTypes.string,
-    ownerId: PropTypes.string,
-    cover: PropTypes.string,
     title: PropTypes.string,
     author: PropTypes.string,
-    owner: PropTypes.string,
+    cover: PropTypes.string,
+    requester: PropTypes.number,
   }).isRequired,
 };

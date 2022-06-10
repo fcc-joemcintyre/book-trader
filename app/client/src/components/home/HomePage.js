@@ -1,19 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { Box, Text } from '../../../libs/uikit';
-import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
 import { Header } from '../header';
 import { Book } from './Book';
 
 export const HomePage = () => {
-  const dispatch = useDispatch ();
   const user = useSelector ((state) => state.user);
   const books = useSelector ((state) => state.books);
   const location = useLocation ();
   const values = queryString.parse (location.search);
-  const { owner, category } = values;
+  const owner = Number (values.owner);
+  const { category } = values;
 
   let topMessage;
   if (!user.authenticated) {
@@ -26,16 +25,13 @@ export const HomePage = () => {
 
   const items = [];
   for (const book of books) {
-    const include1 = owner ? book.ownerId === owner : true;
+    const include1 = owner ? book.owner === owner : true;
     const include2 = category ? book.category === category : true;
     if (include1 && include2) {
       items.push (
         <Book
           key={book.key}
-          user={user}
           book={book}
-          handleRequest={() => { dispatch (createTradeRequest (book)); }}
-          handleCancelRequest={() => { dispatch (deleteTradeRequest (book)); }}
         />
       );
     }

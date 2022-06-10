@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '../../../libs/uikit';
+import { Book } from '../../store/api';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
 
-export const Book = ({ book }) => {
-  const [cover, setCover] = useState (book.cover);
-  const dispatch = useDispatch ();
-  const user = useSelector ((state) => state.user.key);
+type Props = {
+  book: Book,
+};
 
+export const BookCard = ({ book }: Props) => {
+  const [cover, setCover] = useState (book.cover);
+  const dispatch = useAppDispatch ();
+  const user = useAppSelector ((state) => state.user.key || 0);
   let buttonArea;
   if ((user !== 0) && (book.owner !== user)) {
     if (book.requester === user) {
@@ -71,15 +74,4 @@ export const Book = ({ book }) => {
       </Box>
     </Flex>
   );
-};
-
-Book.propTypes = {
-  book: PropTypes.shape ({
-    owner: PropTypes.number,
-    category: PropTypes.string,
-    title: PropTypes.string,
-    author: PropTypes.string,
-    cover: PropTypes.string,
-    requester: PropTypes.number,
-  }).isRequired,
 };

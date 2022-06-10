@@ -7,6 +7,16 @@ export type User = {
   email: string,
 };
 
+export type Book = {
+  key: number,
+  owner: number,
+  category: string,
+  title: string,
+  author: string,
+  cover: string,
+  requester: number,
+};
+
 export const api = createApi ({
   baseQuery: fetchBaseQuery ({ baseUrl: '/api' }),
   tagTypes: ['User'],

@@ -1,14 +1,15 @@
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { Box, Text } from '../../../libs/uikit';
+import { Book } from '../../store/api';
+import { useAppSelector } from '../../store/hooks';
 import { Header } from '../header';
-import { Book } from './Book';
+import { BookCard } from './BookCard';
 
 export const HomePage = () => {
-  const user = useSelector ((state) => state.user);
-  const books = useSelector ((state) => state.books);
+  const user = useAppSelector ((state) => state.user);
+  const books = useAppSelector ((state) => state.books) as Book[];
   const location = useLocation ();
   const values = queryString.parse (location.search);
   const owner = Number (values.owner);
@@ -23,13 +24,13 @@ export const HomePage = () => {
     );
   }
 
-  const items = [];
+  const items: JSX.Element[] = [];
   for (const book of books) {
     const include1 = owner ? book.owner === owner : true;
     const include2 = category ? book.category === category : true;
     if (include1 && include2) {
       items.push (
-        <Book
+        <BookCard
           key={book.key}
           book={book}
         />

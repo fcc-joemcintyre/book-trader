@@ -16,7 +16,7 @@ import { ScrollToTop } from './ScrollToTop';
 
 import { LoadingPage } from './LoadingPage';
 import { HomePage } from '../home';
-import { RequestPage } from '../request';
+import { Request } from '../request';
 import { ManagePage } from '../manage';
 import { NotFoundPage } from './NotFoundPage';
 import { AboutPage } from '../about';
@@ -69,7 +69,7 @@ export const App = () => {
             <Nav menu />
             <Routes>
               <Route path='/' element={<HomePage />} />
-              <Route path='/requests' element={<AuthRoute><RequestPage /></AuthRoute>} />
+              <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
               <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
               <Route path='/about' element={<AboutPage />} />
               <Route path='/logout' element={<Logout />} />

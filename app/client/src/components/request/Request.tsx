@@ -1,17 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Divider, Text } from '../../../libs/uikit';
+import { Book } from '../../store/api';
+import { RootState } from '../../store/store';
 import { deleteTradeRequest, executeTrade } from '../../store/bookActions';
 import { Header } from '../header';
 
-export const RequestPage = () => {
+export const Request = () => {
   const dispatch = useDispatch ();
-  const books = useSelector ((state) => state.books);
-  const user = useSelector ((state) => state.user.username);
+  const books = useSelector ((state: RootState) => state.books) as Book[];
+  const user = useSelector ((state: RootState) => state.user.key);
 
-  const itemsRequested = [];
-  const itemsPending = [];
+  const itemsRequested: JSX.Element[] = [];
+  const itemsPending: JSX.Element[] = [];
   for (const book of books) {
-    if (book.requesterId === user) {
+    if (book.requester === user) {
       itemsRequested.push (
         <tr key={book.key}>
           <td className='r-title'>{book.title}</td>
@@ -28,7 +30,7 @@ export const RequestPage = () => {
           </td>
         </tr>
       );
-    } else if ((book.ownerId === user) && (book.requesterId !== '')) {
+    } else if ((book.owner === user) && (book.requester !== 0)) {
       itemsPending.push (
         <tr key={book.key}>
           <td className='r-title'>{book.title}</td>

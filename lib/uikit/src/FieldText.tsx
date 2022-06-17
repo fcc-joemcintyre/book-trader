@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Box } from './Box';
-import { Text } from './Text';
-import { FieldLabel } from './FieldLabel';
-import { FieldElementStyle } from './FieldElementStyle';
-import { GridBoxElement } from './GridBoxElement';
+import { Box } from './Box.js';
+import { Text } from './Text.js';
+import { FieldLabel } from './FieldLabel.js';
+import { FieldElementStyle } from './FieldElementStyle.js';
+import { GridBoxElement } from './GridBoxElement.js';
 
 type Props = {
   id: string,

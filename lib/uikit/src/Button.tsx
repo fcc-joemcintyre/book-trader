@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, TBox } from './Box';
+import { Box, TBox } from './Box.js';
 
 export type TButton = TBox & {
   as?: string,

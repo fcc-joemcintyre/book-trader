@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MenuItem } from './MenuItem';
+import { MenuItem } from './MenuItem.js';
 
 export type TMenuFloating = {
   top?: string,

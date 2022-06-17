@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { MenuItem } from './MenuItem';
-import { MenuFloating } from './MenuFloating';
-import { MenuSpacer } from './MenuSpacer';
+import { MenuItem } from './MenuItem.js';
+import { MenuFloating } from './MenuFloating.js';
+import { MenuSpacer } from './MenuSpacer.js';
 
 type PropsSubMenuImpl = {
   text: string,

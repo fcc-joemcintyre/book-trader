@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex, TFlex } from './Flex';
+import { Flex, TFlex } from './Flex.js';
 
 export type TMenuBar = TFlex & {
   right: boolean,

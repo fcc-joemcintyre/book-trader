@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Field } from '@cygns/use-fields';
-import { Select } from './Select';
-import { GridBoxElement } from './GridBoxElement';
-import { FieldInfo } from './FieldInfo';
-import { FieldError } from './FieldError';
-import { FieldLabel } from './FieldLabel';
-import { FieldElementStyle } from './FieldElementStyle';
+import { Select } from './Select.js';
+import { GridBoxElement } from './GridBoxElement.js';
+import { FieldInfo } from './FieldInfo.js';
+import { FieldError } from './FieldError.js';
+import { FieldLabel } from './FieldLabel.js';
+import { FieldElementStyle } from './FieldElementStyle.js';
 
 type Props = {
   field: Field,

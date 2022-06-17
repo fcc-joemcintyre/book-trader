@@ -17,8 +17,8 @@ const Anchor = ({ to, children, ...rest }: TAnchor) => (
 );
 
 export type TLinkExternal = {
-  c: string,
-  tc: string,
+  c?: string,
+  tc?: string,
 };
 
 export const LinkExternal = styled (Anchor)<TLinkExternal>`

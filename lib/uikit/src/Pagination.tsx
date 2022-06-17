@@ -1,5 +1,5 @@
-import { Flex } from './Flex';
-import { Text } from './Text';
+import { Flex } from './Flex.js';
+import { Text } from './Text.js';
 
 type Props = {
   items: number,

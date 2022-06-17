@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Field } from '@cygns/use-fields';
-import { GridBoxElement } from './GridBoxElement';
-import { FieldInfo } from './FieldInfo';
-import { FieldError } from './FieldError';
-import { FieldElementStyle } from './FieldElementStyle';
-import { Text } from './Text';
+import { GridBoxElement } from './GridBoxElement.js';
+import { FieldInfo } from './FieldInfo.js';
+import { FieldError } from './FieldError.js';
+import { FieldElementStyle } from './FieldElementStyle.js';
+import { Text } from './Text.js';
 
 export type Props = {
   field: Field,

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Box } from './Box';
-import { MenuDropdownIcon } from './MenuDropdownIcon';
-import { MenuFloating } from './MenuFloating';
-import { MenuSpacer } from './MenuSpacer';
+import { Box } from './Box.js';
+import { MenuDropdownIcon } from './MenuDropdownIcon.js';
+import { MenuFloating } from './MenuFloating.js';
+import { MenuSpacer } from './MenuSpacer.js';
 
 type Props = {
   right?: boolean,

@@ -1,10 +1,10 @@
 /* eslint-disable no-use-before-define */
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Box } from './Box';
-import { Button } from './Button';
-import { Flex } from './Flex';
-import { Modal } from './Modal';
+import { Box } from './Box.js';
+import { Button } from './Button.js';
+import { Flex } from './Flex.js';
+import { Modal } from './Modal.js';
 
 type Props = {
   actions?: string[],

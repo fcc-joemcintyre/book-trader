@@ -1,0 +1,36 @@
+{
+  "name": "@cygns/use-fields",
+  "author": "Joe McIntyre (j_h_mcintyre@yahoo.com)",
+  "description": "React Hooks for Field Handling",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "license": "MIT",
+  "module": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha",
+    "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern ."
+  },
+  "devDependencies": {
+    "@cygns/eslint-config": "5.1.0",
+    "@types/mocha": "9.1.1",
+    "@types/react": "18.0.12",
+    "@types/react-dom": "18.0.5",
+    "@typescript-eslint/eslint-plugin": "5.26.0",
+    "@typescript-eslint/parser": "5.26.0",
+    "earljs": "0.2.3",
+    "eslint": "8.15.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-react": "7.29.4",
+    "eslint-plugin-react-hooks": "4.5.0",
+    "mocha": "10.0.0",
+    "ts-node": "10.8.0",
+    "typescript": "4.6.4"
+  }
+}

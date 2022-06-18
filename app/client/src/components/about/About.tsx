@@ -1,12 +1,12 @@
-import { Box, LinkExternal, PageContent, Text } from '../../../libs/uikit';
+import { Box, LinkExternal, PageContent, Text } from '@cygns/uikit';
 import { Header } from '../header';
 
-export const AboutPage = () => (
+export const About = () => (
   <>
     <Header />
     <PageContent>
       <Text as='h1' center>About BookTrader</Text>
-      <Box center noborder maxw='500px'>
+      <Box center maxw='500px'>
         <Text as='p'>
           Written by Joe McIntyre, BookTrader is a full stack project defined by FreeCodeCamp.
         </Text>

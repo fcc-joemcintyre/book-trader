@@ -19,7 +19,7 @@ import { HomePage } from '../home';
 import { Request } from '../request';
 import { ManagePage } from '../manage';
 import { NotFoundPage } from './NotFoundPage';
-import { AboutPage } from '../about';
+import { About } from '../about';
 import { Logout } from '../logout';
 
 export const App = () => {
@@ -71,7 +71,7 @@ export const App = () => {
               <Route path='/' element={<HomePage />} />
               <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
               <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
-              <Route path='/about' element={<AboutPage />} />
+              <Route path='/about' element={<About />} />
               <Route path='/logout' element={<Logout />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>

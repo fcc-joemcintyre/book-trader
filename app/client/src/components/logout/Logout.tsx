@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PageContent, Text } from '../../../libs/uikit';
+import { PageContent, Text } from '@cygns/uikit';
 import { useAppDispatch } from '../../store/hooks';
 import { useLogoutMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';

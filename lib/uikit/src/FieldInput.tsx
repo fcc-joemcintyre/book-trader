@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Field } from '@cygns/use-fields';
 import { GridBoxElement } from './GridBoxElement.js';
@@ -7,8 +6,9 @@ import { FieldError } from './FieldError.js';
 import { FieldLabel } from './FieldLabel.js';
 import { FieldElementStyle } from './FieldElementStyle.js';
 
-type Props = {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   field: Field,
+  type?: string,
   label?: string,
   span?: number,
   row?: boolean,
@@ -30,6 +30,7 @@ const StyledInput = styled.input`
 
 export const FieldInput = ({
   field,
+  type = 'text',
   label = '',
   span = 12,
   row = false,
@@ -47,7 +48,7 @@ export const FieldInput = ({
     <GridBoxElement span={span} row={row}>
       {showLabel && <FieldLabel htmlFor={field.name} required={field.required}>{label}</FieldLabel>}
       <StyledInput
-        type='text'
+        type={type}
         {...rest}
         id={field.name}
         name={field.name}

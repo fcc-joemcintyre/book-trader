@@ -15,7 +15,8 @@ export type TButton = TBox & {
   dbc?: string,
 };
 
-export const Button = styled (Box)<TButton>`
+export const Button = styled.button<TButton>`
+  ${Box}
   border-radius: 4px;
   cursor: pointer;
   text-transform: uppercase;

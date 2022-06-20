@@ -1,16 +1,30 @@
-import PropTypes from 'prop-types';
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '../../../libs/uikit';
-import { fieldPropTypes } from '../../../libs/use-fields';
+import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '@cygns/uikit';
+import { Field, FieldError } from '@cygns/use-fields';
+
+type Props = {
+  fields: {
+    username: Field,
+    password: Field,
+  },
+  onChange: React.ChangeEventHandler,
+  onValidate: React.FocusEventHandler,
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<FieldError[] | null>,
+  onCancel: () => void,
+}
 
 const passwordErrors = {
   length: 'Must be 4+ characters',
   format: 'Invalid characters',
 };
 
-export const LoginForm = ({ fields: { username, password }, onChange, onValidate, onSubmit, onCancel }) => (
+export const LoginForm = ({
+  fields: { username, password },
+  onChange, onValidate, onSubmit, onCancel,
+}: Props) => (
   <Modal>
     <Text as='h1' center>Login</Text>
     <form
+      noValidate
       onSubmit={async (e) => {
         const errors = await onSubmit (e);
         const el = document.getElementById (errors ? errors[0].name : username.name);
@@ -53,14 +67,3 @@ export const LoginForm = ({ fields: { username, password }, onChange, onValidate
     </form>
   </Modal>
 );
-
-LoginForm.propTypes = {
-  fields: PropTypes.shape ({
-    username: PropTypes.shape (fieldPropTypes).isRequired,
-    password: PropTypes.shape (fieldPropTypes).isRequired,
-  }).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onValidate: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};

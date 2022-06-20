@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@cygns/use-fields": "0.0.1",
     "@cygns/uikit": "0.0.1",
     "@cygns/validators": "0.0.1",
     "@reduxjs/toolkit": "1.8.2",

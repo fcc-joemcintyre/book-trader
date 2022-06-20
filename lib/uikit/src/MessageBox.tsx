@@ -11,7 +11,7 @@ type Props = {
   closeAction?: string,
   content: React.ReactNode,
   data?: unknown,
-  onClose: (closeAction: string, data: unknown) => void,
+  onClose?: (closeAction: string, data: unknown) => void,
 };
 
 export const MessageBox = ({

@@ -13,7 +13,7 @@ module.exports = {
     },
   },
   entry: {
-    app: './src/components/app/index.js',
+    app: './src/components/app/index.tsx',
   },
   output: {
     filename: '[name].bundle.js',

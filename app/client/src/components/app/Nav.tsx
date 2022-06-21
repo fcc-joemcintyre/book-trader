@@ -1,8 +1,7 @@
-import { Fragment, useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from '../../../libs/uikit';
+import { MenuBar, MenuDropdown, MenuItem, MenuSeparator, MenuSubmenu, Text } from '@cygns/uikit';
 import { useAppSelector } from '../../store/hooks';
 import { Login } from '../login';
 import { Register } from '../register';
@@ -14,8 +13,12 @@ const StyledMenuDropdown = styled (MenuDropdown)`
   margin-right: 8px;
 `;
 
-export const Nav = ({ menu }) => {
-  const [dialog, setDialog] = useState (null);
+type Props = {
+  menu: boolean,
+};
+
+export const Nav = ({ menu }: Props) => {
+  const [dialog, setDialog] = useState<JSX.Element | null> (null);
   const [innerWidth, setInnerWidth] = useState (window.innerWidth);
   const navigate = useNavigate ();
   const authenticated = useAppSelector ((a) => a.user.authenticated);
@@ -34,8 +37,8 @@ export const Nav = ({ menu }) => {
   }, [setDialog]);
 
   const menus = (innerWidth < 420) ? (
-    <StyledMenuDropdown m='10px 8px 0 4px' spacer={8}>
-      <MenuItem as={NavLink} to='/' exact>All</MenuItem>
+    <StyledMenuDropdown>
+      <MenuItem as={NavLink} to='/'>All</MenuItem>
       { authenticated && <MenuItem as={NavLink} to='/requests'>Requests</MenuItem> }
       { authenticated && <MenuItem as={NavLink} to='/manage'>Manage</MenuItem> }
       <MenuItem as={NavLink} to='/about'>About</MenuItem>
@@ -66,7 +69,7 @@ export const Nav = ({ menu }) => {
   );
 
   return (
-    <Fragment>
+    <>
       <Container>
         <Content>
           {menu && innerWidth < 420 && menus}
@@ -75,12 +78,8 @@ export const Nav = ({ menu }) => {
         </Content>
       </Container>
       { dialog }
-    </Fragment>
+    </>
   );
-};
-
-Nav.propTypes = {
-  menu: PropTypes.bool.isRequired,
 };
 
 export const Container = styled.div`

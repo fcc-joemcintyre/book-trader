@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -14,11 +14,11 @@ import { Nav } from './Nav';
 import { setBooks } from '../../store/bookActions';
 import { ScrollToTop } from './ScrollToTop';
 
-import { LoadingPage } from './LoadingPage';
+import { Loading } from './Loading';
 import { HomePage } from '../home';
 import { Request } from '../request';
 import { ManagePage } from '../manage';
-import { NotFoundPage } from './NotFoundPage';
+import { NotFound } from './NotFound';
 import { About } from '../about';
 import { Logout } from '../logout';
 
@@ -49,13 +49,13 @@ export const App = () => {
   if (loading) {
     return (
       <ThemeProvider theme={theme}>
-        <Fragment>
+        <>
           <GlobalStyle />
           <BrowserRouter>
             <Nav menu={false} />
           </BrowserRouter>
-          <LoadingPage message={message} />
-        </Fragment>
+          <Loading message={message} />
+        </>
       </ThemeProvider>
     );
   }
@@ -64,7 +64,7 @@ export const App = () => {
     <BrowserRouter>
       <ScrollToTop>
         <ThemeProvider theme={theme}>
-          <Fragment>
+          <>
             <GlobalStyle />
             <Nav menu />
             <Routes>
@@ -73,9 +73,9 @@ export const App = () => {
               <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
               <Route path='/about' element={<About />} />
               <Route path='/logout' element={<Logout />} />
-              <Route path='*' element={<NotFoundPage />} />
+              <Route path='*' element={<NotFound />} />
             </Routes>
-          </Fragment>
+          </>
         </ThemeProvider>
       </ScrollToTop>
     </BrowserRouter>

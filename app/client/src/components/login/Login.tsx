@@ -1,5 +1,4 @@
-import { Fragment, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import { isPassword } from '@cygns/validators';
 import { createField, useFields } from '@cygns/use-fields';
 import { MessageBox } from '@cygns/uikit';
@@ -13,7 +12,11 @@ const initialFields = [
   createField ('password', '', true, [isPassword]),
 ];
 
-export const Login = ({ onClose }) => {
+type Props = {
+  onClose: () => void,
+};
+
+export const Login = ({ onClose }: Props) => {
   const dispatch = useAppDispatch ();
   const [login] = useLoginMutation ();
 
@@ -54,7 +57,7 @@ export const Login = ({ onClose }) => {
   }, [dispatch, getValues, login, onClose, onCloseModal, setDialog, validateAll]);
 
   return (
-    <Fragment>
+    <>
       <LoginForm
         fields={{
           username: fields.username,
@@ -66,10 +69,6 @@ export const Login = ({ onClose }) => {
         onCancel={onClose}
       />
       {dialog}
-    </Fragment>
+    </>
   );
-};
-
-Login.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };

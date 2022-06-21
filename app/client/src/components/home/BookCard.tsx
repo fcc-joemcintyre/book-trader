@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '../../../libs/uikit';
+import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '@cygns/uikit';
 import { Book } from '../../store/api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
@@ -48,6 +48,7 @@ export const BookCard = ({ book }: Props) => {
         src={cover}
         h='80px'
         w='auto'
+        crossOrigin='anonymous'
         onError={() => {
           setCover (`${location.origin}/images/image404-75.png`);
         }}

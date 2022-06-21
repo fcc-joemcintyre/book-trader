@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Box, TBox } from './Box.js';
 
 export type TDivider = TBox & {
-  extend: string,
+  extend?: string,
 };
 
 export const Divider = styled (Box)<TDivider>`

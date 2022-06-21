@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
-import { Box, Text } from '../../../libs/uikit';
+import { Box, Text } from '@cygns/uikit';
 import { Book } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
 import { Header } from '../header';

@@ -1,8 +1,7 @@
-import { Fragment, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
-import { createField, useFields } from '../../../libs/use-fields';
 import { useLoginMutation, useRegisterMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
 import { setAuthenticated } from '../../store/userSlice';
@@ -34,8 +33,11 @@ const initialFields = [
   createField ('verifyPassword', '', true, [isPassword, isPasswordChars]),
 ];
 
+type Props = {
+  onClose: () => void,
+};
 
-export const Register = ({ onClose }) => {
+export const Register = ({ onClose }: Props) => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
   const navigate = useNavigate ();
   const dispatch = useAppDispatch ();
@@ -46,10 +48,10 @@ export const Register = ({ onClose }) => {
     e.preventDefault ();
     const errors = validateAll ();
     if (!errors) {
-      const { email, username, password } = getValues ();
+      const { email, username, password } = getValues () as { email: string, username: string, password: string };
       await register ({ email, username, password });
-      const user = await login ({ username, password });
-      await dispatch (setAuthenticated (user));
+      const user = await login ({ username, password }).unwrap ();
+      await dispatch (setAuthenticated ({ ...user, authenticated: true }));
       onClose ();
       navigate ('/', { replace: true });
     }
@@ -57,23 +59,24 @@ export const Register = ({ onClose }) => {
   }, [dispatch, getValues, login, navigate, onClose, register, validateAll]);
 
   return (
-    <Fragment>
+    <>
       <RegisterForm
         isLoading={isLoading}
         isError={isError}
         isSuccess={isSuccess}
         isLogin={isLogin}
         isLoginError={isLoginError}
-        fields={fields}
+        fields={{
+          email: fields.email,
+          username: fields.username,
+          password: fields.password,
+          verifyPassword: fields.verifyPassword,
+        }}
         onChange={onChange}
         onValidate={onValidate}
         onSubmit={onSubmit}
         onCancel={onClose}
       />
-    </Fragment>
+    </>
   );
-};
-
-Register.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };

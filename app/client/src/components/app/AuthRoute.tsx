@@ -3,10 +3,10 @@ import { useAppSelector } from '../../store/hooks';
 import { Login } from '../login';
 
 type Props = {
-  children: React.ReactNode,
+  children: JSX.Element,
 };
 
-export const AuthRoute = ({ children }: Props) => {
+export const AuthRoute = ({ children }: Props): JSX.Element => {
   const authenticated = useAppSelector ((a) => a.user.authenticated);
   const navigate = useNavigate ();
 

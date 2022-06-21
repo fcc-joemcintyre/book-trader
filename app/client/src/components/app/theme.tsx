@@ -35,42 +35,8 @@ const colorsCyanTheme = {
   barColor: '#b0c4de',
 };
 
-const colorsGrayTheme = {
-  text: '#000000',
-  navText: '#000000',
-  navColor: '#a9a9a9',
-  buttonText: '#ffffff',
-  buttonBG: '#a9a9a9',
-  buttonBorder: '#333333',
-  dButtonText: '#dedede',
-  dButtonBG: '#a9a9a9',
-  dButtonBorder: '#333333',
-  hButtonText: '#ffffff',
-  hButtonBG: '#7f7f7f',
-  hButtonBorder: '#333333',
-  sButtonText: '#ffffff',
-  sButtonBG: '#0000ff',
-  sButtonBorder: '#0000ff',
-  sdButtonText: '#ffffff',
-  sdButtonBG: '#00ff00',
-  sdButtonBorder: '#00ff00',
-  shButtonText: '#ffffff',
-  shButtonBG: '#00007f',
-  shButtonBorder: '#0000ff',
-  divider: '#000000',
-  tableColorEven: '#cccccc',
-  tableColorOdd: '#eeeeee',
-  tableColorBorderHover: '#f7f7f7',
-  barColor: '#aaaaaa',
-  tabColor: '#ffffff',
-  tabTextColor: '#000000',
-  tabSelectedColor: '#0000ff',
-  tabTextSelectedColor: '#ffffff',
-  tabLineColor: '#0000ff',
-};
-
-export function getTheme (name) {
-  const colors = (name === 'gray') ? colorsGrayTheme : colorsCyanTheme;
+export function getTheme () {
+  const colors = colorsCyanTheme;
   return generateTheme (colors);
 }
 

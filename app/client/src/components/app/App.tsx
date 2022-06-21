@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -27,7 +27,6 @@ export const App = () => {
   const appDispatch = useAppDispatch ();
   const [verifyLogin] = useVerifyLoginMutation ();
 
-  const themeName = useSelector ((a) => a.user.theme || 'base');
   const [loading, setLoading] = useState (true);
   const [message, setMessage] = useState ('Loading ...');
 
@@ -45,7 +44,7 @@ export const App = () => {
     }) ();
   }, [dispatch, appDispatch, verifyLogin]);
 
-  const theme = getTheme (themeName);
+  const theme = getTheme ();
   if (loading) {
     return (
       <ThemeProvider theme={theme}>

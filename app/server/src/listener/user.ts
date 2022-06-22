@@ -49,17 +49,19 @@ export function verifyLogin (req: Request, res: Response) {
   console.log ('INFO verifyLogin');
   let message: {
     authenticated: boolean,
-    user: { key: number, username: string, email: string} | null
-  } = { authenticated: false, user: null };
+    key?: number,
+    username?: string,
+    email?: string
+  } = {
+    authenticated: false,
+  };
   if (req.isAuthenticated ()) {
     const user = req.user as db.User;
     message = {
       authenticated: true,
-      user: {
-        key: user.key,
-        username: user.username,
-        email: user.email,
-      },
+      key: user.key,
+      username: user.username,
+      email: user.email,
     };
     console.log ('INFO verified', user.username);
   } else {

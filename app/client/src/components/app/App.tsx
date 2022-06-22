@@ -17,7 +17,7 @@ import { ScrollToTop } from './ScrollToTop';
 import { Loading } from './Loading';
 import { HomePage } from '../home';
 import { Request } from '../request';
-import { ManagePage } from '../manage';
+import { Manage } from '../manage';
 import { NotFound } from './NotFound';
 import { About } from '../about';
 import { Logout } from '../logout';
@@ -69,7 +69,7 @@ export const App = () => {
             <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
-              <Route path='/manage' element={<AuthRoute><ManagePage /></AuthRoute>} />
+              <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
               <Route path='/about' element={<About />} />
               <Route path='/logout' element={<Logout />} />
               <Route path='*' element={<NotFound />} />

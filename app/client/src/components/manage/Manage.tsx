@@ -1,29 +1,34 @@
 import { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Box, Button, MessageBox, Text } from '../../../libs/uikit';
+import { Box, Button, MessageBox, Text } from '@cygns/uikit';
+import { Book } from '../../store/api';
 import { saveBook, deleteBook } from '../../store/bookActions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Header } from '../header';
 import { ManageBook } from './ManageBook';
 import { EditBook } from './EditBook';
 
-export const ManagePage = () => {
-  const dispatch = useDispatch ();
-  const books = useSelector ((state) => state.books);
-  const user = useSelector ((state) => state.user.username);
-  const [mb, setMB] = useState (null);
-  const [dialog, setDialog] = useState (null);
+export const Manage = () => {
+  const dispatch = useAppDispatch ();
+  const books = useAppSelector ((state) => state.books) as Book[];
+  const user = useAppSelector ((state) => state.user.key);
+  const [mb, setMB] = useState<JSX.Element | null> (null);
+  const [dialog, setDialog] = useState<JSX.Element | null> (null);
+
+  const onClose = useCallback (() => {
+    setMB (null);
+  }, [setMB]);
 
   const onSave = useCallback (async (book) => {
-    setMB ({ content: 'Saving book' });
+    setMB (<MessageBox content='Saving book' />);
     try {
       await dispatch (saveBook (book));
-      setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Book saved' });
+      setMB (<MessageBox actions={['Close']} closeAction='Close' content='Book saved' onClose={onClose} />);
     } catch (err) {
-      setMB ({ actions: ['Close'], closeAction: 'Close', content: 'Error saving book' });
+      setMB (<MessageBox actions={['Close']} closeAction='Close' content='Error saving book' onClose={onClose} />);
     }
     setDialog (null);
-  }, [dispatch, setMB]);
+  }, [dispatch, onClose, setMB]);
 
   const onEdit = useCallback ((book) => {
     setDialog (
@@ -39,9 +44,9 @@ export const ManagePage = () => {
     onEdit (null);
   }, [onEdit]);
 
-  const items = [];
+  const items: JSX.Element[] = [];
   for (const book of books) {
-    if (book.ownerId === user) {
+    if (book.owner === user) {
       items.push (
         <ManageBook
           key={book.key}
@@ -70,14 +75,7 @@ export const ManagePage = () => {
           {items}
         </Grid>
       </Box>
-      { mb && (
-        <MessageBox
-          actions={mb.actions}
-          closeAction={mb.closeAction}
-          content={mb.content}
-          onClose={() => setMB (null)}
-        />
-      )}
+      { mb }
       {dialog}
     </>
   );

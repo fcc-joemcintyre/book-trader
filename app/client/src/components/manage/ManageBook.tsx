@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Button, Divider, Flex, Image, Text } from '../../../libs/uikit';
+import { Box, Button, Divider, Flex, Image, Text } from '@cygns/uikit';
+import { Book } from '../../store/api';
 
-export const ManageBook = ({ book, onEditBook, onDeleteBook }) => {
+type Props = {
+  book: Book,
+  onEditBook: (book: Book) => void,
+  onDeleteBook: (key: number) => void,
+};
+
+export const ManageBook = ({ book, onEditBook, onDeleteBook }: Props) => {
   const [cover, setCover] = useState (book.cover);
   return (
     <Flex b='1px solid #dddddd' br='4px'>
@@ -38,16 +44,4 @@ export const ManageBook = ({ book, onEditBook, onDeleteBook }) => {
       </Box>
     </Flex>
   );
-};
-
-ManageBook.propTypes = {
-  book: PropTypes.shape ({
-    key: PropTypes.number,
-    cover: PropTypes.string,
-    title: PropTypes.string,
-    author: PropTypes.string,
-    category: PropTypes.string,
-  }).isRequired,
-  onEditBook: PropTypes.func.isRequired,
-  onDeleteBook: PropTypes.func.isRequired,
 };

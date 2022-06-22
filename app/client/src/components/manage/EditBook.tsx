@@ -1,9 +1,16 @@
 import { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '../../../libs/uikit';
-import { createField, useFields } from '../../../libs/use-fields';
+import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '@cygns/uikit';
+import { createField, useFields } from '@cygns/use-fields';
+import { Book } from '../../store/api';
 
-export const EditBook = ({ book, onSave, onCancel }) => {
+type Props = {
+  book: Book | null,
+  onSave: ({ key, category, title, author, cover }:
+    { key: number, category: string, title: string, author: string, cover: string }) => void,
+  onCancel: () => void,
+};
+
+export const EditBook = ({ book = null, onSave, onCancel }: Props) => {
   const initial = [
     createField ('title', book ? book.title : '', true),
     createField ('category', book ? book.category : '', true),
@@ -15,8 +22,9 @@ export const EditBook = ({ book, onSave, onCancel }) => {
   const onSaveBook = useCallback (() => {
     const errors = validateAll ();
     if (!errors) {
-      const { title, category, author, cover } = getValues ();
-      onSave ({ key: book ? book.key : 0, title, category, author, cover });
+      const { category, title, author, cover } = getValues () as
+        { category: string, title: string, author: string, cover: string };
+      onSave ({ key: book ? book.key : 0, category, title, author, cover });
     }
     return errors;
   }, [book, getValues, onSave, validateAll]);
@@ -78,20 +86,4 @@ export const EditBook = ({ book, onSave, onCancel }) => {
       </Modal>
     </>
   );
-};
-
-EditBook.propTypes = {
-  book: PropTypes.shape ({
-    key: PropTypes.number,
-    title: PropTypes.string,
-    category: PropTypes.string,
-    author: PropTypes.string,
-    cover: PropTypes.string,
-  }),
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
-
-EditBook.defaultProps = {
-  book: null,
 };

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '@cygns/uikit';
-import { Book } from '../../store/api';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { createTradeRequest, deleteTradeRequest } from '../../store/bookActions';
+import { Book, useCreateTradeRequestMutation, useDeleteTradeRequestMutation } from '../../store/api';
+import { useAppSelector } from '../../store/hooks';
 
 type Props = {
   book: Book,
@@ -11,8 +10,10 @@ type Props = {
 
 export const BookCard = ({ book }: Props) => {
   const [cover, setCover] = useState (book.cover);
-  const dispatch = useAppDispatch ();
   const user = useAppSelector ((state) => state.user.key || 0);
+  const [createTradeRequest] = useCreateTradeRequestMutation ();
+  const [deleteTradeRequest] = useDeleteTradeRequestMutation ();
+
   let buttonArea;
   if ((user !== 0) && (book.owner !== user)) {
     if (book.requester === user) {
@@ -20,7 +21,7 @@ export const BookCard = ({ book }: Props) => {
         <Box mt='10px' pr='4px' align='right'>
           <Button
             type='button'
-            onClick={() => { dispatch (deleteTradeRequest (book)); }}
+            onClick={() => { deleteTradeRequest ({ key: book.key }); }}
           >
             Cancel Request
           </Button>
@@ -32,7 +33,7 @@ export const BookCard = ({ book }: Props) => {
           <Button
             type='button'
             onClick={() => {
-              dispatch (createTradeRequest (book));
+              createTradeRequest ({ key: book.key });
             }}
           >
             Request Book

@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from './api';
-import books from './books';
+import { bookSlice } from './bookSlice';
 import { userSlice } from './userSlice';
 
 export const store = configureStore ({
   reducer: {
     [api.reducerPath]: api.reducer,
     user: userSlice.reducer,
-    books,
+    books: bookSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware ().concat (api.middleware),
 });

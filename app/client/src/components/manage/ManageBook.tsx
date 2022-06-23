@@ -16,6 +16,7 @@ export const ManageBook = ({ book, onEditBook, onDeleteBook }: Props) => {
         src={cover}
         h='80px'
         w='auto'
+        crossOrigin='anonymous'
         onError={() => {
           setCover (`${location.origin}/images/image404-75.png`);
         }}

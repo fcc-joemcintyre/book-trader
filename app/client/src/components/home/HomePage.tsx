@@ -2,14 +2,15 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { Box, Text } from '@cygns/uikit';
-import { Book } from '../../store/api';
+import { useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
 import { Header } from '../header';
 import { BookCard } from './BookCard';
 
 export const HomePage = () => {
   const user = useAppSelector ((state) => state.user);
-  const books = useAppSelector ((state) => state.books) as Book[];
+  const { data: books, isLoading } = useGetBooksQuery ();
+
   const location = useLocation ();
   const values = queryString.parse (location.search);
   const owner = Number (values.owner);
@@ -25,16 +26,18 @@ export const HomePage = () => {
   }
 
   const items: JSX.Element[] = [];
-  for (const book of books) {
-    const include1 = owner ? book.owner === owner : true;
-    const include2 = category ? book.category === category : true;
-    if (include1 && include2) {
-      items.push (
-        <BookCard
-          key={book.key}
-          book={book}
-        />
-      );
+  if (!isLoading && books) {
+    for (const book of books) {
+      const include1 = owner ? book.owner === owner : true;
+      const include2 = category ? book.category === category : true;
+      if (include1 && include2) {
+        items.push (
+          <BookCard
+            key={book.key}
+            book={book}
+          />
+        );
+      }
     }
   }
 

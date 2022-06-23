@@ -1,17 +1,18 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Box, Button, MessageBox, Text } from '@cygns/uikit';
-import { Book } from '../../store/api';
-import { saveBook, deleteBook } from '../../store/bookActions';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Book, useCreateBookMutation, useDeleteBookMutation, useGetBooksQuery, useUpdateBookMutation } from '../../store/api';
+import { useAppSelector } from '../../store/hooks';
 import { Header } from '../header';
 import { ManageBook } from './ManageBook';
 import { EditBook } from './EditBook';
 
 export const Manage = () => {
-  const dispatch = useAppDispatch ();
-  const books = useAppSelector ((state) => state.books) as Book[];
   const user = useAppSelector ((state) => state.user.key);
+  const { data: books, isLoading } = useGetBooksQuery ();
+  const [createBook] = useCreateBookMutation ();
+  const [deleteBook] = useDeleteBookMutation ();
+  const [updateBook] = useUpdateBookMutation ();
   const [mb, setMB] = useState<JSX.Element | null> (null);
   const [dialog, setDialog] = useState<JSX.Element | null> (null);
 
@@ -19,18 +20,22 @@ export const Manage = () => {
     setMB (null);
   }, [setMB]);
 
-  const onSave = useCallback (async (book) => {
+  const onSave = useCallback (async (book: Book) => {
     setMB (<MessageBox content='Saving book' />);
     try {
-      await dispatch (saveBook (book));
+      if (book.key === 0) {
+        await createBook (book);
+      } else {
+        await updateBook (book);
+      }
       setMB (<MessageBox actions={['Close']} closeAction='Close' content='Book saved' onClose={onClose} />);
     } catch (err) {
       setMB (<MessageBox actions={['Close']} closeAction='Close' content='Error saving book' onClose={onClose} />);
     }
     setDialog (null);
-  }, [dispatch, onClose, setMB]);
+  }, [createBook, onClose, setMB, updateBook]);
 
-  const onEdit = useCallback ((book) => {
+  const onEdit = useCallback ((book: Book | null) => {
     setDialog (
       <EditBook
         book={book}
@@ -45,16 +50,18 @@ export const Manage = () => {
   }, [onEdit]);
 
   const items: JSX.Element[] = [];
-  for (const book of books) {
-    if (book.owner === user) {
-      items.push (
-        <ManageBook
-          key={book.key}
-          book={book}
-          onEditBook={onEdit}
-          onDeleteBook={(key) => { dispatch (deleteBook (key)); }}
-        />
-      );
+  if (!isLoading && books) {
+    for (const book of books) {
+      if (book.owner === user) {
+        items.push (
+          <ManageBook
+            key={book.key}
+            book={book}
+            onEditBook={onEdit}
+            onDeleteBook={(key) => { deleteBook ({ key }); }}
+          />
+        );
+      }
     }
   }
 
@@ -75,7 +82,7 @@ export const Manage = () => {
           {items}
         </Grid>
       </Box>
-      { mb }
+      {mb}
       {dialog}
     </>
   );

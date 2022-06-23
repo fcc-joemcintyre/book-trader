@@ -11,7 +11,6 @@ import { getTheme } from './theme';
 import { GlobalStyle } from './GlobalStyle';
 import { AuthRoute } from './AuthRoute';
 import { Nav } from './Nav';
-import { setBooks } from '../../store/bookActions';
 import { ScrollToTop } from './ScrollToTop';
 
 import { Loading } from './Loading';
@@ -35,7 +34,6 @@ export const App = () => {
       try {
         const user = await verifyLogin ().unwrap ();
         await appDispatch (setAuthenticated (user));
-        await dispatch (setBooks ());
         setLoading (false);
         setMessage ('');
       } catch (err) {

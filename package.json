@@ -18,7 +18,7 @@
     "lib/validators"
   ],
   "dependencies": {
-    "nodemon": "2.0.16"
+    "nodemon": "2.0.18"
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf lib/uikit/lib && rm -rf lib/use-fields/lib && rm -rf lib/validators/lib",

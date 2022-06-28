@@ -1,4 +1,3 @@
-import { expect } from 'earljs';
 import { init, reducer } from '../lib/useFieldsReducer.js';
 import { createField } from '../lib/helpers.js';
 

@@ -1,4 +1,3 @@
-import { expect } from 'earljs';
 import {
   inDate, inInteger, inIntegerArray, outBoolean, outDate, outDateISO, outDateString, outInteger,
   outIntegerArray, outString, outStringArray, outTrim, outTrimArray,

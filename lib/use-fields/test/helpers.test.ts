@@ -1,4 +1,3 @@
-import { expect } from 'earljs';
 import { createField } from '../lib/helpers.js';
 
 describe ('helpers', function () {
@@ -20,7 +19,7 @@ describe ('helpers', function () {
     expect (t.name).toEqual ('name');
     expect (t.initial).toEqual ('in');
     expect (t.required).toEqual (true);
-    expect (t.validators).toBeAnArrayOfLength (2);
+    expect (t.validators).toHaveLength (2);
     expect (t.validators[0]).toEqual (noop);
     expect (t.validators[1]).toEqual (noop);
     expect (t.formatOut).toEqual (noop);

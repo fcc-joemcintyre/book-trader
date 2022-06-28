@@ -1,0 +1,35 @@
+// Vitest Snapshot v1
+
+exports[`Badge > empty badge 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bczRLJ fJyYec"
+    />
+  </div>
+</body>
+`;
+
+exports[`Badge > numbered badge 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bczRLJ fJyYec"
+    >
+      7
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Badge > numbered badge, white on red 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bczRLJ kUKtus"
+    >
+      7
+    </div>
+  </div>
+</body>
+`;

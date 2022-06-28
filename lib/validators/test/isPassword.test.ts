@@ -1,16 +1,15 @@
-import { expect } from 'earljs';
 import { isPassword } from '../src/isPassword.js';
 
 describe ('isPassword', () => {
   it ('valid', () => {
-    expect (isPassword ('abcdef')).toEqual (null);
+    expect (isPassword ('abcdef')).toBe (null);
   });
 
   it ('invalid length', () => {
-    expect (isPassword ('abc')).toEqual ('length');
+    expect (isPassword ('abc')).toBe ('length');
   });
 
   it ('invalid content', () => {
-    expect (isPassword ('abc>def')).toEqual ('format');
+    expect (isPassword ('abc>def')).toBe ('format');
   });
 });

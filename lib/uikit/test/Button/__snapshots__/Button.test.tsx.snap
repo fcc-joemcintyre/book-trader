@@ -1,0 +1,36 @@
+// Vitest Snapshot v1
+
+exports[`Button > button with text 1`] = `
+<body>
+  <div>
+    <button
+      class="sc-gsnTZi dHDNxA"
+    >
+      Action
+    </button>
+  </div>
+</body>
+`;
+
+exports[`Button > empty button 1`] = `
+<body>
+  <div>
+    <button
+      class="sc-gsnTZi dHDNxA"
+    />
+  </div>
+</body>
+`;
+
+exports[`Button > submit button 1`] = `
+<body>
+  <div>
+    <button
+      class="sc-gsnTZi hWWFwV"
+      type="submit"
+    >
+      Action
+    </button>
+  </div>
+</body>
+`;

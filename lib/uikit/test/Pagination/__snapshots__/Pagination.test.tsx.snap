@@ -1,0 +1,26 @@
+// Vitest Snapshot v1
+
+exports[`Pagination > 2 elements, first is current 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bczRLJ sc-gsnTZi bTcrmt dlUnJU"
+    >
+      <div
+        class="sc-dkzDqf iGumvi"
+        cursor="pointer"
+      >
+        &lt;
+      </div>
+      <div
+        class="sc-dkzDqf fpkzJG"
+        cursor="pointer"
+      >
+        <strong>
+          2
+        </strong>
+      </div>
+    </div>
+  </div>
+</body>
+`;

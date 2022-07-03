@@ -7,10 +7,47 @@ exports[`Pagination > 2 elements, first is current 1`] = `
       class="sc-bczRLJ sc-gsnTZi bTcrmt dlUnJU"
     >
       <div
+        class="sc-dkzDqf hjJIeP"
+        cursor="default"
+      >
+        &lt;
+      </div>
+      <div
+        class="sc-dkzDqf fpkzJG"
+        cursor="pointer"
+      >
+        <strong>
+          1
+        </strong>
+      </div>
+      <div
         class="sc-dkzDqf iGumvi"
         cursor="pointer"
       >
+        2
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Pagination > 2 elements, second is current 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bczRLJ sc-gsnTZi bTcrmt dlUnJU"
+    >
+      <div
+        class="sc-dkzDqf hjJIeP"
+        cursor="default"
+      >
         &lt;
+      </div>
+      <div
+        class="sc-dkzDqf iGumvi"
+        cursor="pointer"
+      >
+        1
       </div>
       <div
         class="sc-dkzDqf fpkzJG"

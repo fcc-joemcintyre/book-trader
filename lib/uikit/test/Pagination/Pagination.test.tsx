@@ -10,7 +10,15 @@ describe ('Pagination', () => {
   it ('2 elements, first is current', () => {
     const { baseElement } = render (
       <ThemeProvider theme={theme}>
-        <Pagination items={20} pageItems={10} visible={5} first={1} current={1} onChange={() => { /* no op */ }} />
+        <Pagination items={20} pageItems={10} visible={5} first={0} current={0} onChange={() => { /* no op */ }} />
+      </ThemeProvider>
+    );
+    expect (baseElement).toMatchSnapshot ();
+  });
+  it ('2 elements, second is current', () => {
+    const { baseElement } = render (
+      <ThemeProvider theme={theme}>
+        <Pagination items={20} pageItems={10} visible={5} first={0} current={1} onChange={() => { /* no op */ }} />
       </ThemeProvider>
     );
     expect (baseElement).toMatchSnapshot ();

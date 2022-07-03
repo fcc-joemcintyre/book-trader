@@ -3,7 +3,6 @@
   "author": "Joe McIntyre (j_h_mcintyre@yahoo.com)",
   "description": "React UI Library",
   "private": true,
-  "type": "module",
   "version": "0.0.1",
   "license": "MIT",
   "module": "./lib/index.js",

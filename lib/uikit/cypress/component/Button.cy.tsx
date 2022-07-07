@@ -13,5 +13,14 @@ describe ('Button.cy.ts', () => {
         <Button>Ok</Button>
       </ThemeProvider>
     );
+    cy.get ('button').should ('contain.text', 'Ok');
+  });
+  it ('default submit button', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <Button type='submit'>Ok</Button>
+      </ThemeProvider>
+    );
+    cy.get ('button').should ('contain.text', 'Ok');
   });
 });

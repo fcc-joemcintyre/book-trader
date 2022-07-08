@@ -20,7 +20,8 @@
     "test": "vitest run",
     "test-update": "vitest run -u",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern ."
+    "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern .",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "@cygns/eslint-config": "5.1.0",

@@ -1,52 +1,46 @@
 import styled from 'styled-components';
-import { Colors, TColors } from './sharedStyles.js';
 
-export type TButton = TColors & {
-  as?: string,
-  s?: string,
-  v?: string,
-  type?: string,
-  bc?: string,
-  hc?: string,
-  hbg?: string,
-  hbc?: string,
-  dc?: string,
-  dbg?: string,
-  dbc?: string,
+export type TButton = {
+  variant?: 'solid' | 'outline',
+  type: 'button' | 'submit',
+  size?: 'xs' | 'sm' | 'md' | 'lg',
+  fullWidth?: boolean,
+  colors?: {
+    text?: string,
+    bg?: string,
+    border?: string,
+    hover?: string,
+    disabled?: string,
+  }
 };
 
 export const Button = styled.button<TButton>`
-  ${({ theme, v, type }) => {
-    let base: string = v && theme.variant[v];
+  ${({ theme, variant, type }) => {
+    let base: string = variant && theme.variant[variant];
     if (!base) {
       base = type === 'submit' ? theme.variant.buttonSubmit : theme.variant.buttonDefault;
     }
     return base;
   }}
-
-  ${Colors}
+  ${({ theme, size }) => (theme.buttonSize[size || 'md'])}}
 
   border-radius: 4px;
   cursor: pointer;
   text-transform: uppercase;
-  ${({ theme, s, bc, hc, hbg, hbc, dc, dbg, dbc }) => (`
-    ${(s && theme.buttonSize[s]) || theme.buttonSize.normal}
-    ${bc && `border-color: ${bc};`}
+
+  ${({ fullWidth, colors }) => (`
+    ${colors?.text && `color: ${colors.text};`}
+    ${colors?.bg && `color: ${colors.bg};`}
+    ${colors?.border && `border-color: ${colors.border};`}
 
     &:hover {
-      ${hc && `color: ${hc};`}
-      ${hbg && `background-color: ${hbg};`}
-      ${hbc && `border-color: ${hbc};`}
+      ${colors?.hover && `background-color: ${colors.hover}};`}
     }
 
     &:disabled {
-      ${dc && `color: ${dc};`}
-      ${dbg && `background-color: ${dbg};`}
-      ${dbc && `border-color: ${dbc};`}
+      ${colors?.disabled && `background-color: ${colors.disabled};`}
     }
-  `)}
 
-  ${({ s }) => (s === 'wide') && `
-    width: 100%;
-  `};
+    ${(fullWidth && 'width: 100%')}
+  `)}
 `;

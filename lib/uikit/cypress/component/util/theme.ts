@@ -76,16 +76,20 @@ function generateTheme (colors) {
     },
 
     buttonSize: {
-      normal: `
-        font-size: 16px;
-        padding: 4px 8px;
-      `,
-      small: `
-        font-size: 12px;
+      xs: `
+        font-size: 0.75rem;
         padding: 2px 4px;
       `,
-      large: `
-        font-size: 16px;
+      sm: `
+        font-size: 1rem;
+        padding: 4px 8px;
+      `,
+      md: `
+        font-size: 1.25rem;
+        padding: 6px 12px;
+      `,
+      lg: `
+        font-size: 1.5rem;
         padding: 6px 12px;
       `,
     },

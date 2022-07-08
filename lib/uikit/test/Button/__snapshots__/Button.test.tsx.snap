@@ -4,7 +4,7 @@ exports[`Button > button with text 1`] = `
 <body>
   <div>
     <button
-      class="sc-bczRLJ fYqWZU"
+      class="sc-bczRLJ bcjrqL"
     >
       Action
     </button>
@@ -16,7 +16,7 @@ exports[`Button > empty button 1`] = `
 <body>
   <div>
     <button
-      class="sc-bczRLJ fYqWZU"
+      class="sc-bczRLJ bcjrqL"
     />
   </div>
 </body>
@@ -26,7 +26,7 @@ exports[`Button > submit button 1`] = `
 <body>
   <div>
     <button
-      class="sc-bczRLJ jdbWoZ"
+      class="sc-bczRLJ cHjjOe"
       type="submit"
     >
       Action

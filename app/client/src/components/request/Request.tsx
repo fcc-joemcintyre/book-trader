@@ -21,6 +21,7 @@ export const Request = () => {
             <td className='r-owner'>{book.owner}</td>
             <td className='r-action'>
               <Button
+                type='button'
                 onClick={() => { deleteTradeRequest ({ key: book.key }); }}
               >
                 Cancel
@@ -36,11 +37,13 @@ export const Request = () => {
             <td className='r-requester'>{book.requester}</td>
             <td className='r-action'>
               <Button
+                type='button'
                 onClick={() => { executeTrade ({ key: book.key }); }}
               >
                 Approve
               </Button>
               <Button
+                type='button'
                 onClick={() => { deleteTradeRequest ({ key: book.key }); }}
               >
                 Decline

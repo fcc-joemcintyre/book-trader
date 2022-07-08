@@ -1,10 +1,11 @@
-import { defineConfig } from "cypress";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { defineConfig } from 'cypress';
 
-export default defineConfig({
+export default defineConfig ({
   component: {
     devServer: {
-      framework: "react",
-      bundler: "vite",
+      framework: 'react',
+      bundler: 'vite',
     },
   },
 });

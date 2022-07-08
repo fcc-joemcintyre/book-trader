@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Box, TBox } from './Box.js';
+import { Colors, TColors } from './sharedStyles.js';
 
-export type TButton = TBox & {
+export type TButton = TColors & {
   as?: string,
   s?: string,
   v?: string,
@@ -16,10 +16,6 @@ export type TButton = TBox & {
 };
 
 export const Button = styled.button<TButton>`
-  ${Box}
-  border-radius: 4px;
-  cursor: pointer;
-  text-transform: uppercase;
   ${({ theme, v, type }) => {
     let base: string = v && theme.variant[v];
     if (!base) {
@@ -27,10 +23,14 @@ export const Button = styled.button<TButton>`
     }
     return base;
   }}
-  ${({ theme, s, c, bg, bc, hc, hbg, hbc, dc, dbg, dbc }) => (`
+
+  ${Colors}
+
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  ${({ theme, s, bc, hc, hbg, hbc, dc, dbg, dbc }) => (`
     ${(s && theme.buttonSize[s]) || theme.buttonSize.normal}
-    ${c && `color: ${c};`}
-    ${bg && `background-color: ${bg};`}
     ${bc && `border-color: ${bc};`}
 
     &:hover {

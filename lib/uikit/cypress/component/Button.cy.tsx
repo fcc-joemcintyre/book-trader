@@ -7,10 +7,10 @@ import { Button } from '../../src/Button';
 import { theme } from './util/theme';
 
 describe ('Button.cy.ts', () => {
-  it ('default button', () => {
+  it.only ('default button', () => {
     mount (
       <ThemeProvider theme={theme}>
-        <Button>Ok</Button>
+        <Button c='#00ff00'>Ok</Button>
       </ThemeProvider>
     );
     cy.get ('button').should ('contain.text', 'Ok');

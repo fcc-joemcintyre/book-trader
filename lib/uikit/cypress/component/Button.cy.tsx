@@ -30,5 +30,6 @@ describe ('Button.cy.ts', () => {
       </ThemeProvider>
     );
     cy.get ('button').should ('contain.text', 'Ok');
+    cy.get ('button').should ('have.css', 'background-color', 'rgb(0, 0, 255)');
   });
 });

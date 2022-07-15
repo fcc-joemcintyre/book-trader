@@ -17,4 +17,44 @@ describe ('Divider', () => {
     );
     cy.get ('div > div').should ('have.css', 'width', '100px');
   });
+  it ('divider in padded div, default', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <div
+          data-testid='container'
+          style={{
+            boxSizing: 'border-box',
+            width: '100px',
+            height: '100px',
+            padding: '4px',
+            border: '1px solid black',
+          }}
+        >
+          <Divider data-testid='divider' />
+        </div>
+      </ThemeProvider>
+    );
+    cy.get ('[data-testid="container"]').should ('have.css', 'width', '100px');
+    cy.get ('[data-testid="divider"]').should ('have.css', 'width', '90px');
+  });
+  it ('divider in padded div, default', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <div
+          data-testid='container'
+          style={{
+            boxSizing: 'border-box',
+            width: '100px',
+            height: '100px',
+            padding: '4px',
+            border: '1px solid black',
+          }}
+        >
+          <Divider data-testid='divider' extend='4px' />
+        </div>
+      </ThemeProvider>
+    );
+    cy.get ('[data-testid="container"]').should ('have.css', 'width', '100px');
+    cy.get ('[data-testid="divider"]').should ('have.css', 'width', '98px');
+  });
 });

@@ -17,4 +17,36 @@ describe ('Text', () => {
     );
     cy.get ('[data-testid="text"]').should ('contain', 'Some text');
   });
+  it ('text named fontsize xxsmall', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <div>
+          <Text
+            data-testid='text'
+            fs='xxsmall'
+          >
+            Some text
+          </Text>
+        </div>
+      </ThemeProvider>
+    );
+    cy.get ('[data-testid="text"]').should ('contain', 'Some text');
+    cy.get ('[data-testid="text"]').should ('have.css', 'font-size', '10px');
+  });
+  it ('text named fontsize xxlarge', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <div>
+          <Text
+            data-testid='text'
+            fs='xxlarge'
+          >
+            Some text
+          </Text>
+        </div>
+      </ThemeProvider>
+    );
+    cy.get ('[data-testid="text"]').should ('contain', 'Some text');
+    cy.get ('[data-testid="text"]').should ('have.css', 'font-size', '26px');
+  });
 });

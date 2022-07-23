@@ -31,6 +31,9 @@ describe ('Pagination.cy.ts', () => {
 
     cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '700');
     cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '400');
   });
   it ('should show first five pages, third selected', () => {
     mount (
@@ -47,8 +50,31 @@ describe ('Pagination.cy.ts', () => {
       </ThemeProvider>
     );
 
+    cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '400');
     cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
     cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '700');
     cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '400');
+  });
+  it ('should show first five pages, last selected', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <Pagination
+          data-testid='pagination'
+          items={100}
+          pageItems={10}
+          visible={5}
+          first={0}
+          current={4}
+          onChange={() => { /* no op */ }}
+        />
+      </ThemeProvider>
+    );
+
+    cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '700');
   });
 });

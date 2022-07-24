@@ -10,19 +10,19 @@ describe ('Badge', () => {
   it ('default badge', () => {
     mount (
       <ThemeProvider theme={theme}>
-        <Badge>1</Badge>
+        <Badge data-testid='badge'>1</Badge>
       </ThemeProvider>
     );
-    cy.get ('div').should ('contain.text', '1');
+    cy.get ('[data-testid="badge"]').should ('contain.text', '1');
   });
   it ('custom color badge', () => {
     mount (
       <ThemeProvider theme={theme}>
-        <Badge c='yellow' bg='red'>1</Badge>
+        <Badge data-testid='badge' c='yellow' bg='red'>1</Badge>
       </ThemeProvider>
     );
-    cy.get ('div').should ('contain.text', '1');
-    cy.get ('div > div').should ('have.css', 'color', 'rgb(255, 255, 0)');
-    cy.get ('div > div').should ('have.css', 'background-color', 'rgb(255, 0, 0)');
+    cy.get ('[data-testid="badge"]').should ('contain.text', '1');
+    cy.get ('[data-testid="badge"]').should ('have.css', 'color', 'rgb(255, 255, 0)');
+    cy.get ('[data-testid="badge"]').should ('have.css', 'background-color', 'rgb(255, 0, 0)');
   });
 });

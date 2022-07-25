@@ -10,7 +10,7 @@ describe ('Button.cy.ts', () => {
   it ('regular buttons', () => {
     mount (
       <ThemeProvider theme={theme}>
-        <Button type='button'>Default</Button>
+        <Button data-testid='button' type='button'>Default</Button>
         <span style={{ marginLeft: '10px' }} />
         <Button type='button' size='xs'>xs</Button>
         <span style={{ marginLeft: '10px' }} />
@@ -21,15 +21,15 @@ describe ('Button.cy.ts', () => {
         <Button type='button' size='lg'>lg</Button>
       </ThemeProvider>
     );
-    cy.get ('button').should ('contain.text', 'Default');
+    cy.get ('[data-testid="button"]').should ('contain.text', 'Default');
   });
   it ('default submit button', () => {
     mount (
       <ThemeProvider theme={theme}>
-        <Button type='submit'>Ok</Button>
+        <Button data-testid='button' type='submit'>Ok</Button>
       </ThemeProvider>
     );
-    cy.get ('button').should ('contain.text', 'Ok');
-    cy.get ('button').should ('have.css', 'background-color', 'rgb(0, 0, 255)');
+    cy.get ('[data-testid="button"]').should ('contain.text', 'Ok');
+    cy.get ('[data-testid="button"]').should ('have.css', 'background-color', 'rgb(0, 0, 255)');
   });
 });

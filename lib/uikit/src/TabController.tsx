@@ -55,10 +55,11 @@ type TabProps = {
   children: React.ReactNode,
 };
 
-export const Tab = ({ value, children }: TabProps) => (
+export const Tab = ({ value, children, ...rest }: TabProps) => (
   <Consumer>
     {({ activeValue, onSelect }) => (
       <TabLabel
+        {...rest}
         selected={value === activeValue}
         onClick={() => onSelect (value)}
       >

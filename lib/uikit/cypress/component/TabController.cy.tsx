@@ -6,6 +6,13 @@ import { ThemeProvider } from 'styled-components';
 import { Tab, TabContainer, TabController, TabPanel } from '../../src';
 import { theme } from './util/theme';
 
+const tab0 = '[data-testid=tab0]';
+const tab1 = '[data-testid=tab1]';
+const tab2 = '[data-testid=tab2]';
+const tabpanel0 = '[data-testid=tabpanel0]';
+const tabpanel1 = '[data-testid=tabpanel1]';
+const tabpanel2 = '[data-testid=tabpanel2]';
+
 describe ('TabController.cy.ts', () => {
   it ('basic tabs', () => {
     mount (
@@ -51,7 +58,25 @@ describe ('TabController.cy.ts', () => {
         </TabController>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="tab0"]').should ('contain', 'Tab 0');
-    cy.get ('[data-testid="tabpanel0"]').should ('contain', 'TabPanel 0');
+    cy.get (tab0).should ('contain', 'Tab 0');
+    cy.get (tab1).should ('contain', 'Tab 1');
+    cy.get (tab2).should ('contain', 'Tab 2');
+
+    cy.get (tab0).should ('have.css', 'background-color', 'rgb(0, 0, 255)');
+    cy.get (tab1).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tab2).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tabpanel0).should ('contain', 'TabPanel 0');
+
+    cy.get (tab1).click ();
+    cy.get (tab0).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tab1).should ('have.css', 'background-color', 'rgb(0, 0, 255)');
+    cy.get (tab2).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tabpanel1).should ('contain', 'TabPanel 1');
+
+    cy.get (tab2).click ();
+    cy.get (tab0).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tab1).should ('have.css', 'background-color', 'rgb(255, 255, 255)');
+    cy.get (tab2).should ('have.css', 'background-color', 'rgb(0, 0, 255)');
+    cy.get (tabpanel2).should ('contain', 'TabPanel 2');
   });
 });

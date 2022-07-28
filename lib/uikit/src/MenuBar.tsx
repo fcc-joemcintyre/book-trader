@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Flex, TFlex } from './Flex.js';
 
 export type TMenuBar = TFlex & {
-  right: boolean,
+  right?: boolean,
 };
 
 export const MenuBar = styled (Flex)<TMenuBar>`

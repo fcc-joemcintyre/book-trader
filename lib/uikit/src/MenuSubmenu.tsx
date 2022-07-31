@@ -73,8 +73,9 @@ export const MenuSubmenu = ({
   spacer = '2px',
   className = '',
   children,
+  ...rest
 }: Props) => (
-  <StyledMenuItem as={SubMenuImpl} text={text} right={right} spacer={spacer} className={className}>
+  <StyledMenuItem as={SubMenuImpl} text={text} right={right} spacer={spacer} className={className} {...rest}>
     {children}
   </StyledMenuItem>
 );

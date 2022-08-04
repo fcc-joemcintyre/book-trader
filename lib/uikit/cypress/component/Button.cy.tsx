@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import { Button } from '../../src/Button';
 import { theme } from './util/theme';
 
+const button = '[data-testid=button]';
+
 describe ('Button.cy.ts', () => {
   it ('regular buttons', () => {
     mount (
@@ -21,7 +23,7 @@ describe ('Button.cy.ts', () => {
         <Button type='button' size='lg'>lg</Button>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="button"]').should ('contain.text', 'Default');
+    cy.get (button).should ('contain.text', 'Default');
   });
   it ('default submit button', () => {
     mount (
@@ -29,7 +31,7 @@ describe ('Button.cy.ts', () => {
         <Button data-testid='button' type='submit'>Ok</Button>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="button"]').should ('contain.text', 'Ok');
-    cy.get ('[data-testid="button"]').should ('have.css', 'background-color', 'rgb(0, 0, 255)');
+    cy.get (button).should ('contain.text', 'Ok');
+    cy.get (button).should ('have.css', 'background-color', 'rgb(0, 0, 255)');
   });
 });

@@ -6,16 +6,19 @@ import { ThemeProvider } from 'styled-components';
 import { Divider } from '../../src';
 import { theme } from './util/theme';
 
+const container = '[data-testid=container]';
+const divider = '[data-testid=divider]';
+
 describe ('Divider', () => {
   it ('default divider', () => {
     mount (
       <ThemeProvider theme={theme}>
         <div style={{ width: '100px', height: '100px' }}>
-          <Divider />
+          <Divider data-testid='divider' />
         </div>
       </ThemeProvider>
     );
-    cy.get ('div > div').should ('have.css', 'width', '100px');
+    cy.get (divider).should ('have.css', 'width', '100px');
   });
   it ('divider in padded div, default', () => {
     mount (
@@ -34,8 +37,8 @@ describe ('Divider', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="container"]').should ('have.css', 'width', '100px');
-    cy.get ('[data-testid="divider"]').should ('have.css', 'width', '90px');
+    cy.get (container).should ('have.css', 'width', '100px');
+    cy.get (divider).should ('have.css', 'width', '90px');
   });
   it ('divider in padded div, default', () => {
     mount (
@@ -54,7 +57,7 @@ describe ('Divider', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="container"]').should ('have.css', 'width', '100px');
-    cy.get ('[data-testid="divider"]').should ('have.css', 'width', '98px');
+    cy.get (container).should ('have.css', 'width', '100px');
+    cy.get (divider).should ('have.css', 'width', '98px');
   });
 });

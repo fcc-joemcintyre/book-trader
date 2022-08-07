@@ -6,7 +6,10 @@ import { ThemeProvider } from 'styled-components';
 import { MenuBar, MenuItem, MenuSubmenu } from '../../src';
 import { theme } from './util/theme';
 
-describe ('Badge', () => {
+const menubar = '[data-testid=menubar]';
+const submenu = '[data-testid=submenu]';
+
+describe ('MenuBar', () => {
   it ('simple menu bar', () => {
     mount (
       <ThemeProvider theme={theme}>
@@ -18,8 +21,8 @@ describe ('Badge', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Item 1');
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Item 2');
+    cy.get (menubar).should ('contain.text', 'Item 1');
+    cy.get (menubar).should ('contain.text', 'Item 2');
   });
   it ('menu bar sub menu', () => {
     mount (
@@ -35,12 +38,12 @@ describe ('Badge', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Item 1');
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Item 2');
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Submenu');
-    cy.get ('[data-testid="menubar"]').should ('not.contain.text', 'Item 3');
+    cy.get (menubar).should ('contain.text', 'Item 1');
+    cy.get (menubar).should ('contain.text', 'Item 2');
+    cy.get (menubar).should ('contain.text', 'Submenu');
+    cy.get (menubar).should ('not.contain.text', 'Item 3');
 
-    cy.get ('[data-testid="submenu"]').click ();
-    cy.get ('[data-testid="menubar"]').should ('contain.text', 'Item 3');
+    cy.get (submenu).click ();
+    cy.get (menubar).should ('contain.text', 'Item 3');
   });
 });

@@ -6,7 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import { MenuDropdown, MenuItem } from '../../src';
 import { theme } from './util/theme';
 
-describe ('Badge', () => {
+const menu = '[data-testid=menu]';
+
+describe ('MenuDropdown', () => {
   it ('simple menu dropdown', () => {
     mount (
       <ThemeProvider theme={theme}>
@@ -18,11 +20,11 @@ describe ('Badge', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="menu"]').should ('not.contain.text', 'Item 1');
-    cy.get ('[data-testid="menu"]').should ('not.contain.text', 'Item 2');
+    cy.get (menu).should ('not.contain.text', 'Item 1');
+    cy.get (menu).should ('not.contain.text', 'Item 2');
 
-    cy.get ('[data-testid="menu"]').click ();
-    cy.get ('[data-testid="menu"]').should ('contain.text', 'Item 1');
-    cy.get ('[data-testid="menu"]').should ('contain.text', 'Item 2');
+    cy.get (menu).click ();
+    cy.get (menu).should ('contain.text', 'Item 1');
+    cy.get (menu).should ('contain.text', 'Item 2');
   });
 });

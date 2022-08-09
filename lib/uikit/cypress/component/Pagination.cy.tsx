@@ -6,7 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import { Pagination } from '../../src';
 import { theme } from './util/theme';
 
-describe ('Pagination.cy.ts', () => {
+const pagination = '[data-testid=pagination]';
+
+describe ('Pagination', () => {
   it ('should show first five pages, first selected', () => {
     mount (
       <ThemeProvider theme={theme}>
@@ -21,19 +23,19 @@ describe ('Pagination.cy.ts', () => {
         />
       </ThemeProvider>
     );
-    cy.get ('[data-testid="pagination"]').should ('contain', '1');
-    cy.get ('[data-testid="pagination"]').should ('contain', '2');
-    cy.get ('[data-testid="pagination"]').should ('contain', '3');
-    cy.get ('[data-testid="pagination"]').should ('contain', '4');
-    cy.get ('[data-testid="pagination"]').should ('contain', '5');
-    cy.get ('[data-testid="pagination"]').should ('contain', '>');
-    cy.get ('[data-testid="pagination"]').should ('not.contain', '6');
+    cy.get (pagination).should ('contain', '1');
+    cy.get (pagination).should ('contain', '2');
+    cy.get (pagination).should ('contain', '3');
+    cy.get (pagination).should ('contain', '4');
+    cy.get (pagination).should ('contain', '5');
+    cy.get (pagination).should ('contain', '>');
+    cy.get (pagination).should ('not.contain', '6');
 
-    cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '700');
-    cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('1').should ('have.css', 'fontWeight', '700');
+    cy.get (pagination).contains ('2').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('3').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('5').should ('have.css', 'fontWeight', '400');
   });
   it ('should show first five pages, third selected', () => {
     mount (
@@ -50,11 +52,11 @@ describe ('Pagination.cy.ts', () => {
       </ThemeProvider>
     );
 
-    cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '700');
-    cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('1').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('2').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('3').should ('have.css', 'fontWeight', '700');
+    cy.get (pagination).contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('5').should ('have.css', 'fontWeight', '400');
   });
   it ('should show first five pages, last selected', () => {
     mount (
@@ -71,10 +73,10 @@ describe ('Pagination.cy.ts', () => {
       </ThemeProvider>
     );
 
-    cy.get ('[data-testid="pagination"]').contains ('1').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('2').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('3').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('4').should ('have.css', 'fontWeight', '400');
-    cy.get ('[data-testid="pagination"]').contains ('5').should ('have.css', 'fontWeight', '700');
+    cy.get (pagination).contains ('1').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('2').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('3').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('4').should ('have.css', 'fontWeight', '400');
+    cy.get (pagination).contains ('5').should ('have.css', 'fontWeight', '700');
   });
 });

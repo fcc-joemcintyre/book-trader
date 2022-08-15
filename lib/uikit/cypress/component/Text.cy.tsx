@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import { Text } from '../../src';
 import { theme } from './util/theme';
 
+const text = '[data-testid=text]';
+
 describe ('Text', () => {
   it ('text default', () => {
     mount (
@@ -15,7 +17,7 @@ describe ('Text', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="text"]').should ('contain', 'Some text');
+    cy.get (text).should ('contain', 'Some text');
   });
   it ('text named fontsize xxsmall', () => {
     mount (
@@ -30,8 +32,8 @@ describe ('Text', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="text"]').should ('contain', 'Some text');
-    cy.get ('[data-testid="text"]').should ('have.css', 'font-size', '10px');
+    cy.get (text).should ('contain', 'Some text');
+    cy.get (text).should ('have.css', 'font-size', '10px');
   });
   it ('text named fontsize xxlarge', () => {
     mount (
@@ -46,7 +48,7 @@ describe ('Text', () => {
         </div>
       </ThemeProvider>
     );
-    cy.get ('[data-testid="text"]').should ('contain', 'Some text');
-    cy.get ('[data-testid="text"]').should ('have.css', 'font-size', '26px');
+    cy.get (text).should ('contain', 'Some text');
+    cy.get (text).should ('have.css', 'font-size', '26px');
   });
 });

@@ -17,7 +17,7 @@ const Anchor = ({ to, subject, children, ...rest }: TAnchor) => (
 
 export type TLinkMailto = {
   c: string,
-  tc: string,
+  tc?: string,
 };
 
 export const LinkMailto = styled (Anchor)<TLinkMailto>`

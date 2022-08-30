@@ -8,8 +8,22 @@ import { theme } from './util/theme';
 
 const link = '[data-testid=link]';
 
-describe ('LinkExternal', () => {
-  it ('text default', () => {
+describe ('LinkMailto', () => {
+  it ('default link', () => {
+    mount (
+      <ThemeProvider theme={theme}>
+        <div>
+          <LinkMailto to='info@www.example.com' data-testid='link'>
+            Some text
+          </LinkMailto>
+        </div>
+      </ThemeProvider>
+    );
+    cy.get (link).should ('contain', 'Some text');
+    cy.get (link).should ('have.attr', 'href', 'mailto:info@www.example.com');
+    cy.get (link).should ('have.css', 'color', 'rgb(0, 0, 238)');
+  });
+  it ('link with specified color', () => {
     mount (
       <ThemeProvider theme={theme}>
         <div>

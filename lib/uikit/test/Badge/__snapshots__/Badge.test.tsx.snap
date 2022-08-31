@@ -4,7 +4,7 @@ exports[`Badge > empty badge 1`] = `
 <body>
   <div>
     <div
-      class="sc-bczRLJ fJyYec"
+      class="sc-bczRLJ jBfdHU"
     />
   </div>
 </body>
@@ -14,7 +14,7 @@ exports[`Badge > numbered badge 1`] = `
 <body>
   <div>
     <div
-      class="sc-bczRLJ fJyYec"
+      class="sc-bczRLJ jBfdHU"
     >
       7
     </div>

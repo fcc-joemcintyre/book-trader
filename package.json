@@ -18,7 +18,7 @@
     "lib/validators"
   ],
   "dependencies": {
-    "nodemon": "2.0.18"
+    "nodemon": "2.0.20"
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf lib/uikit/lib && rm -rf lib/use-fields/lib && rm -rf lib/validators/lib",
@@ -43,6 +43,6 @@
     "build:libs:validators": "cd lib/validators && npm run build"
   },
   "engines": {
-    "node": "^16.15"
+    "node": "^18.7"
   }
 }

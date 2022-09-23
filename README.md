@@ -6,18 +6,11 @@ love, and trade them to get the conversations going.
 
 ## Live instance
 
-The application can be used at https://booktrader-jm.herokuapp.com
+The application can be used at https://booktrader-jm.onrender.com
 
 ## Development setup
 
-*Note*: This project uses NPM workspaces, which requires NPM 7.x. To install
-this version of NPM, use,
-
-```
-npm i -g npm
-```
-
-Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
+Clone the *Github* repo, then install the dependencies using *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/booktrader.git
@@ -45,7 +38,7 @@ npm run dev:server
 In a second terminal, run the client build
 
 ```
-npm run dev:server
+npm run dev:client
 ```
 
 ## Build (Production)

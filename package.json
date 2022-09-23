@@ -30,7 +30,7 @@
     "test:client": "cd app/client && npm run test",
     "postman:server": "cd app/server && npm run postman:server",
     "postman:run": "cd app/server && npm run postman:run",
-    "start": "cd dist && node main.js -p=${PORT}",
+    "start": "cd dist && node main.js",
     "dev:start": "cd dist && nodemon main.js -p=3000",
     "dev:server": "cd app/server && npm run dev",
     "dev:client": "cd app/client && npm run dev",

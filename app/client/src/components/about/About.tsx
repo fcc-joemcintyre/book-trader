@@ -21,9 +21,9 @@ export const About = () => (
           Technologies used include:
         </Text>
         <Box as='ul'>
-          <Text as='li'>Client: React (16.x), Styled Components, React Redux, and React Router</Text>
-          <Text as='li'>Server: Node (14.x) using Express and Passport</Text>
-          <Text as='li'>Database: Mongo (4.x)</Text>
+          <Text as='li'>Client: React (18.x), Styled Components, React Redux, and React Router</Text>
+          <Text as='li'>Server: Node (18.x) using Express and Passport</Text>
+          <Text as='li'>Database: Mongo (5.x)</Text>
           <Text as='li'>Languages: Javascript (ES2020), CSS</Text>
         </Box>
         <Text as='p'>
@@ -31,7 +31,7 @@ export const About = () => (
         </Text>
         <Box as='ul'>
           <Text as='li'>GitHub (source hosting)</Text>
-          <Text as='li'>Heroku (app hosting)</Text>
+          <Text as='li'>Render and Heroku (app hosting)</Text>
           <Text as='li'>MongoDB Atlas (database hosting)</Text>
           <Text as='li'>TravisCI (continuous integration testing)</Text>
         </Box>

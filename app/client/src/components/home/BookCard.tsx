@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const BookCard = ({ book }: Props) => {
-  const [cover, setCover] = useState (book.cover);
+  const [cover, setCover] = useState<string | undefined> (book.cover);
   const user = useAppSelector ((state) => state.user.key || 0);
   const [createTradeRequest] = useCreateTradeRequestMutation ();
   const [deleteTradeRequest] = useDeleteTradeRequestMutation ();
@@ -45,16 +45,20 @@ export const BookCard = ({ book }: Props) => {
 
   return (
     <Flex b='1px solid #dddddd' br='4px'>
-      <Image
-        src={cover}
-        h='80px'
-        w='auto'
-        crossOrigin='anonymous'
-        onError={() => {
-          setCover (`${location.origin}/images/image404-75.png`);
-        }}
-      />
-      <Box inline ml='8px' pt='4px' pb='4px' w='100%'>
+      { cover ? (
+        <Image
+          src={cover}
+          h='auto'
+          w='70px'
+          crossOrigin='anonymous'
+          onError={() => {
+            setCover (undefined);
+          }}
+        />
+      ) : (
+        <Box inline h='70px' w='70px' bg='lightsteelblue' />
+      )}
+      <Box inline ml='8px' pt='4px' pb='4px' w='calc(100%-70px)'>
         <Box p='4px 4px 8px 4px'>
           <Text fs='16px'>{book.title}</Text>
           <Text fs='14px'>{book.author}</Text>

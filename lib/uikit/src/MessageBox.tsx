@@ -45,7 +45,6 @@ export const MessageBox = ({
       <Box p='16px 16px 16px 16px' align='center'>
         {content}
       </Box>
-      <Box>Test</Box>
       { (actions.length > 0) && (
         <Flex center pb='16px' gap='6px'>
           {actions.map ((action) => (

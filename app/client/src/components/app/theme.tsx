@@ -5,8 +5,8 @@ const colorsCyanTheme = {
   navHoverText: '#00ffff',
   navColor: '#008b8b',
   navHoverColor: '#009f9f',
-  buttonText: '#ffffff',
-  buttonBG: '#a9a9a9',
+  buttonText: '#0000ff',
+  buttonBG: '#ffffff',
   buttonBorder: '#333333',
   dButtonText: '#dedede',
   dButtonBG: '#a9a9a9',
@@ -82,16 +82,16 @@ function generateTheme (colors) {
 
     buttonSize: {
       xs: `
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         padding: 2px 4px;
       `,
       sm: `
-        font-size: 1rem;
+        font-size: 0.85rem;
         padding: 4px 8px;
       `,
       md: `
-        font-size: 1.25rem;
-        padding: 6px 12px;
+        font-size: 1.0rem;
+        padding: 5px 10px;
       `,
       lg: `
         font-size: 1.5rem;

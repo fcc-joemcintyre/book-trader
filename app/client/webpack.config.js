@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require ('path');
 const CompressionPlugin = require ('compression-webpack-plugin');
+const MiniCssExtractPlugin = require ('mini-css-extract-plugin');
 
 const baseDest = path.resolve (__dirname, '../../dist');
 
@@ -16,8 +17,8 @@ module.exports = {
     app: './src/components/app/index.tsx',
   },
   output: {
-    filename: '[name].bundle.js',
-    path: `${baseDest}/public/js`,
+    filename: 'js/[name].bundle.js',
+    path: `${baseDest}/public`,
   },
   module: {
     rules: [
@@ -31,9 +32,21 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader', options: { url: false } },
+          'postcss-loader',
+        ],
+      },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin ({
+      filename: 'css/main.css',
+    }),
     new CompressionPlugin ({
       test: /bundle.js$/,
     }),

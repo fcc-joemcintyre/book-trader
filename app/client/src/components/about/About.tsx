@@ -1,41 +1,44 @@
-import { Box, LinkExternal, PageContent, Text } from '@cygns/uikit';
 import { Header } from '../header';
 
 export const About = () => (
   <>
     <Header />
-    <PageContent>
-      <Text as='h1' center>About BookTrader</Text>
-      <Box center maxw='500px'>
-        <Text as='p'>
+    <div className='max-w-md mx-auto px-4'>
+      <h1 className='text-center mb-4'>About BookTrader</h1>
+      <div>
+        <p className='mb-4'>
           Written by Joe McIntyre, BookTrader is a full stack project defined by FreeCodeCamp.
-        </Text>
-        <Text as='p'>
-          The source code is published on GitHub under a MIT LIcense. (
-          <LinkExternal to='https://github.com/fcc-joemcintyre/book-trader'>
-            Link
-          </LinkExternal>
-          )
-        </Text>
-        <Text as='p'>
+        </p>
+        <p className='mb-4'>
+          The{' '}
+          <a
+            href='https://github.com/fcc-joemcintyre/book-trader'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            source code
+          </a>
+          {' '}is published on GitHub under an MIT LIcense.
+        </p>
+        <p className='mb-2'>
           Technologies used include:
-        </Text>
-        <Box as='ul'>
-          <Text as='li'>Client: React (18.x), Styled Components, React Redux, and React Router</Text>
-          <Text as='li'>Server: Node (18.x) using Express and Passport</Text>
-          <Text as='li'>Database: Mongo (5.x)</Text>
-          <Text as='li'>Languages: Javascript (ES2020), CSS</Text>
-        </Box>
-        <Text as='p'>
+        </p>
+        <ul className='mb-4'>
+          <li className='list-disc ml-4'>Client: React (18.x), Styled Components, React Redux, and React Router</li>
+          <li className='list-disc ml-4'>Server: Node (18.x) using Express and Passport</li>
+          <li className='list-disc ml-4'>Database: Mongo (5.x)</li>
+          <li className='list-disc ml-4'>Languages: Javascript (ES2020), CSS</li>
+        </ul>
+        <p className='mb-2'>
           Thanks to:
-        </Text>
-        <Box as='ul'>
-          <Text as='li'>GitHub (source hosting)</Text>
-          <Text as='li'>Render and Heroku (app hosting)</Text>
-          <Text as='li'>MongoDB Atlas (database hosting)</Text>
-          <Text as='li'>TravisCI (continuous integration testing)</Text>
-        </Box>
-      </Box>
-    </PageContent>
+        </p>
+        <ul>
+          <li className='list-disc ml-4'>GitHub (source hosting)</li>
+          <li className='list-disc ml-4'>Render and Heroku (app hosting)</li>
+          <li className='list-disc ml-4'>MongoDB Atlas (database hosting)</li>
+          <li className='list-disc ml-4'>TravisCI (continuous integration testing)</li>
+        </ul>
+      </div>
+    </div>
   </>
 );

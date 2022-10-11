@@ -1,5 +1,1 @@
-import styled from 'styled-components';
-
-export const Header = styled.div`
-  margin-top: 60px;
-`;
+export const Header = () => <div className='mt-[60px]' />;

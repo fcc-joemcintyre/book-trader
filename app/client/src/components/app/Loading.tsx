@@ -1,4 +1,3 @@
-import { Text } from '@cygns/uikit';
 import { Header } from '../header';
 
 type Props = {
@@ -8,6 +7,6 @@ type Props = {
 export const Loading = ({ message }: Props) => (
   <>
     <Header />
-    <Text center>{message}</Text>
+    <p className='text-center pt-8'>{message}</p>
   </>
 );

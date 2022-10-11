@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { PageContent, Text } from '@cygns/uikit';
 import { useAppDispatch } from '../../store/hooks';
 import { useLogoutMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';
@@ -20,23 +19,23 @@ export const Logout = () => {
   return (
     <>
       <Header />
-      <PageContent>
+      <div className='container px-4 pt-8'>
         {isLoading ? (
-          <Text as='p' center>
+          <p className='text-center'>
             Logging out ...
-          </Text>
+          </p>
         ) : (
           isError ? (
-            <Text as='p' center>
+            <p className='text-center'>
               Logging out did not complete, please retry or close your browser.
-            </Text>
+            </p>
           ) : isSuccess ? (
-            <Text as='p' center>
+            <p className='text-center'>
               Thank you for using BookTrader, we hope to see you back again soon.
-            </Text>
+            </p>
           ) : null
         )}
-      </PageContent>
+      </div>
     </>
   );
 };

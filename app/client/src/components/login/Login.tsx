@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 import { isPassword } from '@cygns/validators';
 import { createField, useFields } from '@cygns/use-fields';
-import { MessageBox } from '@cygns/uikit';
 import { useLoginMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
 import { setAuthenticated } from '../../store/userSlice';
+import { MessageBox } from '../ui';
 import { LoginForm } from './LoginForm';
 
 const initialFields = [

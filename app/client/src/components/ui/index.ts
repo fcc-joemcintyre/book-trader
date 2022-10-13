@@ -1,3 +1,4 @@
 import { Button } from './Button';
+import { MessageBox } from './MessageBox';
 
-export { Button };
+export { Button, MessageBox };

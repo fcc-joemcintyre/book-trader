@@ -1,5 +1,7 @@
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '@cygns/uikit';
+import { Dialog } from '@headlessui/react';
+import { FieldInput } from '@cygns/uikit';
 import { Field, FieldError } from '@cygns/use-fields';
+import { Button } from '../ui';
 
 type Props = {
   fields: {
@@ -21,49 +23,55 @@ export const LoginForm = ({
   fields: { username, password },
   onChange, onValidate, onSubmit, onCancel,
 }: Props) => (
-  <Modal>
-    <Text as='h1' center>Login</Text>
-    <form
-      noValidate
-      onSubmit={async (e) => {
-        const errors = await onSubmit (e);
-        const el = document.getElementById (errors ? errors[0].name : username.name);
-        if (el) { el.focus (); }
-      }}
-    >
-      <GridBox w='300px' p='10px 10px 20px 10px' center>
-        <FieldInput
-          field={username}
-          label='User name'
-          autoFocus
-          maxLength={20}
-          autoCapitalize='none'
-          autoCorrect='off'
-          info='Your user name'
-          onChange={onChange}
-          onValidate={onValidate}
-        />
-        <FieldInput
-          type='password'
-          field={password}
-          label='Password'
-          maxLength={20}
-          info='Your password'
-          errors={passwordErrors}
-          onChange={onChange}
-          onValidate={onValidate}
-        />
-        <GridBoxElement mt='20px' span={12} center>
-          <Flex gap='6px'>
-            <Button type='submit'>
-              LOGIN
-            </Button>
-            <Button type='button' onClick={onCancel}>
-              CANCEL
-            </Button>
-          </Flex>
-        </GridBoxElement>
-      </GridBox>
-    </form>
-  </Modal>
+  <Dialog open onClose={() => { /* no op */ }} as='div' className='relative z-30'>
+    <div className='fixed inset-0 overflow-y-auto'>
+      <div className='flex min-h-full items-center justify-center bg-cyan-200 bg-opacity-50'>
+        <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-4 shadow-xl'>
+          <Dialog.Title className='text-center'>Login</Dialog.Title>
+          <form
+            className='align-left'
+            noValidate
+            onSubmit={async (e) => {
+              const errors = await onSubmit (e);
+              const el = document.getElementById (errors ? errors[0].name : username.name);
+              if (el) { el.focus (); }
+            }}
+          >
+            <div className='grid grid-cols-12 gap-4 w-[300px] p-2 mx-auto'>
+              <FieldInput
+                field={username}
+                label='User name'
+                autoFocus
+                maxLength={20}
+                autoCapitalize='none'
+                autoCorrect='off'
+                info='Your user name'
+                onChange={onChange}
+                onValidate={onValidate}
+              />
+              <FieldInput
+                type='password'
+                field={password}
+                label='Password'
+                maxLength={20}
+                info='Your password'
+                errors={passwordErrors}
+                onChange={onChange}
+                onValidate={onValidate}
+              />
+            </div>
+
+            <div className='flex space-x-2 justify-center mt-8'>
+              <Button type='submit'>
+                LOGIN
+              </Button>
+              <Button type='button' onClick={onCancel}>
+                CANCEL
+              </Button>
+            </div>
+          </form>
+        </Dialog.Panel>
+      </div>
+    </div>
+  </Dialog>
 );

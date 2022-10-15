@@ -13,7 +13,6 @@ import { AuthRoute } from './AuthRoute';
 import { Nav } from './Nav';
 import { ScrollToTop } from './ScrollToTop';
 
-import { Loading } from './Loading';
 import { HomePage } from '../home';
 import { Request } from '../request';
 import { Manage } from '../manage';
@@ -27,51 +26,38 @@ export const App = () => {
   const [verifyLogin] = useVerifyLoginMutation ();
 
   const [loading, setLoading] = useState (true);
-  const [message, setMessage] = useState ('Loading ...');
 
   useEffect (() => {
     (async () => {
       try {
         const user = await verifyLogin ().unwrap ();
         await appDispatch (setAuthenticated (user));
+      } finally {
         setLoading (false);
-        setMessage ('');
-      } catch (err) {
-        setMessage ('Network error, try again.');
       }
     }) ();
   }, [dispatch, appDispatch, verifyLogin]);
 
   const theme = getTheme ();
-  if (loading) {
-    return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <BrowserRouter>
-            <Nav menu={false} />
-          </BrowserRouter>
-          <Loading message={message} />
-        </>
-      </ThemeProvider>
-    );
-  }
-
   return (
     <BrowserRouter>
       <ScrollToTop>
         <ThemeProvider theme={theme}>
           <>
             <GlobalStyle />
-            <Nav menu />
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
-              <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
-              <Route path='/about' element={<About />} />
-              <Route path='/logout' element={<Logout />} />
-              <Route path='*' element={<NotFound />} />
-            </Routes>
+            { !loading && (
+              <>
+                <Nav />
+                <Routes>
+                  <Route path='/' element={<HomePage />} />
+                  <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
+                  <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
+                  <Route path='/about' element={<About />} />
+                  <Route path='/logout' element={<Logout />} />
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </>
+            )}
           </>
         </ThemeProvider>
       </ScrollToTop>

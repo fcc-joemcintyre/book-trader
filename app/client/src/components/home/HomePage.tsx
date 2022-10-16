@@ -1,10 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 import queryString from 'query-string';
-import { Box, Text } from '@cygns/uikit';
 import { useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
-import { Header } from '../header';
 import { BookCard } from './BookCard';
 
 export const HomePage = () => {
@@ -19,9 +16,9 @@ export const HomePage = () => {
   let topMessage;
   if (!user.authenticated) {
     topMessage = (
-      <Text as='p' m='0 10px 10px 10px' right>
+      <p className='m-4 mt-0 text-right'>
         Login to add books and trade with others.
-      </Text>
+      </p>
     );
   }
 
@@ -42,33 +39,11 @@ export const HomePage = () => {
   }
 
   return (
-    <>
-      <Header />
-      <Box pt='10px' pb='10px'>
-        { topMessage }
-        <Box p='2px'>
-          <Grid>
-            {items}
-          </Grid>
-        </Box>
-      </Box>
-    </>
+    <div className='p-4 pt-8'>
+      { topMessage }
+      <div className='grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        {items}
+      </div>
+    </div>
   );
 };
-
-const Grid = styled.div`
-  display: grid;
-  grid-gap: 8px;
-
-  @media (max-width: 599px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 600px) and (max-width: 899px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: 900px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-`;

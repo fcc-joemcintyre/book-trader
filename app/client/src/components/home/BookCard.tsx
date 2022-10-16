@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Divider, Flex, FlexItem, Image, Text } from '@cygns/uikit';
 import { Book, useCreateTradeRequestMutation, useDeleteTradeRequestMutation } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
+import { Button } from '../ui';
 
 type Props = {
   book: Book,
@@ -18,66 +18,57 @@ export const BookCard = ({ book }: Props) => {
   if ((user !== 0) && (book.owner !== user)) {
     if (book.requester === user) {
       buttonArea = (
-        <Box mt='10px' pr='4px' align='right'>
+        <div className='mt-2 pr-1 text-right'>
           <Button
             type='button'
             onClick={() => { deleteTradeRequest ({ key: book.key }); }}
           >
             Cancel Request
           </Button>
-        </Box>
+        </div>
       );
     } else if (book.requester === 0) {
       buttonArea = (
-        <Box mt='10px' pr='4px' align='right'>
+        <div className='mt-2 pr-1 text-right'>
           <Button
             type='button'
-            onClick={() => {
-              createTradeRequest ({ key: book.key });
-            }}
+            onClick={() => { createTradeRequest ({ key: book.key }); }}
           >
             Request Book
           </Button>
-        </Box>
+        </div>
       );
     }
   }
 
   return (
-    <Flex b='1px solid #dddddd' br='4px'>
+    <div className='flex items-center border border-slate-600 rounded-md'>
       { cover ? (
-        <Image
+        <img
           src={cover}
-          h='auto'
-          w='70px'
+          height='auto'
+          width='70px'
+          className='object-contain'
           crossOrigin='anonymous'
           onError={() => {
             setCover (undefined);
           }}
         />
       ) : (
-        <Box inline h='70px' w='70px' bg='lightsteelblue' />
+        <div className='h-[70px] w-[70px] bg-blue-100' />
       )}
-      <Box inline ml='8px' pt='4px' pb='4px' w='calc(100%-70px)'>
-        <Box p='4px 4px 8px 4px'>
-          <Text fs='16px'>{book.title}</Text>
-          <Text fs='14px'>{book.author}</Text>
-        </Box>
-        <Divider c='#dddddd' />
-        <Flex p='8px 4px 4px 4px'>
-          <FlexItem grow shrink>
-            <Text as='span' left>
-              <Link to={`/?category=${book.category}`}>{book.category}</Link>
-            </Text>
-          </FlexItem>
-          <FlexItem>
-            <Text as='span' right>
-              <Link to={`/?owner=${book.owner}`}>{book.owner}</Link>
-            </Text>
-          </FlexItem>
-        </Flex>
+      <div className='w-full ml-2 py-1'>
+        <div className='p-1 pb-2'>
+          <span className='text-base'>{book.title}</span><br />
+          <span className='text-sm'>{book.author}</span>
+        </div>
+        <hr className='m-2 bg-slate-200' />
+        <div className='flex p-2 justify-between'>
+          <Link to={`/?category=${book.category}`}>{book.category}</Link>
+          <Link to={`/?owner=${book.owner}`}>{book.owner}</Link>
+        </div>
         {buttonArea}
-      </Box>
-    </Flex>
+      </div>
+    </div>
   );
 };

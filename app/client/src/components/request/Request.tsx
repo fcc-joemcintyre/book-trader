@@ -1,7 +1,6 @@
-import { Box, Button, Divider, Text } from '@cygns/uikit';
 import { useDeleteTradeRequestMutation, useExecuteTradeMutation, useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
-import { Header } from '../header';
+import { Button } from '../ui';
 
 export const Request = () => {
   const user = useAppSelector ((state) => state.user.key);
@@ -16,10 +15,10 @@ export const Request = () => {
       if (book.requester === user) {
         itemsRequested.push (
           <tr key={book.key}>
-            <td className='r-title'>{book.title}</td>
-            <td className='r-author'>{book.author}</td>
-            <td className='r-owner'>{book.owner}</td>
-            <td className='r-action'>
+            <td className=''>{book.title}</td>
+            <td className=''>{book.author}</td>
+            <td className=''>{book.owner}</td>
+            <td className=''>
               <Button
                 type='button'
                 onClick={() => { deleteTradeRequest ({ key: book.key }); }}
@@ -32,10 +31,10 @@ export const Request = () => {
       } else if ((book.owner === user) && (book.requester !== 0)) {
         itemsPending.push (
           <tr key={book.key}>
-            <td className='r-title'>{book.title}</td>
-            <td className='r-author'>{book.author}</td>
-            <td className='r-requester'>{book.requester}</td>
-            <td className='r-action'>
+            <td className=''>{book.title}</td>
+            <td className=''>{book.author}</td>
+            <td className=''>{book.requester}</td>
+            <td className=''>
               <Button
                 type='button'
                 onClick={() => { executeTrade ({ key: book.key }); }}
@@ -56,48 +55,46 @@ export const Request = () => {
   }
 
   return (
-    <>
-      <Header />
-      <Box p='0 8px 20px 8px'>
-        <Text as='h2'>Your Requests</Text>
-        {itemsRequested.length === 0 ? (
-          <p>No outstanding requests.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th className='r-title'>Title</th>
-                <th className='r-author'>Author</th>
-                <th className='r-owner'>Owner</th>
-                <th className='r-action'>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemsRequested}
-            </tbody>
-          </table>
-        )}
+    <div className='p-4 pt-8'>
+      <h1>Your Requests</h1>
+      {itemsRequested.length === 0 ? (
+        <p>No outstanding requests.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th className=''>Title</th>
+              <th className=''>Author</th>
+              <th className=''>Owner</th>
+              <th className=''>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {itemsRequested}
+          </tbody>
+        </table>
+      )}
 
-        <Divider />
-        <Text as='h2'>Trade Requests</Text>
-        {itemsPending.length === 0 ? (
-          <p>No pending requests.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th className='r-title'>Title</th>
-                <th className='r-author'>Author</th>
-                <th className='r-requester'>Requester</th>
-                <th className='r-action'>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemsPending}
-            </tbody>
-          </table>
-        )}
-      </Box>
-    </>
+      <hr className='my-4' />
+
+      <h1>Trade Requests</h1>
+      {itemsPending.length === 0 ? (
+        <p>No pending requests.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th className=''>Title</th>
+              <th className=''>Author</th>
+              <th className=''>Requester</th>
+              <th className=''>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {itemsPending}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };

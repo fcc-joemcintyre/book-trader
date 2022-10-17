@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
-import { BookCard } from './BookCard';
+import { HomeBookCard } from './HomeBookCard';
 
 export const HomePage = () => {
   const user = useAppSelector ((state) => state.user);
@@ -29,7 +29,7 @@ export const HomePage = () => {
       const include2 = category ? book.category === category : true;
       if (include1 && include2) {
         items.push (
-          <BookCard
+          <HomeBookCard
             key={book.key}
             book={book}
           />

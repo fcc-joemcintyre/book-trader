@@ -1,10 +1,8 @@
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import { Box, Button, MessageBox, Text } from '@cygns/uikit';
 import { Book, useCreateBookMutation, useDeleteBookMutation, useGetBooksQuery, useUpdateBookMutation } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
-import { Header } from '../header';
-import { ManageBook } from './ManageBook';
+import { BookCard } from '../book/BookCard';
+import { Button, MessageBox } from '../ui';
 import { EditBook } from './EditBook';
 
 export const Manage = () => {
@@ -49,16 +47,22 @@ export const Manage = () => {
     onEdit (null);
   }, [onEdit]);
 
+  const onDelete = useCallback ((book: Book) => {
+    deleteBook ({ key: book.key });
+  }, [deleteBook]);
+
   const items: JSX.Element[] = [];
   if (!isLoading && books) {
     for (const book of books) {
       if (book.owner === user) {
         items.push (
-          <ManageBook
+          <BookCard
             key={book.key}
             book={book}
-            onEditBook={onEdit}
-            onDeleteBook={(key) => { deleteBook ({ key }); }}
+            actions={[
+              { text: 'Edit', fn: onEdit },
+              { text: 'Delete', fn: onDelete },
+            ]}
           />
         );
       }
@@ -67,40 +71,22 @@ export const Manage = () => {
 
   return (
     <>
-      <Header />
-      <Box p='16px 8px 20px 8px'>
-        <Text as='h2'>Your Books</Text>
-        <Box mb='16px'>
+      <div className='p-4 pt-8'>
+        <div className='flex justify-between'>
+          <h1>Your Books</h1>
           <Button
             type='button'
             onClick={onAdd}
           >
             Add Book
           </Button>
-        </Box>
-        <Grid>
+        </div>
+        <div className='grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {items}
-        </Grid>
-      </Box>
+        </div>
+      </div>
       {mb}
       {dialog}
     </>
   );
 };
-
-const Grid = styled.div`
-  display: grid;
-  grid-gap: 8px;
-
-  @media (max-width: 599px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 600px) and (max-width: 899px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: 900px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-`;

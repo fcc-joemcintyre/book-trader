@@ -1,7 +1,9 @@
 import { useCallback } from 'react';
-import { Button, FieldInput, Flex, GridBox, GridBoxElement, Modal, Text } from '@cygns/uikit';
+import { Dialog } from '@headlessui/react';
+import { FieldInput } from '@cygns/uikit';
 import { createField, useFields } from '@cygns/use-fields';
 import { Book } from '../../store/api';
+import { Button } from '../ui';
 
 type Props = {
   book: Book | null,
@@ -30,60 +32,58 @@ export const EditBook = ({ book = null, onSave, onCancel }: Props) => {
   }, [book, getValues, onSave, validateAll]);
 
   return (
-    <>
-      <Modal top='50%'>
-        <GridBox p='16px'>
-          <GridBoxElement>
-            <Text as='h4'>Book</Text>
-          </GridBoxElement>
-          <FieldInput
-            field={fields.title}
-            label='Title'
-            autoFocus
-            maxLength={60}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-          <FieldInput
-            field={fields.category}
-            label='Category'
-            maxLength={20}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-          <FieldInput
-            field={fields.author}
-            label='Author'
-            maxLength={30}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-          <FieldInput
-            field={fields.cover}
-            label='Cover (url)'
-            maxLength={512}
-            autoCapitalize='none'
-            autoCorrect='off'
-            onChange={onChange}
-            onValidate={onValidate}
-          />
+    <Dialog open onClose={() => { /* no op */ }} as='div' className='relative z-30'>
+      <div className='fixed inset-0 overflow-y-auto'>
+        <div className='flex min-h-full items-center justify-center p-4 bg-cyan-200 bg-opacity-50'>
+          <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl'>
+            <Dialog.Title className='text-center'>Book</Dialog.Title>
+            <form className='align-left'>
+              <div className='grid grid-cols-12 gap-4 p-2 mx-auto'>
+                <FieldInput
+                  field={fields.title}
+                  label='Title'
+                  autoFocus
+                  maxLength={60}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+                <FieldInput
+                  field={fields.category}
+                  label='Category'
+                  maxLength={20}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+                <FieldInput
+                  field={fields.author}
+                  label='Author'
+                  maxLength={30}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+                <FieldInput
+                  field={fields.cover}
+                  label='Cover (url)'
+                  maxLength={512}
+                  autoCapitalize='none'
+                  autoCorrect='off'
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
 
-          <Flex gap='8px'>
-            <Button
-              type='button'
-              onClick={onSaveBook}
-            >
-              Save
-            </Button>
-            <Button
-              type='button'
-              onClick={onCancel}
-            >
-              Cancel
-            </Button>
-          </Flex>
-        </GridBox>
-      </Modal>
-    </>
+              <div className='flex space-x-2 justify-center mt-8'>
+                <Button type='button' onClick={onSaveBook}>
+                  Save
+                </Button>
+                <Button type='button' onClick={onCancel}>
+                  CANCEL
+                </Button>
+              </div>
+            </form>
+          </Dialog.Panel>
+        </div>
+      </div>
+    </Dialog>
   );
 };

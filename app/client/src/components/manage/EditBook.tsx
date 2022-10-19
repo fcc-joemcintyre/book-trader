@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { Dialog } from '@headlessui/react';
-import { FieldInput } from '@cygns/uikit';
 import { createField, useFields } from '@cygns/use-fields';
 import { Book } from '../../store/api';
-import { Button } from '../ui';
+import { Button, FieldInput } from '../ui';
 
 type Props = {
   book: Book | null,
@@ -39,37 +38,45 @@ export const EditBook = ({ book = null, onSave, onCancel }: Props) => {
             <Dialog.Title className='text-center'>Book</Dialog.Title>
             <form className='align-left'>
               <div className='grid grid-cols-12 gap-4 p-2 mx-auto'>
-                <FieldInput
-                  field={fields.title}
-                  label='Title'
-                  autoFocus
-                  maxLength={60}
-                  onChange={onChange}
-                  onValidate={onValidate}
-                />
-                <FieldInput
-                  field={fields.category}
-                  label='Category'
-                  maxLength={20}
-                  onChange={onChange}
-                  onValidate={onValidate}
-                />
-                <FieldInput
-                  field={fields.author}
-                  label='Author'
-                  maxLength={30}
-                  onChange={onChange}
-                  onValidate={onValidate}
-                />
-                <FieldInput
-                  field={fields.cover}
-                  label='Cover (url)'
-                  maxLength={512}
-                  autoCapitalize='none'
-                  autoCorrect='off'
-                  onChange={onChange}
-                  onValidate={onValidate}
-                />
+                <div className='col-span-12'>
+                  <FieldInput
+                    field={fields.title}
+                    label='Title'
+                    autoFocus
+                    maxLength={60}
+                    onChange={onChange}
+                    onValidate={onValidate}
+                  />
+                </div>
+                <div className='col-span-6'>
+                  <FieldInput
+                    field={fields.category}
+                    label='Category'
+                    maxLength={20}
+                    onChange={onChange}
+                    onValidate={onValidate}
+                  />
+                </div>
+                <div className='col-span-12'>
+                  <FieldInput
+                    field={fields.author}
+                    label='Author'
+                    maxLength={30}
+                    onChange={onChange}
+                    onValidate={onValidate}
+                  />
+                </div>
+                <div className='col-span-12'>
+                  <FieldInput
+                    field={fields.cover}
+                    label='Cover (url)'
+                    maxLength={512}
+                    autoCapitalize='none'
+                    autoCorrect='off'
+                    onChange={onChange}
+                    onValidate={onValidate}
+                  />
+                </div>
               </div>
 
               <div className='flex space-x-2 justify-center mt-8'>

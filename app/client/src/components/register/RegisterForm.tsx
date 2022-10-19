@@ -1,7 +1,6 @@
 import { Dialog } from '@headlessui/react';
-import { FieldInput } from '@cygns/uikit';
 import { Field, FieldError } from '@cygns/use-fields';
-import { Button } from '../ui';
+import { Button, FieldInput } from '../ui';
 
 type Props = {
   isLoading: boolean,
@@ -63,49 +62,57 @@ export const RegisterForm = ({
                 </p>
               </div>
 
-              <FieldInput
-                field={email}
-                label='Email'
-                autoFocus
-                maxLength={100}
-                autoCapitalize='none'
-                autoCorrect='off'
-                info='Your email address'
-                errors={emailErrors}
-                onChange={onChange}
-                onValidate={onValidate}
-              />
-              <FieldInput
-                field={username}
-                label='Screen name'
-                maxLength={20}
-                autoCapitalize='none'
-                autoCorrect='off'
-                info='Up to 20 characters (no spaces)'
-                errors={nameErrors}
-                onChange={onChange}
-                onValidate={onValidate}
-              />
-              <FieldInput
-                field={password}
-                label='Password'
-                type='password'
-                maxLength={20}
-                info='4 to 20 characters'
-                errors={passwordErrors}
-                onChange={onChange}
-                onValidate={onValidate}
-              />
-              <FieldInput
-                field={verifyPassword}
-                label='Verify Password'
-                type='password'
-                maxLength={20}
-                info='Re-type your password'
-                errors={passwordErrors}
-                onChange={onChange}
-                onValidate={onValidate}
-              />
+              <div className='col-span-12'>
+                <FieldInput
+                  field={email}
+                  label='Email'
+                  autoFocus
+                  maxLength={100}
+                  autoCapitalize='none'
+                  autoCorrect='off'
+                  info='Your email address'
+                  errors={emailErrors}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
+              <div className='col-span-12'>
+                <FieldInput
+                  field={username}
+                  label='Screen name'
+                  maxLength={20}
+                  autoCapitalize='none'
+                  autoCorrect='off'
+                  info='Up to 20 characters (no spaces)'
+                  errors={nameErrors}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
+              <div className='col-span-12'>
+                <FieldInput
+                  field={password}
+                  label='Password'
+                  type='password'
+                  maxLength={20}
+                  info='4 to 20 characters'
+                  errors={passwordErrors}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
+              <div className='col-span-12'>
+                <FieldInput
+                  field={verifyPassword}
+                  label='Verify Password'
+                  type='password'
+                  maxLength={20}
+                  info='Re-type your password'
+                  errors={passwordErrors}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
             </div>
 
             <div className='flex space-x-2 justify-center mt-8'>

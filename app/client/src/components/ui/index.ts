@@ -1,4 +1,6 @@
 import { Button } from './Button';
+import { FieldInput } from './FieldInput';
+import { FieldLabel } from './FieldLabel';
 import { MessageBox } from './MessageBox';
 
-export { Button, MessageBox };
+export { Button, FieldInput, FieldLabel, MessageBox };

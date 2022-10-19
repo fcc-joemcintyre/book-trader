@@ -1,7 +1,6 @@
 import { Dialog } from '@headlessui/react';
-import { FieldInput } from '@cygns/uikit';
 import { Field, FieldError } from '@cygns/use-fields';
-import { Button } from '../ui';
+import { Button, FieldInput } from '../ui';
 
 type Props = {
   fields: {
@@ -38,27 +37,31 @@ export const LoginForm = ({
             }}
           >
             <div className='grid grid-cols-12 gap-4 w-[300px] p-2 mx-auto'>
-              <FieldInput
-                field={username}
-                label='User name'
-                autoFocus
-                maxLength={20}
-                autoCapitalize='none'
-                autoCorrect='off'
-                info='Your user name'
-                onChange={onChange}
-                onValidate={onValidate}
-              />
-              <FieldInput
-                type='password'
-                field={password}
-                label='Password'
-                maxLength={20}
-                info='Your password'
-                errors={passwordErrors}
-                onChange={onChange}
-                onValidate={onValidate}
-              />
+              <div className='col-span-12'>
+                <FieldInput
+                  field={username}
+                  label='User name'
+                  autoFocus
+                  maxLength={20}
+                  autoCapitalize='none'
+                  autoCorrect='off'
+                  info='Your user name'
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
+              <div className='col-span-12'>
+                <FieldInput
+                  type='password'
+                  field={password}
+                  label='Password'
+                  maxLength={20}
+                  info='Your password'
+                  errors={passwordErrors}
+                  onChange={onChange}
+                  onValidate={onValidate}
+                />
+              </div>
             </div>
 
             <div className='flex space-x-2 justify-center mt-8'>

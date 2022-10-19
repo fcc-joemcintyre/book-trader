@@ -13,7 +13,6 @@
   "workspaces": [
     "app/client",
     "app/server",
-    "lib/uikit",
     "lib/use-fields",
     "lib/validators"
   ],
@@ -37,8 +36,7 @@
     "build": "npm run clean && npm run build:libs && npm run build:server && npm run build:client",
     "build:server": "cd app/server && npm run build",
     "build:client": "cd app/client && npm run build",
-    "build:libs": "npm run build:libs:validators && npm run build:libs:use-fields && npm run build:libs:uikit",
-    "build:libs:uikit": "cd lib/uikit && npm run build",
+    "build:libs": "npm run build:libs:validators && npm run build:libs:use-fields",
     "build:libs:use-fields": "cd lib/use-fields && npm run build",
     "build:libs:validators": "cd lib/validators && npm run build"
   },

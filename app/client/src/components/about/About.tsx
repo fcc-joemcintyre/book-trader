@@ -24,10 +24,10 @@ export const About = () => (
           Technologies used include:
         </p>
         <ul className='mb-4'>
-          <li className='list-disc ml-4'>Client: React (18.x), Styled Components, React Redux, and React Router</li>
+          <li className='list-disc ml-4'>Client: React (18.x), Tailwind CSS, React Redux, and React Router</li>
           <li className='list-disc ml-4'>Server: Node (18.x) using Express and Passport</li>
           <li className='list-disc ml-4'>Database: Mongo (5.x)</li>
-          <li className='list-disc ml-4'>Languages: Javascript (ES2020), CSS</li>
+          <li className='list-disc ml-4'>Language: Typescript</li>
         </ul>
         <p className='mb-2'>
           Thanks to:

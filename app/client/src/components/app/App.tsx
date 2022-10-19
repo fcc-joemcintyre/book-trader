@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 
 import { useAppDispatch } from '../../store/hooks';
 import { useVerifyLoginMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';
 
-import { getTheme } from './theme';
-import { GlobalStyle } from './GlobalStyle';
 import { AuthRoute } from './AuthRoute';
 import { Nav } from './Nav';
 import { ScrollToTop } from './ScrollToTop';
@@ -38,28 +35,24 @@ export const App = () => {
     }) ();
   }, [dispatch, appDispatch, verifyLogin]);
 
-  const theme = getTheme ();
+  if (loading) {
+    return null;
+  }
+
   return (
     <BrowserRouter>
       <ScrollToTop>
-        <ThemeProvider theme={theme}>
-          <>
-            <GlobalStyle />
-            { !loading && (
-              <>
-                <Nav />
-                <Routes>
-                  <Route path='/' element={<HomePage />} />
-                  <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
-                  <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
-                  <Route path='/about' element={<About />} />
-                  <Route path='/logout' element={<Logout />} />
-                  <Route path='*' element={<NotFound />} />
-                </Routes>
-              </>
-            )}
-          </>
-        </ThemeProvider>
+        <>
+          <Nav />
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
+            <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
+            <Route path='/about' element={<About />} />
+            <Route path='/logout' element={<Logout />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </>
       </ScrollToTop>
     </BrowserRouter>
   );

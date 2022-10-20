@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { useLogoutMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';
-import { Header } from '../header';
 
 export const Logout = () => {
   const dispatch = useAppDispatch ();
@@ -17,25 +16,22 @@ export const Logout = () => {
   }, [dispatch, logout]);
 
   return (
-    <>
-      <Header />
-      <div className='container px-4 pt-8'>
-        {isLoading ? (
+    <div className='container px-4 pt-8'>
+      {isLoading ? (
+        <p className='text-center'>
+          Logging out ...
+        </p>
+      ) : (
+        isError ? (
           <p className='text-center'>
-            Logging out ...
+            Logging out did not complete, please retry or close your browser.
           </p>
-        ) : (
-          isError ? (
-            <p className='text-center'>
-              Logging out did not complete, please retry or close your browser.
-            </p>
-          ) : isSuccess ? (
-            <p className='text-center'>
-              Thank you for using BookTrader, we hope to see you back again soon.
-            </p>
-          ) : null
-        )}
-      </div>
-    </>
+        ) : isSuccess ? (
+          <p className='text-center'>
+            Thank you for using BookTrader, we hope to see you back again soon.
+          </p>
+        ) : null
+      )}
+    </div>
   );
 };

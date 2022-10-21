@@ -1,6 +1,6 @@
 import { useDeleteTradeRequestMutation, useExecuteTradeMutation, useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
-import { Button } from '../ui';
+import { Button, PageContent } from '../ui';
 
 export const Request = () => {
   const user = useAppSelector ((state) => state.user.key);
@@ -55,7 +55,7 @@ export const Request = () => {
   }
 
   return (
-    <div className='p-4 pt-8'>
+    <PageContent>
       <h1>Your Requests</h1>
       {itemsRequested.length === 0 ? (
         <p>No outstanding requests.</p>
@@ -95,6 +95,6 @@ export const Request = () => {
           </tbody>
         </table>
       )}
-    </div>
+    </PageContent>
   );
 };

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { useLogoutMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';
+import { PageContent } from '../ui/PageContent';
 
 export const Logout = () => {
   const dispatch = useAppDispatch ();
@@ -16,7 +17,7 @@ export const Logout = () => {
   }, [dispatch, logout]);
 
   return (
-    <div className='container px-4 pt-8'>
+    <PageContent>
       {isLoading ? (
         <p className='text-center'>
           Logging out ...
@@ -32,6 +33,6 @@ export const Logout = () => {
           </p>
         ) : null
       )}
-    </div>
+    </PageContent>
   );
 };

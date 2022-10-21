@@ -1,7 +1,9 @@
+import { PageContent } from '../ui';
+
 export const About = () => (
-  <div className='max-w-md mx-auto px-4 pt-8'>
+  <PageContent>
     <h1 className='text-center mb-4'>About BookTrader</h1>
-    <div>
+    <div className='max-w-md mx-auto'>
       <p className='mb-4'>
         Written by Joe McIntyre, BookTrader is a full stack project defined by FreeCodeCamp.
       </p>
@@ -35,5 +37,5 @@ export const About = () => (
         <li className='list-disc ml-4'>TravisCI (continuous integration testing)</li>
       </ul>
     </div>
-  </div>
+  </PageContent>
 );

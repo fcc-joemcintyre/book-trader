@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useGetBooksQuery } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
+import { PageContent } from '../ui';
 import { HomeBookCard } from './HomeBookCard';
 
 export const HomePage = () => {
@@ -39,11 +40,11 @@ export const HomePage = () => {
   }
 
   return (
-    <div className='p-4 pt-8'>
+    <PageContent>
       { topMessage }
       <div className='grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {items}
       </div>
-    </div>
+    </PageContent>
   );
 };

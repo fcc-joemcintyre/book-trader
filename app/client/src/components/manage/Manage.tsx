@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Book, useCreateBookMutation, useDeleteBookMutation, useGetBooksQuery, useUpdateBookMutation } from '../../store/api';
 import { useAppSelector } from '../../store/hooks';
 import { BookCard } from '../book/BookCard';
-import { Button, MessageBox } from '../ui';
+import { Button, MessageBox, PageContent } from '../ui';
 import { EditBook } from './EditBook';
 
 export const Manage = () => {
@@ -71,7 +71,7 @@ export const Manage = () => {
 
   return (
     <>
-      <div className='p-4 pt-8'>
+      <PageContent>
         <div className='flex justify-between'>
           <h1>Your Books</h1>
           <Button
@@ -84,7 +84,7 @@ export const Manage = () => {
         <div className='grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {items}
         </div>
-      </div>
+      </PageContent>
       {mb}
       {dialog}
     </>

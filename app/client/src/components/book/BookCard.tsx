@@ -32,15 +32,17 @@ export const BookCard = ({ book, actions }: Props) => {
       ) : (
         <div className='h-[70px] w-[70px] bg-blue-100' />
       )}
-      <div className='w-full mx-2 py-1'>
-        <div className='p-1 pb-2'>
-          <span className='text-base'>{book.title}</span><br />
-          <span className='text-sm'>{book.author}</span>
-        </div>
-        <hr className='m-2 bg-slate-200' />
-        <div className='flex p-2 justify-between'>
-          <Link to={`/?category=${book.category}`}>{book.category}</Link>
-          <Link to={`/?owner=${book.owner}`}>{book.owner}</Link>
+      <div className='flex flex-col h-full w-full mx-2 py-1 justify-between'>
+        <div>
+          <div className='p-1 pb-2'>
+            <span className='text-base'>{book.title}</span><br />
+            <span className='text-sm'>{book.author}</span>
+          </div>
+          <hr className='m-2 bg-slate-200' />
+          <div className='flex p-2 justify-between'>
+            <Link to={`/?category=${book.category}`}>{book.category}</Link>
+            <Link to={`/?owner=${book.owner}`}>{book.owner}</Link>
+          </div>
         </div>
         {actions && actions.length > 0 && (
           <div className='flex space-x-2 justify-end'>
@@ -48,6 +50,7 @@ export const BookCard = ({ book, actions }: Props) => {
               <Button
                 key={a.text}
                 type='button'
+                size='sm'
                 onClick={() => a.fn (book)}
               >
                 {a.text}

@@ -2,12 +2,12 @@ import { PageContent } from '../ui';
 
 export const About = () => (
   <PageContent>
-    <h1 className='text-center mb-4'>About BookTrader</h1>
-    <div className='max-w-md mx-auto'>
-      <p className='mb-4'>
+    <h1 className='text-center'>BookTrader</h1>
+    <div className='p-4 max-w-screen-md mx-auto'>
+      <p className='leading-relaxed mb-4'>
         Written by Joe McIntyre, BookTrader is a full stack project defined by FreeCodeCamp.
       </p>
-      <p className='mb-4'>
+      <p className='leading-relaxed mb-4'>
         The{' '}
         <a
           href='https://github.com/fcc-joemcintyre/book-trader'
@@ -18,7 +18,7 @@ export const About = () => (
         </a>
         {' '}is published on GitHub under an MIT LIcense.
       </p>
-      <p className='mb-2'>
+      <p className='leading-relaxed'>
         Technologies used include:
       </p>
       <ul className='mb-4'>
@@ -27,7 +27,7 @@ export const About = () => (
         <li className='list-disc ml-4'>Database: Mongo (5.x)</li>
         <li className='list-disc ml-4'>Language: Typescript</li>
       </ul>
-      <p className='mb-2'>
+      <p className='leading-relaxed'>
         Thanks to:
       </p>
       <ul>

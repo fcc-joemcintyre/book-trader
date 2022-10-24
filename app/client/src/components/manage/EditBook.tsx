@@ -35,7 +35,7 @@ export const EditBook = ({ book = null, onSave, onCancel }: Props) => {
       <div className='fixed inset-0 overflow-y-auto'>
         <div className='flex min-h-full items-center justify-center p-4 bg-cyan-200 bg-opacity-50'>
           <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl'>
-            <Dialog.Title className='text-center'>Book</Dialog.Title>
+            <Dialog.Title className='text-center'>{book ? 'Edit' : 'Create'} Book</Dialog.Title>
             <form className='align-left'>
               <div className='grid grid-cols-12 gap-4 p-2 mx-auto'>
                 <div className='col-span-12'>

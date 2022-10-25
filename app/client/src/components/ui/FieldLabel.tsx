@@ -7,7 +7,7 @@ type Props = {
 export const FieldLabel = ({ htmlFor, required, children, ...rest }: Props) => (
   <label
     htmlFor={htmlFor}
-    className={`${required ? 'after:{content:" *"}' : ''}`}
+    className={`text-sm ${required ? 'after:{content:" *"}' : ''}`}
     {...rest}
   >
     {children}

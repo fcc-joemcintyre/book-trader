@@ -33,7 +33,7 @@ export const FieldInput = ({
     <div>
       {showLabel && <FieldLabel htmlFor={field.name} required={field.required}>{label}</FieldLabel>}
       <input
-        className={`block w-full m-0 p-2 bg-gray-100 rounded-sm outline-0 border ${border} focus:border-blue-500`}
+        className={`block w-full m-0 p-1 bg-gray-100 rounded-sm outline-0 border ${border} focus:border-blue-500`}
         type={type}
         {...rest}
         id={field.name}

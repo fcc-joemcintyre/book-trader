@@ -7,7 +7,7 @@ import { useVerifyLoginMutation } from '../../store/api';
 import { setAuthenticated } from '../../store/userSlice';
 
 import { AuthRoute } from './AuthRoute';
-import { Nav } from './Nav';
+import { Layout } from './Layout';
 import { ScrollToTop } from './ScrollToTop';
 
 import { HomePage } from '../home';
@@ -42,17 +42,16 @@ export const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop>
-        <>
-          <Nav />
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/requests' element={<AuthRoute><Request /></AuthRoute>} />
-            <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
-            <Route path='/about' element={<About />} />
-            <Route path='/logout' element={<Logout />} />
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path='requests' element={<AuthRoute><Request /></AuthRoute>} />
+            <Route path='manage' element={<AuthRoute><Manage /></AuthRoute>} />
+            <Route path='about' element={<About />} />
+            <Route path='logout' element={<Logout />} />
             <Route path='*' element={<NotFound />} />
-          </Routes>
-        </>
+          </Route>
+        </Routes>
       </ScrollToTop>
     </BrowserRouter>
   );

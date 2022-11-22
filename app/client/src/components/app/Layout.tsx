@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { useAppSelector } from '../../store/hooks';
 import { Login } from '../login';
@@ -9,7 +9,7 @@ const base = 'hover:bg-cyan-700 hover:text-white px-3 py-2 rounded-md text-sm fo
 const activeItem = `text-white ${base}`;
 const inactiveItem = `text-gray-200 ${base}`;
 
-export function Nav () {
+export function Layout () {
   const ref = useRef ();
   const [isOpen, setIsOpen] = useState (false);
   const [dialog, setDialog] = useState<JSX.Element | null> (null);
@@ -82,7 +82,7 @@ export function Nav () {
 
   return (
     <div>
-      <nav className='fixed w-full top-0 z-10 bg-brand'>
+      <nav className='fixed h-12 w-full top-0 z-10 bg-brand'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex items-center justify-between h-12'>
             <NavLink
@@ -149,6 +149,7 @@ export function Nav () {
 
         <Transition
           show={isOpen}
+          className='bg-cyan-500'
           enter='transition ease-out duration-100 transform'
           enterFrom='opacity-0 scale-95'
           enterTo='opacity-100 scale-100'
@@ -177,6 +178,7 @@ export function Nav () {
       </nav>
       <div className='h-12' />
       {dialog}
+      <Outlet />
     </div>
   );
 }
